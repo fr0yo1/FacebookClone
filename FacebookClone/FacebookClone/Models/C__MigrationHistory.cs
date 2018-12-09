@@ -12,15 +12,11 @@ namespace FacebookClone.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Message
+    public partial class C__MigrationHistory
     {
-        public int message_id { get; set; }
-        public string sender_id { get; set; }
-        public string receiver_id { get; set; }
-        public System.DateTime date { get; set; }
-        public string content { get; set; }
-    
-        public virtual AspNetUser AspNetUser { get; set; }
-        public virtual AspNetUser AspNetUser1 { get; set; }
+        public string MigrationId { get; set; }
+        public string ContextKey { get; set; }
+        public byte[] Model { get; set; }
+        public string ProductVersion { get; set; }
     }
 }

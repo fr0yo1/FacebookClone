@@ -12,15 +12,15 @@ namespace FacebookClone.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Message
+    public partial class Post
     {
-        public int message_id { get; set; }
+        public int post_id { get; set; }
         public string sender_id { get; set; }
-        public string receiver_id { get; set; }
+        public int group_id { get; set; }
         public System.DateTime date { get; set; }
         public string content { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual AspNetUser AspNetUser1 { get; set; }
+        public virtual Group Group { get; set; }
     }
 }

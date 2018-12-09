@@ -21,11 +21,11 @@ namespace FacebookClone.Models
         }
     
         public int album_id { get; set; }
-        public int user_id { get; set; }
+        public string user_id { get; set; }
         public string name { get; set; }
         public System.DateTime date { get; set; }
     
-        public virtual User User { get; set; }
+        public virtual Profile Profile { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Picture> Pictures { get; set; }
     }

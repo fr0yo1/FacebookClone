@@ -12,15 +12,18 @@ namespace FacebookClone.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Message
+    public partial class Profile
     {
-        public int message_id { get; set; }
-        public string sender_id { get; set; }
-        public string receiver_id { get; set; }
-        public System.DateTime date { get; set; }
-        public string content { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Profile()
+        {
+            this.Albums = new HashSet<Album>();
+        }
     
+        public string Id { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Album> Albums { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual AspNetUser AspNetUser1 { get; set; }
     }
 }
