@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 12/09/2018 19:17:16
+-- Date Created: 12/10/2018 00:59:29
 -- Generated from EDMX file: C:\Users\Adrian-Sandru\FacebookClone\FacebookClone\FacebookClone\Models\Model.edmx
 -- --------------------------------------------------
 
@@ -20,38 +20,20 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_Albums_ToUsers]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Albums] DROP CONSTRAINT [FK_Albums_ToUsers];
 GO
-IF OBJECT_ID(N'[dbo].[FK_Picture_ToAlbum]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Pictures] DROP CONSTRAINT [FK_Picture_ToAlbum];
+IF OBJECT_ID(N'[FacebookDatabaseModelStoreContainer].[FK_AspNetUserRoles_AsonetRoles]', 'F') IS NOT NULL
+    ALTER TABLE [FacebookDatabaseModelStoreContainer].[AspNetUserRoles] DROP CONSTRAINT [FK_AspNetUserRoles_AsonetRoles];
+GO
+IF OBJECT_ID(N'[FacebookDatabaseModelStoreContainer].[FK_AspNetUserRoles_AspNetUsers]', 'F') IS NOT NULL
+    ALTER TABLE [FacebookDatabaseModelStoreContainer].[AspNetUserRoles] DROP CONSTRAINT [FK_AspNetUserRoles_AspNetUsers];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Comment_ToPicture]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Comments] DROP CONSTRAINT [FK_Comment_ToPicture];
 GO
 IF OBJECT_ID(N'[dbo].[FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[AspNetUserClaims] DROP CONSTRAINT [FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId];
 GO
 IF OBJECT_ID(N'[dbo].[FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[AspNetUserLogins] DROP CONSTRAINT [FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId];
-GO
-IF OBJECT_ID(N'[dbo].[FK_Message_ToRUser]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Messages] DROP CONSTRAINT [FK_Message_ToRUser];
-GO
-IF OBJECT_ID(N'[dbo].[FK_Message_ToUser]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Messages] DROP CONSTRAINT [FK_Message_ToUser];
-GO
-IF OBJECT_ID(N'[dbo].[FK_Post_ToUser]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Posts] DROP CONSTRAINT [FK_Post_ToUser];
-GO
-IF OBJECT_ID(N'[dbo].[FK_Profile_ToAspNetUsers]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Profiles] DROP CONSTRAINT [FK_Profile_ToAspNetUsers];
-GO
-IF OBJECT_ID(N'[dbo].[FK_Comment_ToPicture]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Comments] DROP CONSTRAINT [FK_Comment_ToPicture];
-GO
-IF OBJECT_ID(N'[dbo].[FK_Post_ToGroup]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Posts] DROP CONSTRAINT [FK_Post_ToGroup];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AspNetUserRoles_AspNetRole]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[AspNetUserRoles] DROP CONSTRAINT [FK_AspNetUserRoles_AspNetRole];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AspNetUserRoles_AspNetUser]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[AspNetUserRoles] DROP CONSTRAINT [FK_AspNetUserRoles_AspNetUser];
 GO
 IF OBJECT_ID(N'[dbo].[FK_Friendship_AspNetUser]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Friendship] DROP CONSTRAINT [FK_Friendship_AspNetUser];
@@ -64,6 +46,27 @@ IF OBJECT_ID(N'[dbo].[FK_GroupUser_AspNetUser]', 'F') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[FK_GroupUser_Group]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[GroupUser] DROP CONSTRAINT [FK_GroupUser_Group];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Message_ToRUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Messages] DROP CONSTRAINT [FK_Message_ToRUser];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Message_ToUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Messages] DROP CONSTRAINT [FK_Message_ToUser];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Picture_ToAlbum]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Pictures] DROP CONSTRAINT [FK_Picture_ToAlbum];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Post_ToGroup]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Posts] DROP CONSTRAINT [FK_Post_ToGroup];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Post_ToUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Posts] DROP CONSTRAINT [FK_Post_ToUser];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Posts_ToPicture]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Posts] DROP CONSTRAINT [FK_Posts_ToPicture];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Profile_ToAspNetUsers]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Profiles] DROP CONSTRAINT [FK_Profile_ToAspNetUsers];
 GO
 
 -- --------------------------------------------------
@@ -91,8 +94,14 @@ GO
 IF OBJECT_ID(N'[dbo].[Comments]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Comments];
 GO
+IF OBJECT_ID(N'[dbo].[Friendship]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Friendship];
+GO
 IF OBJECT_ID(N'[dbo].[Groups]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Groups];
+GO
+IF OBJECT_ID(N'[dbo].[GroupUser]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[GroupUser];
 GO
 IF OBJECT_ID(N'[dbo].[Messages]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Messages];
@@ -106,14 +115,8 @@ GO
 IF OBJECT_ID(N'[dbo].[Profiles]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Profiles];
 GO
-IF OBJECT_ID(N'[dbo].[AspNetUserRoles]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[AspNetUserRoles];
-GO
-IF OBJECT_ID(N'[dbo].[Friendship]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Friendship];
-GO
-IF OBJECT_ID(N'[dbo].[GroupUser]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[GroupUser];
+IF OBJECT_ID(N'[FacebookDatabaseModelStoreContainer].[AspNetUserRoles]', 'U') IS NOT NULL
+    DROP TABLE [FacebookDatabaseModelStoreContainer].[AspNetUserRoles];
 GO
 
 -- --------------------------------------------------
@@ -209,7 +212,7 @@ GO
 CREATE TABLE [dbo].[Pictures] (
     [picture_id] int  NOT NULL,
     [album_id] int  NOT NULL,
-    [name] varchar(50)  NOT NULL,
+    [path] varchar(50)  NOT NULL,
     [date] datetime  NOT NULL,
     [description] varchar(50)  NOT NULL
 );
@@ -219,7 +222,8 @@ GO
 CREATE TABLE [dbo].[Posts] (
     [post_id] int  NOT NULL,
     [sender_id] nvarchar(128)  NOT NULL,
-    [group_id] int  NOT NULL,
+    [group_id] int  NULL,
+    [picture_id] int  NULL,
     [date] datetime  NOT NULL,
     [content] varchar(50)  NOT NULL
 );
@@ -498,28 +502,19 @@ ON [dbo].[Posts]
     ([group_id]);
 GO
 
--- Creating foreign key on [AspNetRoles_Id] in table 'AspNetUserRoles'
-ALTER TABLE [dbo].[AspNetUserRoles]
-ADD CONSTRAINT [FK_AspNetUserRoles_AspNetRole]
-    FOREIGN KEY ([RoleId])
-    REFERENCES [dbo].[AspNetRoles]
-        ([Id])
+-- Creating foreign key on [picture_id] in table 'Posts'
+ALTER TABLE [dbo].[Posts]
+ADD CONSTRAINT [FK_Posts_ToPicture]
+    FOREIGN KEY ([picture_id])
+    REFERENCES [dbo].[Pictures]
+        ([picture_id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
--- Creating foreign key on [AspNetUsers_Id] in table 'AspNetUserRoles'
-ALTER TABLE [dbo].[AspNetUserRoles]
-ADD CONSTRAINT [FK_AspNetUserRoles_AspNetUser]
-    FOREIGN KEY ([UserId])
-    REFERENCES [dbo].[AspNetUsers]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_AspNetUserRoles_AspNetUser'
-CREATE INDEX [IX_FK_AspNetUserRoles_AspNetUser]
-ON [dbo].[AspNetUserRoles]
-    ([UserId]);
+-- Creating non-clustered index for FOREIGN KEY 'FK_Posts_ToPicture'
+CREATE INDEX [IX_FK_Posts_ToPicture]
+ON [dbo].[Posts]
+    ([picture_id]);
 GO
 
 -- Creating foreign key on [AspNetUsers_Id] in table 'Friendship'
@@ -568,6 +563,30 @@ GO
 CREATE INDEX [IX_FK_GroupUser_Group]
 ON [dbo].[GroupUser]
     ([Groups_group_id]);
+GO
+
+-- Creating foreign key on [AspNetRoles_Id] in table 'AspNetUserRoles'
+ALTER TABLE [dbo].[AspNetUserRoles]
+ADD CONSTRAINT [FK_AspNetUserRoles_AspNetRole]
+    FOREIGN KEY ([AspNetRoles_Id])
+    REFERENCES [dbo].[AspNetRoles]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating foreign key on [AspNetUsers_Id] in table 'AspNetUserRoles'
+ALTER TABLE [dbo].[AspNetUserRoles]
+ADD CONSTRAINT [FK_AspNetUserRoles_AspNetUser]
+    FOREIGN KEY ([AspNetUsers_Id])
+    REFERENCES [dbo].[AspNetUsers]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_AspNetUserRoles_AspNetUser'
+CREATE INDEX [IX_FK_AspNetUserRoles_AspNetUser]
+ON [dbo].[AspNetUserRoles]
+    ([AspNetUsers_Id]);
 GO
 
 -- --------------------------------------------------

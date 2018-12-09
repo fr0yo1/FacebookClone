@@ -18,16 +18,19 @@ namespace FacebookClone.Models
         public Picture()
         {
             this.Comments = new HashSet<Comment>();
+            this.Posts = new HashSet<Post>();
         }
     
         public int picture_id { get; set; }
         public int album_id { get; set; }
-        public string name { get; set; }
+        public string path { get; set; }
         public System.DateTime date { get; set; }
         public string description { get; set; }
     
         public virtual Album Album { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Post> Posts { get; set; }
     }
 }

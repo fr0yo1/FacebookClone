@@ -16,11 +16,13 @@ namespace FacebookClone.Models
     {
         public int post_id { get; set; }
         public string sender_id { get; set; }
-        public int group_id { get; set; }
+        public Nullable<int> group_id { get; set; }
+        public Nullable<int> picture_id { get; set; }
         public System.DateTime date { get; set; }
         public string content { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Group Group { get; set; }
+        public virtual Picture Picture { get; set; }
     }
 }
