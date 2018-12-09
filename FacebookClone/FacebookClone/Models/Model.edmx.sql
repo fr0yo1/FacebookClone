@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 12/09/2018 16:39:14
--- Generated from EDMX file: C:\Users\Adrian Sandru\facebookclone\FacebookClone\FacebookClone\Models\Model.edmx
+-- Date Created: 12/09/2018 19:17:16
+-- Generated from EDMX file: C:\Users\Adrian-Sandru\FacebookClone\FacebookClone\FacebookClone\Models\Model.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -20,14 +20,8 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_Albums_ToUsers]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Albums] DROP CONSTRAINT [FK_Albums_ToUsers];
 GO
-IF OBJECT_ID(N'[dbo].[FK_Comment_ToPicture]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Comments] DROP CONSTRAINT [FK_Comment_ToPicture];
-GO
-IF OBJECT_ID(N'[dbo].[FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[AspNetUserRoles] DROP CONSTRAINT [FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId];
-GO
-IF OBJECT_ID(N'[dbo].[FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[AspNetUserRoles] DROP CONSTRAINT [FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId];
+IF OBJECT_ID(N'[dbo].[FK_Picture_ToAlbum]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Pictures] DROP CONSTRAINT [FK_Picture_ToAlbum];
 GO
 IF OBJECT_ID(N'[dbo].[FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[AspNetUserClaims] DROP CONSTRAINT [FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId];
@@ -35,35 +29,41 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[AspNetUserLogins] DROP CONSTRAINT [FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId];
 GO
-IF OBJECT_ID(N'[dbo].[FK_Friendship_AspNetUsers]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Friendship] DROP CONSTRAINT [FK_Friendship_AspNetUsers];
-GO
-IF OBJECT_ID(N'[dbo].[FK_Friendship_AspNetUsers1]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Friendship] DROP CONSTRAINT [FK_Friendship_AspNetUsers1];
-GO
-IF OBJECT_ID(N'[dbo].[FK_GroupUser_AspNetUsers]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[GroupUser] DROP CONSTRAINT [FK_GroupUser_AspNetUsers];
-GO
-IF OBJECT_ID(N'[dbo].[FK_GroupUser_Group]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[GroupUser] DROP CONSTRAINT [FK_GroupUser_Group];
-GO
 IF OBJECT_ID(N'[dbo].[FK_Message_ToRUser]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Messages] DROP CONSTRAINT [FK_Message_ToRUser];
 GO
 IF OBJECT_ID(N'[dbo].[FK_Message_ToUser]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Messages] DROP CONSTRAINT [FK_Message_ToUser];
 GO
-IF OBJECT_ID(N'[dbo].[FK_Picture_ToAlbum]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Pictures] DROP CONSTRAINT [FK_Picture_ToAlbum];
-GO
-IF OBJECT_ID(N'[dbo].[FK_Post_ToGroup]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Posts] DROP CONSTRAINT [FK_Post_ToGroup];
-GO
 IF OBJECT_ID(N'[dbo].[FK_Post_ToUser]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Posts] DROP CONSTRAINT [FK_Post_ToUser];
 GO
 IF OBJECT_ID(N'[dbo].[FK_Profile_ToAspNetUsers]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Profiles] DROP CONSTRAINT [FK_Profile_ToAspNetUsers];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Comment_ToPicture]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Comments] DROP CONSTRAINT [FK_Comment_ToPicture];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Post_ToGroup]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Posts] DROP CONSTRAINT [FK_Post_ToGroup];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AspNetUserRoles_AspNetRole]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AspNetUserRoles] DROP CONSTRAINT [FK_AspNetUserRoles_AspNetRole];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AspNetUserRoles_AspNetUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AspNetUserRoles] DROP CONSTRAINT [FK_AspNetUserRoles_AspNetUser];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Friendship_AspNetUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Friendship] DROP CONSTRAINT [FK_Friendship_AspNetUser];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Friendship_AspNetUser1]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Friendship] DROP CONSTRAINT [FK_Friendship_AspNetUser1];
+GO
+IF OBJECT_ID(N'[dbo].[FK_GroupUser_AspNetUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[GroupUser] DROP CONSTRAINT [FK_GroupUser_AspNetUser];
+GO
+IF OBJECT_ID(N'[dbo].[FK_GroupUser_Group]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[GroupUser] DROP CONSTRAINT [FK_GroupUser_Group];
 GO
 
 -- --------------------------------------------------
@@ -82,9 +82,6 @@ GO
 IF OBJECT_ID(N'[dbo].[AspNetUserLogins]', 'U') IS NOT NULL
     DROP TABLE [dbo].[AspNetUserLogins];
 GO
-IF OBJECT_ID(N'[dbo].[AspNetUserRoles]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[AspNetUserRoles];
-GO
 IF OBJECT_ID(N'[dbo].[AspNetUsers]', 'U') IS NOT NULL
     DROP TABLE [dbo].[AspNetUsers];
 GO
@@ -94,14 +91,8 @@ GO
 IF OBJECT_ID(N'[dbo].[Comments]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Comments];
 GO
-IF OBJECT_ID(N'[dbo].[Friendship]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Friendship];
-GO
 IF OBJECT_ID(N'[dbo].[Groups]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Groups];
-GO
-IF OBJECT_ID(N'[dbo].[GroupUser]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[GroupUser];
 GO
 IF OBJECT_ID(N'[dbo].[Messages]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Messages];
@@ -114,6 +105,15 @@ IF OBJECT_ID(N'[dbo].[Posts]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[Profiles]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Profiles];
+GO
+IF OBJECT_ID(N'[dbo].[AspNetUserRoles]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[AspNetUserRoles];
+GO
+IF OBJECT_ID(N'[dbo].[Friendship]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Friendship];
+GO
+IF OBJECT_ID(N'[dbo].[GroupUser]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[GroupUser];
 GO
 
 -- --------------------------------------------------
@@ -166,7 +166,7 @@ CREATE TABLE [dbo].[AspNetUsers] (
     [LockoutEndDateUtc] datetime  NULL,
     [LockoutEnabled] bit  NOT NULL,
     [AccessFailedCount] int  NOT NULL,
-    [UserName] nvarchar(256)  NOT NULL,
+    [UserName] nvarchar(256)  NOT NULL
 );
 GO
 
@@ -227,7 +227,11 @@ GO
 
 -- Creating table 'Profiles'
 CREATE TABLE [dbo].[Profiles] (
-    [Id] nvarchar(128)  NOT NULL
+    [Id] nvarchar(128)  NOT NULL,
+    [firstname] nvarchar(max)  NOT NULL,
+    [lastname] nvarchar(max)  NOT NULL,
+    [age] nvarchar(max)  NOT NULL,
+    [gender] nvarchar(max)  NOT NULL
 );
 GO
 
