@@ -15,10 +15,10 @@ namespace FacebookClone.Models
     public partial class Comment
     {
         public int comment_id { get; set; }
-        public int picture_id { get; set; }
+        public int post_id { get; set; }
         public System.DateTime date { get; set; }
         public string content { get; set; }
     
-        public virtual Picture Picture { get; set; }
+        public virtual Post Post { get; set; }
     }
 }

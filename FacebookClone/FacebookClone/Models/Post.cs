@@ -14,6 +14,12 @@ namespace FacebookClone.Models
     
     public partial class Post
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Post()
+        {
+            this.Comments = new HashSet<Comment>();
+        }
+    
         public int post_id { get; set; }
         public string sender_id { get; set; }
         public Nullable<int> group_id { get; set; }
@@ -24,5 +30,7 @@ namespace FacebookClone.Models
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Group Group { get; set; }
         public virtual Picture Picture { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

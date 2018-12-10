@@ -17,7 +17,6 @@ namespace FacebookClone.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Picture()
         {
-            this.Comments = new HashSet<Comment>();
             this.Posts = new HashSet<Post>();
         }
     
@@ -28,8 +27,6 @@ namespace FacebookClone.Models
         public string description { get; set; }
     
         public virtual Album Album { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Comment> Comments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Post> Posts { get; set; }
     }
