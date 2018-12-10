@@ -21,6 +21,7 @@
     <EntitySet Name="Friendship" EntityType="FacebookDatabaseModel.Store.Friendship" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GroupUser" EntityType="FacebookDatabaseModel.Store.GroupUser" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AspNetUserRoles" EntityType="FacebookDatabaseModel.Store.AspNetUserRoles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AspNetUserRoles1" EntityType="FacebookDatabaseModel.Store.AspNetUserRoles1" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="FK_Albums_ToUsers" Association="FacebookDatabaseModel.Store.FK_Albums_ToUsers">
       <End Role="Profile" EntitySet="Profiles" />
       <End Role="Album" EntitySet="Albums" />
@@ -88,6 +89,18 @@
     <AssociationSet Name="FK_Comment_ToPost" Association="FacebookDatabaseModel.Store.FK_Comment_ToPost">
       <End Role="Post" EntitySet="Posts" />
       <End Role="Comment" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Comments_ToUser" Association="FacebookDatabaseModel.Store.FK_Comments_ToUser">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="Comment" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AspNetUserRoles1_AspNetRole" Association="FacebookDatabaseModel.Store.FK_AspNetUserRoles1_AspNetRole">
+      <End Role="AspNetRole" EntitySet="AspNetRoles" />
+      <End Role="AspNetUserRoles1" EntitySet="AspNetUserRoles1" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AspNetUserRoles1_AspNetUser" Association="FacebookDatabaseModel.Store.FK_AspNetUserRoles1_AspNetUser">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserRoles1" EntitySet="AspNetUserRoles1" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Albums">
@@ -208,6 +221,7 @@
     <Property Name="post_id" Type="int" Nullable="false" />
     <Property Name="date" Type="datetime" Nullable="false" />
     <Property Name="content" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="user_id" Type="nvarchar" Nullable="false" MaxLength="128" />
   </EntityType>
   <EntityType Name="Friendship">
     <Key>
@@ -232,6 +246,14 @@
     </Key>
     <Property Name="AspNetRoles_Id" Type="nvarchar" Nullable="false" MaxLength="128" />
     <Property Name="AspNetUsers_Id" Type="nvarchar" Nullable="false" MaxLength="128" />
+  </EntityType>
+  <EntityType Name="AspNetUserRoles1">
+    <Key>
+      <PropertyRef Name="AspNetRoles1_Id" />
+      <PropertyRef Name="AspNetUsers1_Id" />
+    </Key>
+    <Property Name="AspNetRoles1_Id" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="AspNetUsers1_Id" Type="nvarchar" Nullable="false" MaxLength="128" />
   </EntityType>
   <Association Name="FK_Albums_ToUsers">
     <End Role="Profile" Type="FacebookDatabaseModel.Store.Profiles" Multiplicity="1" />
@@ -371,6 +393,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Comments_ToUser">
+    <End Role="AspNetUser" Type="FacebookDatabaseModel.Store.AspNetUsers" Multiplicity="1" />
+    <End Role="Comment" Type="FacebookDatabaseModel.Store.Comments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Friendship_AspNetUser">
     <End Role="AspNetUser" Type="FacebookDatabaseModel.Store.AspNetUsers" Multiplicity="1" />
     <End Role="Friendship" Type="FacebookDatabaseModel.Store.Friendship" Multiplicity="*" />
@@ -440,6 +474,30 @@
       </Principal>
       <Dependent Role="AspNetUserRoles">
         <PropertyRef Name="AspNetUsers_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AspNetUserRoles1_AspNetRole">
+    <End Role="AspNetRole" Type="FacebookDatabaseModel.Store.AspNetRoles" Multiplicity="1" />
+    <End Role="AspNetUserRoles1" Type="FacebookDatabaseModel.Store.AspNetUserRoles1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetRole">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles1">
+        <PropertyRef Name="AspNetRoles1_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AspNetUserRoles1_AspNetUser">
+    <End Role="AspNetUserRoles1" Type="FacebookDatabaseModel.Store.AspNetUserRoles1" Multiplicity="*" />
+    <End Role="AspNetUser" Type="FacebookDatabaseModel.Store.AspNetUsers" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles1">
+        <PropertyRef Name="AspNetUsers1_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -516,6 +574,14 @@
             <End Role="Post" EntitySet="Posts" />
             <End Role="Comment" EntitySet="Comments" />
           </AssociationSet>
+          <AssociationSet Name="FK_Comments_ToUser" Association="FacebookDatabaseModel.FK_Comments_ToUser">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles1" Association="FacebookDatabaseModel.AspNetUserRoles1">
+            <End Role="AspNetRole" EntitySet="AspNetRoles" />
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Album">
           <Key>
@@ -535,6 +601,7 @@
           <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUsers" Relationship="FacebookDatabaseModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUsers1" Relationship="FacebookDatabaseModel.AspNetUserRoles1" FromRole="AspNetRole" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="AspNetUserClaim">
           <Key>
@@ -583,6 +650,8 @@
           <NavigationProperty Name="AspNetUsers" Relationship="FacebookDatabaseModel.Friendship" FromRole="AspNetUser1" ToRole="AspNetUser" />
           <NavigationProperty Name="Groups" Relationship="FacebookDatabaseModel.GroupUser" FromRole="AspNetUser" ToRole="Group" />
           <NavigationProperty Name="AspNetRoles" Relationship="FacebookDatabaseModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+          <NavigationProperty Name="Comments" Relationship="FacebookDatabaseModel.FK_Comments_ToUser" FromRole="AspNetUser" ToRole="Comment" />
+          <NavigationProperty Name="AspNetRoles1" Relationship="FacebookDatabaseModel.AspNetUserRoles1" FromRole="AspNetUser" ToRole="AspNetRole" />
         </EntityType>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -801,6 +870,8 @@
           <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="content" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Post" Relationship="FacebookDatabaseModel.FK_Comment_ToPost" FromRole="Comment" ToRole="Post" />
+          <Property Name="user_id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="FacebookDatabaseModel.FK_Comments_ToUser" FromRole="Comment" ToRole="AspNetUser" />
         </EntityType>
         <Association Name="FK_Comment_ToPost">
           <End Type="FacebookDatabaseModel.Post" Role="Post" Multiplicity="1" />
@@ -813,6 +884,22 @@
               <PropertyRef Name="post_id" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comments_ToUser">
+          <End Type="FacebookDatabaseModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="FacebookDatabaseModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles1">
+          <End Type="FacebookDatabaseModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+          <End Type="FacebookDatabaseModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -945,6 +1032,7 @@
           <ScalarProperty Name="post_id" ColumnName="post_id" />
           <ScalarProperty Name="date" ColumnName="date" />
           <ScalarProperty Name="content" ColumnName="content" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -970,6 +1058,14 @@
       </EndProperty>
       <EndProperty Name="AspNetUser">
         <ScalarProperty Name="Id" ColumnName="AspNetUsers_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="AspNetUserRoles1" TypeName="FacebookDatabaseModel.AspNetUserRoles1" StoreEntitySet="AspNetUserRoles1">
+      <EndProperty Name="AspNetRole">
+        <ScalarProperty Name="Id" ColumnName="AspNetRoles1_Id" />
+      </EndProperty>
+      <EndProperty Name="AspNetUser">
+        <ScalarProperty Name="Id" ColumnName="AspNetUsers1_Id" />
       </EndProperty>
     </AssociationSetMapping>
   </EntityContainerMapping>

@@ -31,6 +31,8 @@
         <AssociationConnector Association="FacebookDatabaseModel.AspNetUserRoles" />
         <EntityTypeShape EntityType="FacebookDatabaseModel.Comment" Width="1.5" PointX="11" PointY="1" />
         <AssociationConnector Association="FacebookDatabaseModel.FK_Comment_ToPost" />
+        <AssociationConnector Association="FacebookDatabaseModel.FK_Comments_ToUser" />
+        <AssociationConnector Association="FacebookDatabaseModel.AspNetUserRoles1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

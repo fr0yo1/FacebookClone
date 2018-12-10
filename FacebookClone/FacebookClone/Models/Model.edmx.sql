@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 12/11/2018 00:08:57
+-- Date Created: 12/11/2018 00:27:46
 -- Generated from EDMX file: C:\Users\Adrian-Sandru\FacebookClone\FacebookClone\FacebookClone\Models\Model.edmx
 -- --------------------------------------------------
 
@@ -20,14 +20,17 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_Albums_ToUsers]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Albums] DROP CONSTRAINT [FK_Albums_ToUsers];
 GO
-IF OBJECT_ID(N'[dbo].[FK_AspNetUserRoles_AsonetRoles]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[AspNetUserRoles] DROP CONSTRAINT [FK_AspNetUserRoles_AsonetRoles];
+IF OBJECT_ID(N'[dbo].[FK_AspNetUserRoles_AspNetRole]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AspNetUserRoles] DROP CONSTRAINT [FK_AspNetUserRoles_AspNetRole];
 GO
-IF OBJECT_ID(N'[dbo].[FK_AspNetUserRoles_AspNetUsers]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[AspNetUserRoles] DROP CONSTRAINT [FK_AspNetUserRoles_AspNetUsers];
+IF OBJECT_ID(N'[dbo].[FK_AspNetUserRoles_AspNetUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AspNetUserRoles] DROP CONSTRAINT [FK_AspNetUserRoles_AspNetUser];
 GO
 IF OBJECT_ID(N'[dbo].[FK_Comment_ToPost]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Comments] DROP CONSTRAINT [FK_Comment_ToPost];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Comments_ToUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Comments] DROP CONSTRAINT [FK_Comments_ToUser];
 GO
 IF OBJECT_ID(N'[dbo].[FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[AspNetUserClaims] DROP CONSTRAINT [FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId];
@@ -235,7 +238,8 @@ CREATE TABLE [dbo].[Comments] (
     [comment_id] int  NOT NULL,
     [post_id] int  NOT NULL,
     [date] datetime  NOT NULL,
-    [content] varchar(50)  NOT NULL
+    [content] varchar(50)  NOT NULL,
+    [user_id] nvarchar(128)  NOT NULL
 );
 GO
 
@@ -589,6 +593,20 @@ ON [dbo].[Comments]
     ([post_id]);
 GO
 
+-- Creating foreign key on [user_id] in table 'Comments'
+ALTER TABLE [dbo].[Comments]
+ADD CONSTRAINT [FK_Comments_ToUser]
+    FOREIGN KEY ([user_id])
+    REFERENCES [dbo].[AspNetUsers]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_Comments_ToUser'
+CREATE INDEX [IX_FK_Comments_ToUser]
+ON [dbo].[Comments]
+    ([user_id]);
+GO
 -- --------------------------------------------------
 -- Script has ended
 -- --------------------------------------------------
