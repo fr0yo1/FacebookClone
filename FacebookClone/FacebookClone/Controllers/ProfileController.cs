@@ -49,6 +49,31 @@ namespace FacebookClone.Controllers
             return View("AddProfile", profile);
         }
 
+        [HttpPost]
+        public ActionResult AddNewProfilePicture(ProfileViewModel profile)
+        {
+            var path = FilesHandler.saveImage(profile.picture, Server);
+            if (path == null)
+            {
+                ModelState.AddModelError("imageError", "Something went wrong we were unable to save the photo");
+            }
+            else
+            {
+                var currentUserId = User.Identity.GetUserId();
+                var date = DateTime.Now;
+                var profileAlbum = databaseEntities.Albums.Where(x => x.name.Equals("ProfileAlbum") && x.user_id==currentUserId).FirstOrDefault();
+                Picture profilePicture = new Picture();
+                profilePicture.album_id = profileAlbum.album_id;
+                profilePicture.path = path;
+                profilePicture.date = date;
+                profilePicture.description = "ProfilePicture";
+                    databaseEntities.Pictures.Add(profilePicture);
+                databaseEntities.SaveChanges();
+            }
+
+            return RedirectToAction("Show", "Profile");
+        }
+
         [Authorize]
         public ActionResult Show()
         {
@@ -60,8 +85,9 @@ namespace FacebookClone.Controllers
             } else
             {
                 //TO-DO: add properties to ProfileViewModel like : albums, posts and personal informations and show them into view.
-                var profilePicture = databaseEntities.Albums.Where(x => x.name.Equals("ProfileAlbum")).FirstOrDefault().Pictures.FirstOrDefault();
-                return View("Profile", new ProfileViewModel { firstname = profile.firstname, profilePictureRelativePath = profilePicture.path});
+                var profilePicture = profile.Albums.Where(x => x.name.Equals("ProfileAlbum")).FirstOrDefault().Pictures.OrderByDescending(x=>x.date).FirstOrDefault();
+                Enum.TryParse(profile.gender, out Gender userGender);
+                return View("Profile", new ProfileViewModel { firstname = profile.firstname, profilePictureRelativePath = profilePicture.path, age=profile.age, gender= userGender, lastname=profile.lastname});
             }
    
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -7,11 +8,14 @@ using System.Web.Mvc;
 
 namespace FacebookClone.Models
 {
-    public enum Gender
+    public enum Gender: int
     {
-        Other,
-        Male,
-        Female
+        [Description("Other")]
+        Other=0,
+        [Description("Male")]
+        Male = 1,
+        [Description("Female")]
+        Female = 2
     }
 
     public class ProfileViewModel

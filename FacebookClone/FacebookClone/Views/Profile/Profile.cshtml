@@ -2,7 +2,29 @@
 @{
     ViewBag.Title = "Profile";
 }
-
-<h2>Hello @Model.firstname!</h2>
-
-<img src=@Url.Content(Model.profilePictureRelativePath) />
+@using (Html.BeginForm("AddNewProfilePicture", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+<div style="width:100%;">
+    <div id="divProfilePicture" style="float:left; width:45%;">
+        <img src=@Url.Content(Model.profilePictureRelativePath) style="width:100%;"/>
+        <br/><br/>
+        <label for="file">Upload profile picture:</label>
+        <br />
+        <input type="file" name="picture" id="file" /><br><br>
+    </div>
+    <div id="divProfileInfo" style="float:right; width:45%;">
+      <h3>@Model.firstname @Model.lastname</h3>
+        <br/><br/>
+        <label>Age</label>
+        <br />
+        <input type="text" name="age" value="@Model.age" readonly/>
+        <br /> <br />
+        <label>Gender</label>
+        <br />
+        <input type="text" name="gender" value="@Model.gender.ToString()" readonly />
+    </div>
+    <div id="divButtons" style="clear:both;">
+        <button type="submit">Save Profile</button>
+    </div>
+</div>
+}
