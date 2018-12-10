@@ -16,10 +16,9 @@ namespace FacebookClone.Controllers
         public ActionResult Index()
         {
             if (User.Identity.IsAuthenticated) { 
-            var currentUserId = User.Identity.GetUserId();
-                Profile profile = databaseEntities.Profiles.Find(currentUserId);
-                return View("HomeProfile",profile);
+                return RedirectToAction("Show", "Profile");
             }
+            //TO-DO on else add a view with a login form like on Filelist.
             return View();
         }
 

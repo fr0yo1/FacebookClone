@@ -1,0 +1,8 @@
+﻿@model FacebookClone.Models.ProfileViewModel
+@{
+    ViewBag.Title = "Profile";
+}
+
+<h2>Hello @Model.firstname!</h2>
+
+<img src=@Url.Content(Model.profilePictureRelativePath) />
