@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Data.Entity.Validation;
 using System.Web.Mvc;
+using System.Linq;
 
 namespace FacebookClone.Controllers
 {
@@ -59,18 +60,7 @@ namespace FacebookClone.Controllers
             } else
             {
                 //TO-DO: add properties to ProfileViewModel like : albums, posts and personal informations and show them into view.
-                var userAlbums = profile.Albums;
-                Picture profilePicture = new Picture();
-                foreach ( var album in userAlbums)
-                {
-                    if (album.name.Equals("ProfileAlbum"))
-                    {
-                        var profilePictures = album.Pictures;
-                        var enumerator = profilePictures.GetEnumerator();
-                        enumerator.MoveNext();
-                        profilePicture = enumerator.Current;
-                    }
-                }
+                var profilePicture = databaseEntities.Albums.Where(x => x.name.Equals("ProfileAlbum")).FirstOrDefault().Pictures.FirstOrDefault();
                 return View("Profile", new ProfileViewModel { firstname = profile.firstname, profilePictureRelativePath = profilePicture.path});
             }
    
