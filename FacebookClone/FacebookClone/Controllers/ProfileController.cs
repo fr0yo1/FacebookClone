@@ -32,7 +32,7 @@ namespace FacebookClone.Controllers
                         firstname = profile.firstname,
                         lastname = profile.lastname,
                         Id = currentUserId,
-                        gender = "male"
+                        gender = profile.gender.ToString()
                     };
                     databaseEntities.Profiles.Add(newProfile);
                     var album = databaseEntities.Albums.Add(new Album { user_id = currentUserId, name = "ProfileAlbum", date = date });
