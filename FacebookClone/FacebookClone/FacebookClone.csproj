@@ -197,6 +197,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\NewsFeedController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -249,12 +250,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\NewsFeedViewModel.cs" />
     <Compile Include="Models\Picture.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Post.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PostViewModel.cs" />
     <Compile Include="Models\Profile.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -271,6 +274,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PostStyle.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -347,6 +351,9 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Profile\AddProfile.cshtml" />
     <Content Include="Views\Profile\Profile.cshtml" />
+    <Content Include="Views\NewsFeed\NewsFeed.cshtml" />
+    <Content Include="Views\Shared\PostPartialView.cshtml" />
+    <Content Include="Views\Shared\CommentPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

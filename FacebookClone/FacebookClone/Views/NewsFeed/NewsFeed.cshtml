@@ -1,0 +1,10 @@
+﻿@model FacebookClone.Models.NewsFeedViewModel
+@{
+    ViewBag.Title = "NewsFeed";
+}
+
+@foreach (var post in @Model.posts)
+{
+    @Html.Partial("PostPartialView", post)
+}
+
