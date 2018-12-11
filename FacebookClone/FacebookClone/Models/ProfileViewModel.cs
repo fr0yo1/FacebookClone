@@ -30,12 +30,12 @@ namespace FacebookClone.Models
         public Gender gender { get; set; }
         [Required]
         public HttpPostedFileBase picture { get; set; }
-
+        public List<PostViewModel> Posts { get; set; }
         public String profilePictureRelativePath { get; set; }
 
         public ProfileViewModel(){}
 
-        public ProfileViewModel(Profile profile)
+        public ProfileViewModel(Profile profile, List<PostViewModel> posts=null)
         {
             firstname = profile.firstname;
             lastname = profile.lastname;
@@ -43,6 +43,7 @@ namespace FacebookClone.Models
             Enum.TryParse(profile.gender, out Gender userGender);
             gender = userGender;
             profilePictureRelativePath = profile.Albums.Where(x => x.name.Equals("ProfileAlbum")).FirstOrDefault().Pictures.OrderByDescending(x => x.date).FirstOrDefault().path;
+            Posts = posts;
         }
 
         public IEnumerable<SelectListItem> getGenderList()

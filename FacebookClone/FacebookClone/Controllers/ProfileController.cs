@@ -5,6 +5,7 @@ using System;
 using System.Data.Entity.Validation;
 using System.Web.Mvc;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace FacebookClone.Controllers
 {
@@ -61,7 +62,14 @@ namespace FacebookClone.Controllers
             } else
             {
                 //TO-DO: add properties to ProfileViewModel like : albums, posts and personal informations and show them into view.
-                return View("Profile", new ProfileViewModel(profile));
+                var aspNetUser = databaseEntities.AspNetUsers.Find(currentUserId);
+                var posts = aspNetUser.Posts;
+                List<PostViewModel> userPosts = new List<PostViewModel>();
+                foreach (var post in posts)
+                {
+                    userPosts.Add(new PostViewModel(post));
+                }
+                return View("Profile", new ProfileViewModel(profile, userPosts));
             }
    
         }
