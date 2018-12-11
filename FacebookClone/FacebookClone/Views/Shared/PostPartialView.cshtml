@@ -7,7 +7,7 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <div class="container">
+    <div class="container" style="width: 150%" >
         <div class="col-md-5">
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -17,7 +17,7 @@
                                 <div class="media">
                                     <div class="media-left">
                                         <a href="#">
-                                            <img class="media-object photo-profile" src="@Html.Action("getUserProfilePicture", "NewsFeed", new {albums=Model.post.AspNetUser.Profile.Albums})"; width="40" height="40" alt="...">
+                                            <img class="media-object photo-profile" src="@Html.Action("getProfilePictureFor", "NewsFeed", new {user=Model.post.AspNetUser})"; width="40" height="40" alt="...">
                                         </a>
                                     </div>
                                     <div class="media-body">
@@ -54,7 +54,11 @@
 
                             </div>
                             <div class="comment">
-                                TO-DO : Show all comments here
+                                @foreach (var comment in @Model.post.Comments)
+                                {
+                                    @Html.Partial("CommentPartialView", comment)
+                                }
+
                             </div>
                         </div>
                     </section>

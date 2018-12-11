@@ -21,5 +21,11 @@ namespace FacebookClone.Models
         public PostViewModel()
         {
         }
+
+        public void addCommentFrom(AspNetUser user, FacebookDatabaseEntities toDataBase)
+        {
+            user.Comments.Add(new Comment {post_id = post.post_id, user_id = user.Id, date = DateTime.Now, content = inputComment});
+            toDataBase.SaveChanges();
+        }
     }
 }

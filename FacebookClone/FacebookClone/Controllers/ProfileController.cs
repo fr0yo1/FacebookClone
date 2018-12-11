@@ -60,7 +60,7 @@ namespace FacebookClone.Controllers
             } else
             {
                 //TO-DO: add properties to ProfileViewModel like : albums, posts and personal informations and show them into view.
-                var profilePicture = databaseEntities.Albums.Where(x => x.name.Equals("ProfileAlbum")).FirstOrDefault().Pictures.FirstOrDefault();
+                var profilePicture = profile.Albums.Where(x => x.name.Equals("ProfileAlbum")).FirstOrDefault().Pictures.FirstOrDefault();
                 return View("Profile", new ProfileViewModel { firstname = profile.firstname, profilePictureRelativePath = profilePicture.path});
             }
    
