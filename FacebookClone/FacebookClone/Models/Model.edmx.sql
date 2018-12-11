@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 12/11/2018 00:27:46
+-- Date Created: 12/11/2018 02:02:47
 -- Generated from EDMX file: C:\Users\Adrian-Sandru\FacebookClone\FacebookClone\FacebookClone\Models\Model.edmx
 -- --------------------------------------------------
 
@@ -128,7 +128,7 @@ GO
 
 -- Creating table 'Albums'
 CREATE TABLE [dbo].[Albums] (
-    [album_id] int  NOT NULL,
+    [album_id] int IDENTITY(1,1) NOT NULL,
     [user_id] nvarchar(128)  NOT NULL,
     [name] varchar(50)  NOT NULL,
     [date] datetime  NOT NULL
@@ -185,6 +185,16 @@ CREATE TABLE [dbo].[C__MigrationHistory] (
 );
 GO
 
+-- Creating table 'Comments'
+CREATE TABLE [dbo].[Comments] (
+    [comment_id] int IDENTITY(1,1) NOT NULL,
+    [post_id] int  NOT NULL,
+    [date] datetime  NOT NULL,
+    [content] varchar(50)  NOT NULL,
+    [user_id] nvarchar(128)  NOT NULL
+);
+GO
+
 -- Creating table 'Groups'
 CREATE TABLE [dbo].[Groups] (
     [group_id] int IDENTITY(1,1) NOT NULL,
@@ -194,7 +204,7 @@ GO
 
 -- Creating table 'Messages'
 CREATE TABLE [dbo].[Messages] (
-    [message_id] int  NOT NULL,
+    [message_id] int IDENTITY(1,1) NOT NULL,
     [sender_id] nvarchar(128)  NOT NULL,
     [receiver_id] nvarchar(128)  NOT NULL,
     [date] datetime  NOT NULL,
@@ -204,7 +214,7 @@ GO
 
 -- Creating table 'Pictures'
 CREATE TABLE [dbo].[Pictures] (
-    [picture_id] int  NOT NULL,
+    [picture_id] int IDENTITY(1,1) NOT NULL,
     [album_id] int  NOT NULL,
     [path] varchar(50)  NOT NULL,
     [date] datetime  NOT NULL,
@@ -214,7 +224,7 @@ GO
 
 -- Creating table 'Posts'
 CREATE TABLE [dbo].[Posts] (
-    [post_id] int  NOT NULL,
+    [post_id] int IDENTITY(1,1) NOT NULL,
     [sender_id] nvarchar(128)  NOT NULL,
     [group_id] int  NULL,
     [picture_id] int  NULL,
@@ -230,16 +240,6 @@ CREATE TABLE [dbo].[Profiles] (
     [lastname] nvarchar(max)  NOT NULL,
     [age] nvarchar(max)  NOT NULL,
     [gender] nvarchar(max)  NOT NULL
-);
-GO
-
--- Creating table 'Comments'
-CREATE TABLE [dbo].[Comments] (
-    [comment_id] int  NOT NULL,
-    [post_id] int  NOT NULL,
-    [date] datetime  NOT NULL,
-    [content] varchar(50)  NOT NULL,
-    [user_id] nvarchar(128)  NOT NULL
 );
 GO
 
@@ -304,6 +304,12 @@ ADD CONSTRAINT [PK_C__MigrationHistory]
     PRIMARY KEY CLUSTERED ([MigrationId], [ContextKey] ASC);
 GO
 
+-- Creating primary key on [comment_id] in table 'Comments'
+ALTER TABLE [dbo].[Comments]
+ADD CONSTRAINT [PK_Comments]
+    PRIMARY KEY CLUSTERED ([comment_id] ASC);
+GO
+
 -- Creating primary key on [group_id] in table 'Groups'
 ALTER TABLE [dbo].[Groups]
 ADD CONSTRAINT [PK_Groups]
@@ -332,12 +338,6 @@ GO
 ALTER TABLE [dbo].[Profiles]
 ADD CONSTRAINT [PK_Profiles]
     PRIMARY KEY CLUSTERED ([Id] ASC);
-GO
-
--- Creating primary key on [comment_id] in table 'Comments'
-ALTER TABLE [dbo].[Comments]
-ADD CONSTRAINT [PK_Comments]
-    PRIMARY KEY CLUSTERED ([comment_id] ASC);
 GO
 
 -- Creating primary key on [AspNetUsers_Id], [AspNetUsers1_Id] in table 'Friendship'

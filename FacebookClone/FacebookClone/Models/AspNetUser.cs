@@ -19,15 +19,14 @@ namespace FacebookClone.Models
         {
             this.AspNetUserClaims = new HashSet<AspNetUserClaim>();
             this.AspNetUserLogins = new HashSet<AspNetUserLogin>();
+            this.Comments = new HashSet<Comment>();
             this.Messages = new HashSet<Message>();
             this.Messages1 = new HashSet<Message>();
             this.Posts = new HashSet<Post>();
+            this.AspNetRoles = new HashSet<AspNetRole>();
             this.AspNetUsers1 = new HashSet<AspNetUser>();
             this.AspNetUsers = new HashSet<AspNetUser>();
             this.Groups = new HashSet<Group>();
-            this.AspNetRoles = new HashSet<AspNetRole>();
-            this.Comments = new HashSet<Comment>();
-            this.AspNetRoles1 = new HashSet<AspNetRole>();
         }
     
         public string Id { get; set; }
