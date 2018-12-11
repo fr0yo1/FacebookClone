@@ -9,7 +9,7 @@
 <div class="container">
         <div class="col-sm-1">
             <div class="thumbnail">
-                <img class="img-responsive user-photo" src="@Html.Action("getProfilePictureFor", "NewsFeed", new {user = Model.AspNetUser})">
+                <img class="img-responsive user-photo" src="@Model.AspNetUser.Profile.Albums.Where(x => x.name.Equals("ProfileAlbum")).FirstOrDefault().Pictures.OrderByDescending(x => x.date).FirstOrDefault().path">
             </div>
         </div>
         <div class="col-sm-5">

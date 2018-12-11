@@ -17,12 +17,12 @@
                                 <div class="media">
                                     <div class="media-left">
                                         <a href="#">
-                                            <img class="media-object photo-profile" src="@Html.Action("getProfilePictureFor", "NewsFeed", new {user=Model.post.AspNetUser})"; width="40" height="40" alt="...">
+                                            <img class="media-object photo-profile" src="@Model.profilePath"; width="40" height="40" alt="...">
                                         </a>
                                     </div>
                                     <div class="media-body">
-                                        <a href="#" class="anchor-username"><h4 class="media-heading">@Model.post.AspNetUser.Profile.firstname  @Model.post.AspNetUser.Profile.lastname</h4></a>
-                                        <a href="#" class="anchor-time">@Model.post.date</a>
+                                        <a href="#" class="anchor-username"><h4 class="media-heading">@Model.userName</h4></a>
+                                        <a href="#" class="anchor-time">@Model.date</a>
                                     </div>
                                 </div>
                             </div>
@@ -33,7 +33,7 @@
                     </section>
                     <section class="post-body">
                         <p>
-                           @Model.post.content
+                           @Model.content
                         </p>
                     </section>
                     <section class="post-footer">
@@ -42,9 +42,9 @@
 
                             @using (Html.BeginForm("AddComment", "NewsFeed", FormMethod.Post, new { enctype = "multipart/form-data" }))
                             {
-                                <div hidden="hidden">
-                                    @Html.EditorFor(model => model.post)
-                                </div>
+                            <div hidden="hidden">
+                                @Html.EditorFor(model => model.id)
+                            </div>
                                 @Html.TextBoxFor(m => m.inputComment)
                                 <i class="glyphicon glyphicon-comment"> </i> <input type="submit" value="Comment" />
                             }
@@ -54,7 +54,7 @@
 
                             </div>
                             <div class="comment">
-                                @foreach (var comment in @Model.post.Comments)
+                                @foreach (var comment in @Model.comments)
                                 {
                                     @Html.Partial("CommentPartialView", comment)
                                 }
