@@ -52,7 +52,7 @@ namespace FacebookClone.Controllers
         [Authorize]
         public string getProfilePictureFor(AspNetUser user)
         {
-             return user.Profile.Albums.Where(x => x.name.Equals("ProfileAlbum")).FirstOrDefault().Pictures.FirstOrDefault().path;
+            return user.Profile.Albums.Where(x => x.name.Equals("ProfileAlbum")).FirstOrDefault().Pictures.OrderByDescending(x => x.date).FirstOrDefault().path;
         }
     }
 }
