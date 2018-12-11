@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Linq;
 
 namespace FacebookClone.Controllers
 {
@@ -20,10 +21,14 @@ namespace FacebookClone.Controllers
             var groups = aspNetUser.Groups;
             List<Post> posts = new List<Post>();
 
+            //TO-DO Create a method
             // add all posts from user groups
             foreach (var group in groups) {
                 posts.AddRange(group.Posts);
             }
+            //add own posts
+            posts.AddRange(aspNetUser.Posts);
+            //TO-DO add post from friends and sort them all by date
 
             List<PostViewModel> postViewModel = new List<PostViewModel>();
 
@@ -38,23 +43,16 @@ namespace FacebookClone.Controllers
         [Authorize]
         public ActionResult AddComment(PostViewModel postViewModel)
         {
+            var userId = User.Identity.GetUserId();
+            var user = databaseEntities.AspNetUsers.Find(userId);
+            postViewModel.addCommentFrom(user, databaseEntities);
             return RedirectToAction("Index");
         }
 
-        public string getUserProfilePicture(ICollection<Album> albums)
+        [Authorize]
+        public string getProfilePictureFor(AspNetUser user)
         {
-             foreach (var album in albums)
-             {
-                    if (album.name.Equals("ProfileAlbum"))
-                    {
-                        var profilePictures = album.Pictures;
-                        var enumerator = profilePictures.GetEnumerator();
-                        enumerator.MoveNext();
-                        var profilePicture = enumerator.Current;
-                        return profilePicture.path;
-                    }
-             }
-            return "error";
+             return user.Profile.Albums.Where(x => x.name.Equals("ProfileAlbum")).FirstOrDefault().Pictures.FirstOrDefault().path;
         }
     }
 }

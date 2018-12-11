@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 12/10/2018 00:59:29
+-- Date Created: 12/11/2018 02:02:47
 -- Generated from EDMX file: C:\Users\Adrian-Sandru\FacebookClone\FacebookClone\FacebookClone\Models\Model.edmx
 -- --------------------------------------------------
 
@@ -20,14 +20,17 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_Albums_ToUsers]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Albums] DROP CONSTRAINT [FK_Albums_ToUsers];
 GO
-IF OBJECT_ID(N'[FacebookDatabaseModelStoreContainer].[FK_AspNetUserRoles_AsonetRoles]', 'F') IS NOT NULL
-    ALTER TABLE [FacebookDatabaseModelStoreContainer].[AspNetUserRoles] DROP CONSTRAINT [FK_AspNetUserRoles_AsonetRoles];
+IF OBJECT_ID(N'[dbo].[FK_AspNetUserRoles_AspNetRole]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AspNetUserRoles] DROP CONSTRAINT [FK_AspNetUserRoles_AspNetRole];
 GO
-IF OBJECT_ID(N'[FacebookDatabaseModelStoreContainer].[FK_AspNetUserRoles_AspNetUsers]', 'F') IS NOT NULL
-    ALTER TABLE [FacebookDatabaseModelStoreContainer].[AspNetUserRoles] DROP CONSTRAINT [FK_AspNetUserRoles_AspNetUsers];
+IF OBJECT_ID(N'[dbo].[FK_AspNetUserRoles_AspNetUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AspNetUserRoles] DROP CONSTRAINT [FK_AspNetUserRoles_AspNetUser];
 GO
-IF OBJECT_ID(N'[dbo].[FK_Comment_ToPicture]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Comments] DROP CONSTRAINT [FK_Comment_ToPicture];
+IF OBJECT_ID(N'[dbo].[FK_Comment_ToPost]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Comments] DROP CONSTRAINT [FK_Comment_ToPost];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Comments_ToUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Comments] DROP CONSTRAINT [FK_Comments_ToUser];
 GO
 IF OBJECT_ID(N'[dbo].[FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[AspNetUserClaims] DROP CONSTRAINT [FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId];
@@ -85,6 +88,9 @@ GO
 IF OBJECT_ID(N'[dbo].[AspNetUserLogins]', 'U') IS NOT NULL
     DROP TABLE [dbo].[AspNetUserLogins];
 GO
+IF OBJECT_ID(N'[dbo].[AspNetUserRoles]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[AspNetUserRoles];
+GO
 IF OBJECT_ID(N'[dbo].[AspNetUsers]', 'U') IS NOT NULL
     DROP TABLE [dbo].[AspNetUsers];
 GO
@@ -115,9 +121,6 @@ GO
 IF OBJECT_ID(N'[dbo].[Profiles]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Profiles];
 GO
-IF OBJECT_ID(N'[FacebookDatabaseModelStoreContainer].[AspNetUserRoles]', 'U') IS NOT NULL
-    DROP TABLE [FacebookDatabaseModelStoreContainer].[AspNetUserRoles];
-GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -125,7 +128,7 @@ GO
 
 -- Creating table 'Albums'
 CREATE TABLE [dbo].[Albums] (
-    [album_id] int  NOT NULL,
+    [album_id] int IDENTITY(1,1) NOT NULL,
     [user_id] nvarchar(128)  NOT NULL,
     [name] varchar(50)  NOT NULL,
     [date] datetime  NOT NULL
@@ -184,10 +187,11 @@ GO
 
 -- Creating table 'Comments'
 CREATE TABLE [dbo].[Comments] (
-    [comment_id] int  NOT NULL,
-    [picture_id] int  NOT NULL,
+    [comment_id] int IDENTITY(1,1) NOT NULL,
+    [post_id] int  NOT NULL,
     [date] datetime  NOT NULL,
-    [content] varchar(50)  NOT NULL
+    [content] varchar(50)  NOT NULL,
+    [user_id] nvarchar(128)  NOT NULL
 );
 GO
 
@@ -200,7 +204,7 @@ GO
 
 -- Creating table 'Messages'
 CREATE TABLE [dbo].[Messages] (
-    [message_id] int  NOT NULL,
+    [message_id] int IDENTITY(1,1) NOT NULL,
     [sender_id] nvarchar(128)  NOT NULL,
     [receiver_id] nvarchar(128)  NOT NULL,
     [date] datetime  NOT NULL,
@@ -210,7 +214,7 @@ GO
 
 -- Creating table 'Pictures'
 CREATE TABLE [dbo].[Pictures] (
-    [picture_id] int  NOT NULL,
+    [picture_id] int IDENTITY(1,1) NOT NULL,
     [album_id] int  NOT NULL,
     [path] varchar(50)  NOT NULL,
     [date] datetime  NOT NULL,
@@ -220,7 +224,7 @@ GO
 
 -- Creating table 'Posts'
 CREATE TABLE [dbo].[Posts] (
-    [post_id] int  NOT NULL,
+    [post_id] int IDENTITY(1,1) NOT NULL,
     [sender_id] nvarchar(128)  NOT NULL,
     [group_id] int  NULL,
     [picture_id] int  NULL,
@@ -239,13 +243,6 @@ CREATE TABLE [dbo].[Profiles] (
 );
 GO
 
--- Creating table 'AspNetUserRoles'
-CREATE TABLE [dbo].[AspNetUserRoles] (
-    [RoleId] nvarchar(128)  NOT NULL,
-    [UserId] nvarchar(128)  NOT NULL
-);
-GO
-
 -- Creating table 'Friendship'
 CREATE TABLE [dbo].[Friendship] (
     [AspNetUsers_Id] nvarchar(128)  NOT NULL,
@@ -257,6 +254,13 @@ GO
 CREATE TABLE [dbo].[GroupUser] (
     [AspNetUsers_Id] nvarchar(128)  NOT NULL,
     [Groups_group_id] int  NOT NULL
+);
+GO
+
+-- Creating table 'AspNetUserRoles'
+CREATE TABLE [dbo].[AspNetUserRoles] (
+    [RoleId] nvarchar(128)  NOT NULL,
+    [UserId] nvarchar(128)  NOT NULL
 );
 GO
 
@@ -336,12 +340,6 @@ ADD CONSTRAINT [PK_Profiles]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [AspNetRoles_Id], [AspNetUsers_Id] in table 'AspNetUserRoles'
-ALTER TABLE [dbo].[AspNetUserRoles]
-ADD CONSTRAINT [PK_AspNetUserRoles]
-    PRIMARY KEY CLUSTERED ([RoleId], [UserId] ASC);
-GO
-
 -- Creating primary key on [AspNetUsers_Id], [AspNetUsers1_Id] in table 'Friendship'
 ALTER TABLE [dbo].[Friendship]
 ADD CONSTRAINT [PK_Friendship]
@@ -352,6 +350,12 @@ GO
 ALTER TABLE [dbo].[GroupUser]
 ADD CONSTRAINT [PK_GroupUser]
     PRIMARY KEY CLUSTERED ([AspNetUsers_Id], [Groups_group_id] ASC);
+GO
+
+-- Creating primary key on [AspNetRoles_Id], [AspNetUsers_Id] in table 'AspNetUserRoles'
+ALTER TABLE [dbo].[AspNetUserRoles]
+ADD CONSTRAINT [PK_AspNetUserRoles]
+    PRIMARY KEY CLUSTERED ([RoleId], [UserId] ASC);
 GO
 
 -- --------------------------------------------------
@@ -472,21 +476,6 @@ ADD CONSTRAINT [FK_Profile_ToAspNetUsers]
     ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
--- Creating foreign key on [picture_id] in table 'Comments'
-ALTER TABLE [dbo].[Comments]
-ADD CONSTRAINT [FK_Comment_ToPicture]
-    FOREIGN KEY ([picture_id])
-    REFERENCES [dbo].[Pictures]
-        ([picture_id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_Comment_ToPicture'
-CREATE INDEX [IX_FK_Comment_ToPicture]
-ON [dbo].[Comments]
-    ([picture_id]);
-GO
-
 -- Creating foreign key on [group_id] in table 'Posts'
 ALTER TABLE [dbo].[Posts]
 ADD CONSTRAINT [FK_Post_ToGroup]
@@ -568,7 +557,7 @@ GO
 -- Creating foreign key on [AspNetRoles_Id] in table 'AspNetUserRoles'
 ALTER TABLE [dbo].[AspNetUserRoles]
 ADD CONSTRAINT [FK_AspNetUserRoles_AspNetRole]
-    FOREIGN KEY ([AspNetRoles_Id])
+    FOREIGN KEY ([RoleId])
     REFERENCES [dbo].[AspNetRoles]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -577,7 +566,7 @@ GO
 -- Creating foreign key on [AspNetUsers_Id] in table 'AspNetUserRoles'
 ALTER TABLE [dbo].[AspNetUserRoles]
 ADD CONSTRAINT [FK_AspNetUserRoles_AspNetUser]
-    FOREIGN KEY ([AspNetUsers_Id])
+    FOREIGN KEY ([UserId])
     REFERENCES [dbo].[AspNetUsers]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -586,9 +575,38 @@ GO
 -- Creating non-clustered index for FOREIGN KEY 'FK_AspNetUserRoles_AspNetUser'
 CREATE INDEX [IX_FK_AspNetUserRoles_AspNetUser]
 ON [dbo].[AspNetUserRoles]
-    ([AspNetUsers_Id]);
+    ([UserId]);
 GO
 
+-- Creating foreign key on [post_id] in table 'Comments'
+ALTER TABLE [dbo].[Comments]
+ADD CONSTRAINT [FK_Comment_ToPost]
+    FOREIGN KEY ([post_id])
+    REFERENCES [dbo].[Posts]
+        ([post_id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_Comment_ToPost'
+CREATE INDEX [IX_FK_Comment_ToPost]
+ON [dbo].[Comments]
+    ([post_id]);
+GO
+
+-- Creating foreign key on [user_id] in table 'Comments'
+ALTER TABLE [dbo].[Comments]
+ADD CONSTRAINT [FK_Comments_ToUser]
+    FOREIGN KEY ([user_id])
+    REFERENCES [dbo].[AspNetUsers]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_Comments_ToUser'
+CREATE INDEX [IX_FK_Comments_ToUser]
+ON [dbo].[Comments]
+    ([user_id]);
+GO
 -- --------------------------------------------------
 -- Script has ended
 -- --------------------------------------------------

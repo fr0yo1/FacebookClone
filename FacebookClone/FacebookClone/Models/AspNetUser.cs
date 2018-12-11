@@ -19,13 +19,14 @@ namespace FacebookClone.Models
         {
             this.AspNetUserClaims = new HashSet<AspNetUserClaim>();
             this.AspNetUserLogins = new HashSet<AspNetUserLogin>();
+            this.Comments = new HashSet<Comment>();
             this.Messages = new HashSet<Message>();
             this.Messages1 = new HashSet<Message>();
             this.Posts = new HashSet<Post>();
+            this.AspNetRoles = new HashSet<AspNetRole>();
             this.AspNetUsers1 = new HashSet<AspNetUser>();
             this.AspNetUsers = new HashSet<AspNetUser>();
             this.Groups = new HashSet<Group>();
-            this.AspNetRoles = new HashSet<AspNetRole>();
         }
     
         public string Id { get; set; }
@@ -60,5 +61,9 @@ namespace FacebookClone.Models
         public virtual ICollection<Group> Groups { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comment> Comments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AspNetRole> AspNetRoles1 { get; set; }
     }
 }

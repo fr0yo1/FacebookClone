@@ -4,453 +4,463 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="FacebookDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Albums">
-          <Key>
-            <PropertyRef Name="album_id" />
-          </Key>
-          <Property Name="album_id" Type="int" Nullable="false" />
-          <Property Name="user_id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="date" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="AspNetRoles">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
-        </EntityType>
-        <EntityType Name="AspNetUserClaims">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="ClaimType" Type="nvarchar(max)" />
-          <Property Name="ClaimValue" Type="nvarchar(max)" />
-        </EntityType>
-        <EntityType Name="AspNetUserLogins">
-          <Key>
-            <PropertyRef Name="LoginProvider" />
-            <PropertyRef Name="ProviderKey" />
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'C:\USERS\ADRIAN-SANDRU\FACEBOOKCLONE\FACEBOOKCLONE\FACEBOOKCLONE\APP_DATA\FACEBOOKDATABASE.MDF.dbo.AspNetUserRoles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="AspNetUserRoles">
-          <Key>
-            <PropertyRef Name="RoleId" />
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-        </EntityType>
-        <EntityType Name="AspNetUsers">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="256" />
-          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
-          <Property Name="PasswordHash" Type="nvarchar(max)" />
-          <Property Name="SecurityStamp" Type="nvarchar(max)" />
-          <Property Name="PhoneNumber" Type="nvarchar(max)" />
-          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
-          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
-          <Property Name="LockoutEndDateUtc" Type="datetime" />
-          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
-          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
-          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
-        </EntityType>
-        <EntityType Name="C__MigrationHistory">
-          <Key>
-            <PropertyRef Name="MigrationId" />
-            <PropertyRef Name="ContextKey" />
-          </Key>
-          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
-          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
-          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Comments">
-          <Key>
-            <PropertyRef Name="comment_id" />
-          </Key>
-          <Property Name="comment_id" Type="int" Nullable="false" />
-          <Property Name="picture_id" Type="int" Nullable="false" />
-          <Property Name="date" Type="datetime" Nullable="false" />
-          <Property Name="content" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Friendship">
-          <Key>
-            <PropertyRef Name="AspNetUsers_Id" />
-            <PropertyRef Name="AspNetUsers1_Id" />
-          </Key>
-          <Property Name="AspNetUsers_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="AspNetUsers1_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Groups">
-          <Key>
-            <PropertyRef Name="group_id" />
-          </Key>
-          <Property Name="group_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="GroupUser">
-          <Key>
-            <PropertyRef Name="AspNetUsers_Id" />
-            <PropertyRef Name="Groups_group_id" />
-          </Key>
-          <Property Name="AspNetUsers_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Groups_group_id" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Messages">
-          <Key>
-            <PropertyRef Name="message_id" />
-          </Key>
-          <Property Name="message_id" Type="int" Nullable="false" />
-          <Property Name="sender_id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="receiver_id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="date" Type="datetime" Nullable="false" />
-          <Property Name="content" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Pictures">
-          <Key>
-            <PropertyRef Name="picture_id" />
-          </Key>
-          <Property Name="picture_id" Type="int" Nullable="false" />
-          <Property Name="album_id" Type="int" Nullable="false" />
-          <Property Name="path" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="date" Type="datetime" Nullable="false" />
-          <Property Name="description" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Posts">
-          <Key>
-            <PropertyRef Name="post_id" />
-          </Key>
-          <Property Name="post_id" Type="int" Nullable="false" />
-          <Property Name="sender_id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="group_id" Type="int" />
-          <Property Name="picture_id" Type="int" />
-          <Property Name="date" Type="datetime" Nullable="false" />
-          <Property Name="content" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Profiles">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="firstname" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="lastname" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="age" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="gender" Type="nvarchar(max)" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_Albums_ToUsers">
-          <End Role="Profiles" Type="Self.Profiles" Multiplicity="1" />
-          <End Role="Albums" Type="Self.Albums" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Profiles">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Albums">
-              <PropertyRef Name="user_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AspNetUserRoles_AsonetRoles">
-          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1" />
-          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetRoles">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserRoles">
-              <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AspNetUserRoles_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserRoles">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Comment_ToPicture">
-          <End Role="Pictures" Type="Self.Pictures" Multiplicity="1" />
-          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Pictures">
-              <PropertyRef Name="picture_id" />
-            </Principal>
-            <Dependent Role="Comments">
-              <PropertyRef Name="picture_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserClaims">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserLogins">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Friendship_AspNetUser">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="Friendship" Type="Self.Friendship" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Friendship">
-              <PropertyRef Name="AspNetUsers_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Friendship_AspNetUser1">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="Friendship" Type="Self.Friendship" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Friendship">
-              <PropertyRef Name="AspNetUsers1_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_GroupUser_AspNetUser">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="GroupUser" Type="Self.GroupUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="GroupUser">
-              <PropertyRef Name="AspNetUsers_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_GroupUser_Group">
-          <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
-          <End Role="GroupUser" Type="Self.GroupUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Groups">
-              <PropertyRef Name="group_id" />
-            </Principal>
-            <Dependent Role="GroupUser">
-              <PropertyRef Name="Groups_group_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Message_ToRUser">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Messages">
-              <PropertyRef Name="receiver_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Message_ToUser">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Messages">
-              <PropertyRef Name="sender_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Picture_ToAlbum">
-          <End Role="Albums" Type="Self.Albums" Multiplicity="1" />
-          <End Role="Pictures" Type="Self.Pictures" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Albums">
-              <PropertyRef Name="album_id" />
-            </Principal>
-            <Dependent Role="Pictures">
-              <PropertyRef Name="album_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Post_ToGroup">
-          <End Role="Groups" Type="Self.Groups" Multiplicity="0..1" />
-          <End Role="Posts" Type="Self.Posts" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Groups">
-              <PropertyRef Name="group_id" />
-            </Principal>
-            <Dependent Role="Posts">
-              <PropertyRef Name="group_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Post_ToUser">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="Posts" Type="Self.Posts" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Posts">
-              <PropertyRef Name="sender_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Posts_ToPicture">
-          <End Role="Pictures" Type="Self.Pictures" Multiplicity="0..1" />
-          <End Role="Posts" Type="Self.Posts" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Pictures">
-              <PropertyRef Name="picture_id" />
-            </Principal>
-            <Dependent Role="Posts">
-              <PropertyRef Name="picture_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Profile_ToAspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Profiles" Type="Self.Profiles" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Profiles">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="FacebookDatabaseModelStoreContainer">
-          <EntitySet Name="Albums" EntityType="Self.Albums" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Friendship" EntityType="Self.Friendship" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="GroupUser" EntityType="Self.GroupUser" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Pictures" EntityType="Self.Pictures" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Posts" EntityType="Self.Posts" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Profiles" EntityType="Self.Profiles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [AspNetUserRoles].[RoleId] AS [RoleId], 
-    [AspNetUserRoles].[UserId] AS [UserId]
-    FROM [dbo].[AspNetUserRoles] AS [AspNetUserRoles]</DefiningQuery>
-          </EntitySet>
-          <AssociationSet Name="FK_Albums_ToUsers" Association="Self.FK_Albums_ToUsers">
-            <End Role="Profiles" EntitySet="Profiles" />
-            <End Role="Albums" EntitySet="Albums" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AspNetUserRoles_AsonetRoles" Association="Self.FK_AspNetUserRoles_AsonetRoles">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AspNetUserRoles_AspNetUsers" Association="Self.FK_AspNetUserRoles_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Comment_ToPicture" Association="Self.FK_Comment_ToPicture">
-            <End Role="Pictures" EntitySet="Pictures" />
-            <End Role="Comments" EntitySet="Comments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Friendship_AspNetUser" Association="Self.FK_Friendship_AspNetUser">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Friendship" EntitySet="Friendship" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Friendship_AspNetUser1" Association="Self.FK_Friendship_AspNetUser1">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Friendship" EntitySet="Friendship" />
-          </AssociationSet>
-          <AssociationSet Name="FK_GroupUser_AspNetUser" Association="Self.FK_GroupUser_AspNetUser">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="GroupUser" EntitySet="GroupUser" />
-          </AssociationSet>
-          <AssociationSet Name="FK_GroupUser_Group" Association="Self.FK_GroupUser_Group">
-            <End Role="Groups" EntitySet="Groups" />
-            <End Role="GroupUser" EntitySet="GroupUser" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Message_ToRUser" Association="Self.FK_Message_ToRUser">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Messages" EntitySet="Messages" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Message_ToUser" Association="Self.FK_Message_ToUser">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Messages" EntitySet="Messages" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Picture_ToAlbum" Association="Self.FK_Picture_ToAlbum">
-            <End Role="Albums" EntitySet="Albums" />
-            <End Role="Pictures" EntitySet="Pictures" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Post_ToGroup" Association="Self.FK_Post_ToGroup">
-            <End Role="Groups" EntitySet="Groups" />
-            <End Role="Posts" EntitySet="Posts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Post_ToUser" Association="Self.FK_Post_ToUser">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Posts" EntitySet="Posts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Posts_ToPicture" Association="Self.FK_Posts_ToPicture">
-            <End Role="Pictures" EntitySet="Pictures" />
-            <End Role="Posts" EntitySet="Posts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Profile_ToAspNetUsers" Association="Self.FK_Profile_ToAspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Profiles" EntitySet="Profiles" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema></edmx:StorageModels>
+    <Schema Namespace="FacebookDatabaseModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="FacebookDatabaseModelStoreContainer">
+    <EntitySet Name="Albums" EntityType="FacebookDatabaseModel.Store.Albums" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AspNetRoles" EntityType="FacebookDatabaseModel.Store.AspNetRoles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AspNetUserClaims" EntityType="FacebookDatabaseModel.Store.AspNetUserClaims" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AspNetUserLogins" EntityType="FacebookDatabaseModel.Store.AspNetUserLogins" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AspNetUsers" EntityType="FacebookDatabaseModel.Store.AspNetUsers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="C__MigrationHistory" EntityType="FacebookDatabaseModel.Store.C__MigrationHistory" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Comments" EntityType="FacebookDatabaseModel.Store.Comments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Groups" EntityType="FacebookDatabaseModel.Store.Groups" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Messages" EntityType="FacebookDatabaseModel.Store.Messages" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Pictures" EntityType="FacebookDatabaseModel.Store.Pictures" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Posts" EntityType="FacebookDatabaseModel.Store.Posts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Profiles" EntityType="FacebookDatabaseModel.Store.Profiles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AspNetUserRoles" EntityType="FacebookDatabaseModel.Store.AspNetUserRoles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Friendship" EntityType="FacebookDatabaseModel.Store.Friendship" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GroupUser" EntityType="FacebookDatabaseModel.Store.GroupUser" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Albums_ToUsers" Association="FacebookDatabaseModel.Store.FK_Albums_ToUsers">
+      <End Role="Profile" EntitySet="Profiles" />
+      <End Role="Album" EntitySet="Albums" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Picture_ToAlbum" Association="FacebookDatabaseModel.Store.FK_Picture_ToAlbum">
+      <End Role="Album" EntitySet="Albums" />
+      <End Role="Picture" EntitySet="Pictures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="FacebookDatabaseModel.Store.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="FacebookDatabaseModel.Store.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Comments_ToUser" Association="FacebookDatabaseModel.Store.FK_Comments_ToUser">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="Comment" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Message_ToRUser" Association="FacebookDatabaseModel.Store.FK_Message_ToRUser">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Message_ToUser" Association="FacebookDatabaseModel.Store.FK_Message_ToUser">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Post_ToUser" Association="FacebookDatabaseModel.Store.FK_Post_ToUser">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="Post" EntitySet="Posts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Profile_ToAspNetUsers" Association="FacebookDatabaseModel.Store.FK_Profile_ToAspNetUsers">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="Profile" EntitySet="Profiles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Comment_ToPost" Association="FacebookDatabaseModel.Store.FK_Comment_ToPost">
+      <End Role="Post" EntitySet="Posts" />
+      <End Role="Comment" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Post_ToGroup" Association="FacebookDatabaseModel.Store.FK_Post_ToGroup">
+      <End Role="Group" EntitySet="Groups" />
+      <End Role="Post" EntitySet="Posts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Posts_ToPicture" Association="FacebookDatabaseModel.Store.FK_Posts_ToPicture">
+      <End Role="Picture" EntitySet="Pictures" />
+      <End Role="Post" EntitySet="Posts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AspNetUserRoles_AspNetRole" Association="FacebookDatabaseModel.Store.FK_AspNetUserRoles_AspNetRole">
+      <End Role="AspNetRole" EntitySet="AspNetRoles" />
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AspNetUserRoles_AspNetUser" Association="FacebookDatabaseModel.Store.FK_AspNetUserRoles_AspNetUser">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Friendship_AspNetUser" Association="FacebookDatabaseModel.Store.FK_Friendship_AspNetUser">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="Friendship" EntitySet="Friendship" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Friendship_AspNetUser1" Association="FacebookDatabaseModel.Store.FK_Friendship_AspNetUser1">
+      <End Role="AspNetUser1" EntitySet="AspNetUsers" />
+      <End Role="Friendship" EntitySet="Friendship" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GroupUser_AspNetUser" Association="FacebookDatabaseModel.Store.FK_GroupUser_AspNetUser">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="GroupUser" EntitySet="GroupUser" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GroupUser_Group" Association="FacebookDatabaseModel.Store.FK_GroupUser_Group">
+      <End Role="Group" EntitySet="Groups" />
+      <End Role="GroupUser" EntitySet="GroupUser" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Albums">
+    <Key>
+      <PropertyRef Name="album_id" />
+    </Key>
+    <Property Name="album_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="user_id" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="date" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetRoles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaims">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="ClaimType" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="ClaimValue" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogins">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="ProviderKey" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="128" />
+  </EntityType>
+  <EntityType Name="AspNetUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="Email" Type="nvarchar" Nullable="true" MaxLength="256" />
+    <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="SecurityStamp" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="PhoneNumber" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="datetime" Nullable="true" />
+    <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="nvarchar" Nullable="false" MaxLength="150" />
+    <Property Name="ContextKey" Type="nvarchar" Nullable="false" MaxLength="300" />
+    <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+    <Property Name="ProductVersion" Type="nvarchar" Nullable="false" MaxLength="32" />
+  </EntityType>
+  <EntityType Name="Comments">
+    <Key>
+      <PropertyRef Name="comment_id" />
+    </Key>
+    <Property Name="comment_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="post_id" Type="int" Nullable="false" />
+    <Property Name="date" Type="datetime" Nullable="false" />
+    <Property Name="content" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="user_id" Type="nvarchar" Nullable="false" MaxLength="128" />
+  </EntityType>
+  <EntityType Name="Groups">
+    <Key>
+      <PropertyRef Name="group_id" />
+    </Key>
+    <Property Name="group_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Messages">
+    <Key>
+      <PropertyRef Name="message_id" />
+    </Key>
+    <Property Name="message_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="sender_id" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="receiver_id" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="date" Type="datetime" Nullable="false" />
+    <Property Name="content" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Pictures">
+    <Key>
+      <PropertyRef Name="picture_id" />
+    </Key>
+    <Property Name="picture_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="album_id" Type="int" Nullable="false" />
+    <Property Name="path" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="date" Type="datetime" Nullable="false" />
+    <Property Name="description" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Posts">
+    <Key>
+      <PropertyRef Name="post_id" />
+    </Key>
+    <Property Name="post_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="sender_id" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="group_id" Type="int" Nullable="true" />
+    <Property Name="picture_id" Type="int" Nullable="true" />
+    <Property Name="date" Type="datetime" Nullable="false" />
+    <Property Name="content" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Profiles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="firstname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="lastname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="age" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="gender" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUserRoles">
+    <Key>
+      <PropertyRef Name="AspNetRoles_Id" />
+      <PropertyRef Name="AspNetUsers_Id" />
+    </Key>
+    <Property Name="AspNetRoles_Id" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="AspNetUsers_Id" Type="nvarchar" Nullable="false" MaxLength="128" />
+  </EntityType>
+  <EntityType Name="Friendship">
+    <Key>
+      <PropertyRef Name="AspNetUsers_Id" />
+      <PropertyRef Name="AspNetUsers1_Id" />
+    </Key>
+    <Property Name="AspNetUsers_Id" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="AspNetUsers1_Id" Type="nvarchar" Nullable="false" MaxLength="128" />
+  </EntityType>
+  <EntityType Name="GroupUser">
+    <Key>
+      <PropertyRef Name="AspNetUsers_Id" />
+      <PropertyRef Name="Groups_group_id" />
+    </Key>
+    <Property Name="AspNetUsers_Id" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="Groups_group_id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Albums_ToUsers">
+    <End Role="Profile" Type="FacebookDatabaseModel.Store.Profiles" Multiplicity="1" />
+    <End Role="Album" Type="FacebookDatabaseModel.Store.Albums" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Profile">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Album">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Picture_ToAlbum">
+    <End Role="Album" Type="FacebookDatabaseModel.Store.Albums" Multiplicity="1" />
+    <End Role="Picture" Type="FacebookDatabaseModel.Store.Pictures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Album">
+        <PropertyRef Name="album_id" />
+      </Principal>
+      <Dependent Role="Picture">
+        <PropertyRef Name="album_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUser" Type="FacebookDatabaseModel.Store.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserClaim" Type="FacebookDatabaseModel.Store.AspNetUserClaims" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaim">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUser" Type="FacebookDatabaseModel.Store.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserLogin" Type="FacebookDatabaseModel.Store.AspNetUserLogins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogin">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Comments_ToUser">
+    <End Role="AspNetUser" Type="FacebookDatabaseModel.Store.AspNetUsers" Multiplicity="1" />
+    <End Role="Comment" Type="FacebookDatabaseModel.Store.Comments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Message_ToRUser">
+    <End Role="AspNetUser" Type="FacebookDatabaseModel.Store.AspNetUsers" Multiplicity="1" />
+    <End Role="Message" Type="FacebookDatabaseModel.Store.Messages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="receiver_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Message_ToUser">
+    <End Role="AspNetUser" Type="FacebookDatabaseModel.Store.AspNetUsers" Multiplicity="1" />
+    <End Role="Message" Type="FacebookDatabaseModel.Store.Messages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="sender_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Post_ToUser">
+    <End Role="AspNetUser" Type="FacebookDatabaseModel.Store.AspNetUsers" Multiplicity="1" />
+    <End Role="Post" Type="FacebookDatabaseModel.Store.Posts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Post">
+        <PropertyRef Name="sender_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Profile_ToAspNetUsers">
+    <End Role="AspNetUser" Type="FacebookDatabaseModel.Store.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Profile" Type="FacebookDatabaseModel.Store.Profiles" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Profile">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Comment_ToPost">
+    <End Role="Post" Type="FacebookDatabaseModel.Store.Posts" Multiplicity="1" />
+    <End Role="Comment" Type="FacebookDatabaseModel.Store.Comments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Post">
+        <PropertyRef Name="post_id" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="post_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Post_ToGroup">
+    <End Role="Group" Type="FacebookDatabaseModel.Store.Groups" Multiplicity="0..1" />
+    <End Role="Post" Type="FacebookDatabaseModel.Store.Posts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="group_id" />
+      </Principal>
+      <Dependent Role="Post">
+        <PropertyRef Name="group_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Posts_ToPicture">
+    <End Role="Picture" Type="FacebookDatabaseModel.Store.Pictures" Multiplicity="0..1" />
+    <End Role="Post" Type="FacebookDatabaseModel.Store.Posts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Picture">
+        <PropertyRef Name="picture_id" />
+      </Principal>
+      <Dependent Role="Post">
+        <PropertyRef Name="picture_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AspNetUserRoles_AspNetRole">
+    <End Role="AspNetRole" Type="FacebookDatabaseModel.Store.AspNetRoles" Multiplicity="1" />
+    <End Role="AspNetUserRoles" Type="FacebookDatabaseModel.Store.AspNetUserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetRole">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles">
+        <PropertyRef Name="AspNetRoles_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AspNetUserRoles_AspNetUser">
+    <End Role="AspNetUserRoles" Type="FacebookDatabaseModel.Store.AspNetUserRoles" Multiplicity="*" />
+    <End Role="AspNetUser" Type="FacebookDatabaseModel.Store.AspNetUsers" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles">
+        <PropertyRef Name="AspNetUsers_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Friendship_AspNetUser">
+    <End Role="AspNetUser" Type="FacebookDatabaseModel.Store.AspNetUsers" Multiplicity="1" />
+    <End Role="Friendship" Type="FacebookDatabaseModel.Store.Friendship" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Friendship">
+        <PropertyRef Name="AspNetUsers_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Friendship_AspNetUser1">
+    <End Role="Friendship" Type="FacebookDatabaseModel.Store.Friendship" Multiplicity="*" />
+    <End Role="AspNetUser1" Type="FacebookDatabaseModel.Store.AspNetUsers" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser1">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Friendship">
+        <PropertyRef Name="AspNetUsers1_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GroupUser_AspNetUser">
+    <End Role="AspNetUser" Type="FacebookDatabaseModel.Store.AspNetUsers" Multiplicity="1" />
+    <End Role="GroupUser" Type="FacebookDatabaseModel.Store.GroupUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="GroupUser">
+        <PropertyRef Name="AspNetUsers_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GroupUser_Group">
+    <End Role="GroupUser" Type="FacebookDatabaseModel.Store.GroupUser" Multiplicity="*" />
+    <End Role="Group" Type="FacebookDatabaseModel.Store.Groups" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="group_id" />
+      </Principal>
+      <Dependent Role="GroupUser">
+        <PropertyRef Name="Groups_group_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FacebookDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -483,6 +493,10 @@ warning 6002: The table/view 'C:\USERS\ADRIAN-SANDRU\FACEBOOKCLONE\FACEBOOKCLONE
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
           </AssociationSet>
+          <AssociationSet Name="FK_Comments_ToUser" Association="FacebookDatabaseModel.FK_Comments_ToUser">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
           <AssociationSet Name="FK_Message_ToRUser" Association="FacebookDatabaseModel.FK_Message_ToRUser">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="Message" EntitySet="Messages" />
@@ -499,8 +513,8 @@ warning 6002: The table/view 'C:\USERS\ADRIAN-SANDRU\FACEBOOKCLONE\FACEBOOKCLONE
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="Profile" EntitySet="Profiles" />
           </AssociationSet>
-          <AssociationSet Name="FK_Comment_ToPicture" Association="FacebookDatabaseModel.FK_Comment_ToPicture">
-            <End Role="Picture" EntitySet="Pictures" />
+          <AssociationSet Name="FK_Comment_ToPost" Association="FacebookDatabaseModel.FK_Comment_ToPost">
+            <End Role="Post" EntitySet="Posts" />
             <End Role="Comment" EntitySet="Comments" />
           </AssociationSet>
           <AssociationSet Name="FK_Post_ToGroup" Association="FacebookDatabaseModel.FK_Post_ToGroup">
@@ -511,6 +525,10 @@ warning 6002: The table/view 'C:\USERS\ADRIAN-SANDRU\FACEBOOKCLONE\FACEBOOKCLONE
             <End Role="Picture" EntitySet="Pictures" />
             <End Role="Post" EntitySet="Posts" />
           </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="FacebookDatabaseModel.AspNetUserRoles">
+            <End Role="AspNetRole" EntitySet="AspNetRoles" />
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
           <AssociationSet Name="Friendship" Association="FacebookDatabaseModel.Friendship">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="AspNetUser1" EntitySet="AspNetUsers" />
@@ -519,16 +537,12 @@ warning 6002: The table/view 'C:\USERS\ADRIAN-SANDRU\FACEBOOKCLONE\FACEBOOKCLONE
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="Group" EntitySet="Groups" />
           </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="FacebookDatabaseModel.AspNetUserRoles">
-            <End Role="AspNetRole" EntitySet="AspNetRoles" />
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Album">
           <Key>
             <PropertyRef Name="album_id" />
           </Key>
-          <Property Name="album_id" Type="Int32" Nullable="false" />
+          <Property Name="album_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="user_id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
@@ -582,14 +596,15 @@ warning 6002: The table/view 'C:\USERS\ADRIAN-SANDRU\FACEBOOKCLONE\FACEBOOKCLONE
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="FacebookDatabaseModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="FacebookDatabaseModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
+          <NavigationProperty Name="Comments" Relationship="FacebookDatabaseModel.FK_Comments_ToUser" FromRole="AspNetUser" ToRole="Comment" />
           <NavigationProperty Name="Messages" Relationship="FacebookDatabaseModel.FK_Message_ToRUser" FromRole="AspNetUser" ToRole="Message" />
           <NavigationProperty Name="Messages1" Relationship="FacebookDatabaseModel.FK_Message_ToUser" FromRole="AspNetUser" ToRole="Message" />
           <NavigationProperty Name="Posts" Relationship="FacebookDatabaseModel.FK_Post_ToUser" FromRole="AspNetUser" ToRole="Post" />
           <NavigationProperty Name="Profile" Relationship="FacebookDatabaseModel.FK_Profile_ToAspNetUsers" FromRole="AspNetUser" ToRole="Profile" />
+          <NavigationProperty Name="AspNetRoles" Relationship="FacebookDatabaseModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
           <NavigationProperty Name="AspNetUsers1" Relationship="FacebookDatabaseModel.Friendship" FromRole="AspNetUser" ToRole="AspNetUser1" />
           <NavigationProperty Name="AspNetUsers" Relationship="FacebookDatabaseModel.Friendship" FromRole="AspNetUser1" ToRole="AspNetUser" />
           <NavigationProperty Name="Groups" Relationship="FacebookDatabaseModel.GroupUser" FromRole="AspNetUser" ToRole="Group" />
-          <NavigationProperty Name="AspNetRoles" Relationship="FacebookDatabaseModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
         </EntityType>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -605,11 +620,13 @@ warning 6002: The table/view 'C:\USERS\ADRIAN-SANDRU\FACEBOOKCLONE\FACEBOOKCLONE
           <Key>
             <PropertyRef Name="comment_id" />
           </Key>
-          <Property Name="comment_id" Type="Int32" Nullable="false" />
-          <Property Name="picture_id" Type="Int32" Nullable="false" />
+          <Property Name="comment_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="post_id" Type="Int32" Nullable="false" />
           <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="content" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Picture" Relationship="FacebookDatabaseModel.FK_Comment_ToPicture" FromRole="Comment" ToRole="Picture" />
+          <Property Name="user_id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="FacebookDatabaseModel.FK_Comments_ToUser" FromRole="Comment" ToRole="AspNetUser" />
+          <NavigationProperty Name="Post" Relationship="FacebookDatabaseModel.FK_Comment_ToPost" FromRole="Comment" ToRole="Post" />
         </EntityType>
         <EntityType Name="Group">
           <Key>
@@ -624,7 +641,7 @@ warning 6002: The table/view 'C:\USERS\ADRIAN-SANDRU\FACEBOOKCLONE\FACEBOOKCLONE
           <Key>
             <PropertyRef Name="message_id" />
           </Key>
-          <Property Name="message_id" Type="Int32" Nullable="false" />
+          <Property Name="message_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="sender_id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="receiver_id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
@@ -636,26 +653,26 @@ warning 6002: The table/view 'C:\USERS\ADRIAN-SANDRU\FACEBOOKCLONE\FACEBOOKCLONE
           <Key>
             <PropertyRef Name="picture_id" />
           </Key>
-          <Property Name="picture_id" Type="Int32" Nullable="false" />
+          <Property Name="picture_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="album_id" Type="Int32" Nullable="false" />
           <Property Name="path" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Album" Relationship="FacebookDatabaseModel.FK_Picture_ToAlbum" FromRole="Picture" ToRole="Album" />
-          <NavigationProperty Name="Comments" Relationship="FacebookDatabaseModel.FK_Comment_ToPicture" FromRole="Picture" ToRole="Comment" />
           <NavigationProperty Name="Posts" Relationship="FacebookDatabaseModel.FK_Posts_ToPicture" FromRole="Picture" ToRole="Post" />
         </EntityType>
         <EntityType Name="Post">
           <Key>
             <PropertyRef Name="post_id" />
           </Key>
-          <Property Name="post_id" Type="Int32" Nullable="false" />
+          <Property Name="post_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="sender_id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="group_id" Type="Int32" />
           <Property Name="picture_id" Type="Int32" />
           <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="content" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AspNetUser" Relationship="FacebookDatabaseModel.FK_Post_ToUser" FromRole="Post" ToRole="AspNetUser" />
+          <NavigationProperty Name="Comments" Relationship="FacebookDatabaseModel.FK_Comment_ToPost" FromRole="Post" ToRole="Comment" />
           <NavigationProperty Name="Group" Relationship="FacebookDatabaseModel.FK_Post_ToGroup" FromRole="Post" ToRole="Group" />
           <NavigationProperty Name="Picture" Relationship="FacebookDatabaseModel.FK_Posts_ToPicture" FromRole="Post" ToRole="Picture" />
         </EntityType>
@@ -723,6 +740,18 @@ warning 6002: The table/view 'C:\USERS\ADRIAN-SANDRU\FACEBOOKCLONE\FACEBOOKCLONE
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Comments_ToUser">
+          <End Type="FacebookDatabaseModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="FacebookDatabaseModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Message_ToRUser">
           <End Type="FacebookDatabaseModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
           <End Type="FacebookDatabaseModel.Message" Role="Message" Multiplicity="*" />
@@ -773,15 +802,15 @@ warning 6002: The table/view 'C:\USERS\ADRIAN-SANDRU\FACEBOOKCLONE\FACEBOOKCLONE
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Comment_ToPicture">
-          <End Type="FacebookDatabaseModel.Picture" Role="Picture" Multiplicity="1" />
+        <Association Name="FK_Comment_ToPost">
+          <End Type="FacebookDatabaseModel.Post" Role="Post" Multiplicity="1" />
           <End Type="FacebookDatabaseModel.Comment" Role="Comment" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Picture">
-              <PropertyRef Name="picture_id" />
+            <Principal Role="Post">
+              <PropertyRef Name="post_id" />
             </Principal>
             <Dependent Role="Comment">
-              <PropertyRef Name="picture_id" />
+              <PropertyRef Name="post_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -809,6 +838,10 @@ warning 6002: The table/view 'C:\USERS\ADRIAN-SANDRU\FACEBOOKCLONE\FACEBOOKCLONE
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="AspNetUserRoles">
+          <End Type="FacebookDatabaseModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+          <End Type="FacebookDatabaseModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+        </Association>
         <Association Name="Friendship">
           <End Type="FacebookDatabaseModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
           <End Type="FacebookDatabaseModel.AspNetUser" Role="AspNetUser1" Multiplicity="*" />
@@ -817,169 +850,166 @@ warning 6002: The table/view 'C:\USERS\ADRIAN-SANDRU\FACEBOOKCLONE\FACEBOOKCLONE
           <End Type="FacebookDatabaseModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
           <End Type="FacebookDatabaseModel.Group" Role="Group" Multiplicity="*" />
         </Association>
-        <Association Name="AspNetUserRoles">
-          <End Type="FacebookDatabaseModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
-          <End Type="FacebookDatabaseModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
-        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="FacebookDatabaseModelStoreContainer" CdmEntityContainer="FacebookDatabaseEntities">
-          <EntitySetMapping Name="Albums">
-            <EntityTypeMapping TypeName="FacebookDatabaseModel.Album">
-              <MappingFragment StoreEntitySet="Albums">
-                <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="album_id" ColumnName="album_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetRoles">
-            <EntityTypeMapping TypeName="FacebookDatabaseModel.AspNetRole">
-              <MappingFragment StoreEntitySet="AspNetRoles">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetUserClaims">
-            <EntityTypeMapping TypeName="FacebookDatabaseModel.AspNetUserClaim">
-              <MappingFragment StoreEntitySet="AspNetUserClaims">
-                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
-                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetUserLogins">
-            <EntityTypeMapping TypeName="FacebookDatabaseModel.AspNetUserLogin">
-              <MappingFragment StoreEntitySet="AspNetUserLogins">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
-                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="FacebookDatabaseModel.AspNetUser">
-              <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
-                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="C__MigrationHistory">
-            <EntityTypeMapping TypeName="FacebookDatabaseModel.C__MigrationHistory">
-              <MappingFragment StoreEntitySet="C__MigrationHistory">
-                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
-                <ScalarProperty Name="Model" ColumnName="Model" />
-                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
-                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Comments">
-            <EntityTypeMapping TypeName="FacebookDatabaseModel.Comment">
-              <MappingFragment StoreEntitySet="Comments">
-                <ScalarProperty Name="content" ColumnName="content" />
-                <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="picture_id" ColumnName="picture_id" />
-                <ScalarProperty Name="comment_id" ColumnName="comment_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Groups">
-            <EntityTypeMapping TypeName="FacebookDatabaseModel.Group">
-              <MappingFragment StoreEntitySet="Groups">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="group_id" ColumnName="group_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Messages">
-            <EntityTypeMapping TypeName="FacebookDatabaseModel.Message">
-              <MappingFragment StoreEntitySet="Messages">
-                <ScalarProperty Name="content" ColumnName="content" />
-                <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="receiver_id" ColumnName="receiver_id" />
-                <ScalarProperty Name="sender_id" ColumnName="sender_id" />
-                <ScalarProperty Name="message_id" ColumnName="message_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Pictures">
-            <EntityTypeMapping TypeName="FacebookDatabaseModel.Picture">
-              <MappingFragment StoreEntitySet="Pictures">
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="path" ColumnName="path" />
-                <ScalarProperty Name="album_id" ColumnName="album_id" />
-                <ScalarProperty Name="picture_id" ColumnName="picture_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Posts">
-            <EntityTypeMapping TypeName="FacebookDatabaseModel.Post">
-              <MappingFragment StoreEntitySet="Posts">
-                <ScalarProperty Name="content" ColumnName="content" />
-                <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="picture_id" ColumnName="picture_id" />
-                <ScalarProperty Name="group_id" ColumnName="group_id" />
-                <ScalarProperty Name="sender_id" ColumnName="sender_id" />
-                <ScalarProperty Name="post_id" ColumnName="post_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Profiles">
-            <EntityTypeMapping TypeName="FacebookDatabaseModel.Profile">
-              <MappingFragment StoreEntitySet="Profiles">
-                <ScalarProperty Name="gender" ColumnName="gender" />
-                <ScalarProperty Name="age" ColumnName="age" />
-                <ScalarProperty Name="lastname" ColumnName="lastname" />
-                <ScalarProperty Name="firstname" ColumnName="firstname" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="Friendship" TypeName="FacebookDatabaseModel.Friendship" StoreEntitySet="Friendship">
-            <EndProperty Name="AspNetUser1">
-              <ScalarProperty Name="Id" ColumnName="AspNetUsers1_Id" />
-            </EndProperty>
-            <EndProperty Name="AspNetUser">
-              <ScalarProperty Name="Id" ColumnName="AspNetUsers_Id" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="GroupUser" TypeName="FacebookDatabaseModel.GroupUser" StoreEntitySet="GroupUser">
-            <EndProperty Name="Group">
-              <ScalarProperty Name="group_id" ColumnName="Groups_group_id" />
-            </EndProperty>
-            <EndProperty Name="AspNetUser">
-              <ScalarProperty Name="Id" ColumnName="AspNetUsers_Id" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="FacebookDatabaseModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-            <EndProperty Name="AspNetUser">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-            <EndProperty Name="AspNetRole">
-              <ScalarProperty Name="Id" ColumnName="RoleId" />
-            </EndProperty>
-          </AssociationSetMapping>
-        </EntityContainerMapping>
+    <EntitySetMapping Name="Albums">
+      <EntityTypeMapping TypeName="IsTypeOf(FacebookDatabaseModel.Album)">
+        <MappingFragment StoreEntitySet="Albums">
+          <ScalarProperty Name="album_id" ColumnName="album_id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="date" ColumnName="date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetRoles">
+      <EntityTypeMapping TypeName="IsTypeOf(FacebookDatabaseModel.AspNetRole)">
+        <MappingFragment StoreEntitySet="AspNetRoles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserClaims">
+      <EntityTypeMapping TypeName="IsTypeOf(FacebookDatabaseModel.AspNetUserClaim)">
+        <MappingFragment StoreEntitySet="AspNetUserClaims">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+          <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserLogins">
+      <EntityTypeMapping TypeName="IsTypeOf(FacebookDatabaseModel.AspNetUserLogin)">
+        <MappingFragment StoreEntitySet="AspNetUserLogins">
+          <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+          <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUsers">
+      <EntityTypeMapping TypeName="IsTypeOf(FacebookDatabaseModel.AspNetUser)">
+        <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+          <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+          <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="C__MigrationHistory">
+      <EntityTypeMapping TypeName="IsTypeOf(FacebookDatabaseModel.C__MigrationHistory)">
+        <MappingFragment StoreEntitySet="C__MigrationHistory">
+          <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+          <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Comments">
+      <EntityTypeMapping TypeName="IsTypeOf(FacebookDatabaseModel.Comment)">
+        <MappingFragment StoreEntitySet="Comments">
+          <ScalarProperty Name="comment_id" ColumnName="comment_id" />
+          <ScalarProperty Name="post_id" ColumnName="post_id" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="content" ColumnName="content" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Groups">
+      <EntityTypeMapping TypeName="IsTypeOf(FacebookDatabaseModel.Group)">
+        <MappingFragment StoreEntitySet="Groups">
+          <ScalarProperty Name="group_id" ColumnName="group_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Messages">
+      <EntityTypeMapping TypeName="IsTypeOf(FacebookDatabaseModel.Message)">
+        <MappingFragment StoreEntitySet="Messages">
+          <ScalarProperty Name="message_id" ColumnName="message_id" />
+          <ScalarProperty Name="sender_id" ColumnName="sender_id" />
+          <ScalarProperty Name="receiver_id" ColumnName="receiver_id" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="content" ColumnName="content" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pictures">
+      <EntityTypeMapping TypeName="IsTypeOf(FacebookDatabaseModel.Picture)">
+        <MappingFragment StoreEntitySet="Pictures">
+          <ScalarProperty Name="picture_id" ColumnName="picture_id" />
+          <ScalarProperty Name="album_id" ColumnName="album_id" />
+          <ScalarProperty Name="path" ColumnName="path" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="description" ColumnName="description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Posts">
+      <EntityTypeMapping TypeName="IsTypeOf(FacebookDatabaseModel.Post)">
+        <MappingFragment StoreEntitySet="Posts">
+          <ScalarProperty Name="post_id" ColumnName="post_id" />
+          <ScalarProperty Name="sender_id" ColumnName="sender_id" />
+          <ScalarProperty Name="group_id" ColumnName="group_id" />
+          <ScalarProperty Name="picture_id" ColumnName="picture_id" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="content" ColumnName="content" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Profiles">
+      <EntityTypeMapping TypeName="IsTypeOf(FacebookDatabaseModel.Profile)">
+        <MappingFragment StoreEntitySet="Profiles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="firstname" ColumnName="firstname" />
+          <ScalarProperty Name="lastname" ColumnName="lastname" />
+          <ScalarProperty Name="age" ColumnName="age" />
+          <ScalarProperty Name="gender" ColumnName="gender" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AspNetUserRoles" TypeName="FacebookDatabaseModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+      <EndProperty Name="AspNetRole">
+        <ScalarProperty Name="Id" ColumnName="AspNetRoles_Id" />
+      </EndProperty>
+      <EndProperty Name="AspNetUser">
+        <ScalarProperty Name="Id" ColumnName="AspNetUsers_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="Friendship" TypeName="FacebookDatabaseModel.Friendship" StoreEntitySet="Friendship">
+      <EndProperty Name="AspNetUser">
+        <ScalarProperty Name="Id" ColumnName="AspNetUsers_Id" />
+      </EndProperty>
+      <EndProperty Name="AspNetUser1">
+        <ScalarProperty Name="Id" ColumnName="AspNetUsers1_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="GroupUser" TypeName="FacebookDatabaseModel.GroupUser" StoreEntitySet="GroupUser">
+      <EndProperty Name="AspNetUser">
+        <ScalarProperty Name="Id" ColumnName="AspNetUsers_Id" />
+      </EndProperty>
+      <EndProperty Name="Group">
+        <ScalarProperty Name="group_id" ColumnName="Groups_group_id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
