@@ -10,8 +10,6 @@ namespace FacebookClone.Controllers
 {
     public class ProfileController : Controller
     {
-        private FacebookDatabaseEntities databaseEntities = new FacebookDatabaseEntities();
-
         [HttpPost]
         public ActionResult Add(ProfileViewModel profile)
         {
@@ -25,27 +23,10 @@ namespace FacebookClone.Controllers
                 } else
                 {
                     var currentUserId = User.Identity.GetUserId();
-                    var date = DateTime.Now;
-
-                    var newProfile = new Profile
-                    {
-                        age = profile.age,
-                        firstname = profile.firstname,
-                        lastname = profile.lastname,
-                        Id = currentUserId,
-                        gender = profile.gender.ToString()
-                    };
-                    databaseEntities.Profiles.Add(newProfile);
-                    var album = databaseEntities.Albums.Add(new Album { user_id = currentUserId, name = "ProfileAlbum", date = date });
-                    var picture = databaseEntities.Pictures.Add(new Picture {album_id = album.album_id, path = path, date = date, description = "ProfilePicture" });
-                    databaseEntities.SaveChanges();
+                    profile.addProfileToUser(currentUserId,path);
                 }
-
-                //everything is good, finally show profile
                 return RedirectToAction("Show", "Profile");
             }
-
-            //something went wrong, show again form
             return View("AddProfile", profile);
         }
 
@@ -60,15 +41,8 @@ namespace FacebookClone.Controllers
             else
             {
                 var currentUserId = User.Identity.GetUserId();
-                var date = DateTime.Now;
-                var profileAlbum = databaseEntities.Albums.Where(x => x.name.Equals("ProfileAlbum") && x.user_id==currentUserId).FirstOrDefault();
-                Picture profilePicture = new Picture();
-                profilePicture.album_id = profileAlbum.album_id;
-                profilePicture.path = path;
-                profilePicture.date = date;
-                profilePicture.description = "ProfilePicture";
-                    databaseEntities.Pictures.Add(profilePicture);
-                databaseEntities.SaveChanges();
+                profile.addNewProfileToUser(currentUserId, path);
+
             }
 
             return RedirectToAction("Show", "Profile");
@@ -78,6 +52,8 @@ namespace FacebookClone.Controllers
         public ActionResult Show()
         {
             var currentUserId = User.Identity.GetUserId();
+
+            var databaseEntities = new FacebookDatabaseEntities();
             Profile profile = databaseEntities.Profiles.Find(currentUserId);
             if (profile == null)
             {
