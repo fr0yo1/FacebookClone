@@ -33,6 +33,18 @@ namespace FacebookClone.Models
 
         public String profilePictureRelativePath { get; set; }
 
+        public ProfileViewModel(){}
+
+        public ProfileViewModel(Profile profile)
+        {
+            firstname = profile.firstname;
+            lastname = profile.lastname;
+            age = profile.age;
+            Enum.TryParse(profile.gender, out Gender userGender);
+            gender = userGender;
+            profilePictureRelativePath = profile.Albums.Where(x => x.name.Equals("ProfileAlbum")).FirstOrDefault().Pictures.OrderByDescending(x => x.date).FirstOrDefault().path;
+        }
+
         public IEnumerable<SelectListItem> getGenderList()
         {
             var selectList = new List<SelectListItem>();

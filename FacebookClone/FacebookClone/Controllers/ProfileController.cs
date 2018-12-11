@@ -52,8 +52,8 @@ namespace FacebookClone.Controllers
         public ActionResult Show()
         {
             var currentUserId = User.Identity.GetUserId();
-
             var databaseEntities = new FacebookDatabaseEntities();
+
             Profile profile = databaseEntities.Profiles.Find(currentUserId);
             if (profile == null)
             {
@@ -61,9 +61,7 @@ namespace FacebookClone.Controllers
             } else
             {
                 //TO-DO: add properties to ProfileViewModel like : albums, posts and personal informations and show them into view.
-                var profilePicture = profile.Albums.Where(x => x.name.Equals("ProfileAlbum")).FirstOrDefault().Pictures.OrderByDescending(x=>x.date).FirstOrDefault();
-                Enum.TryParse(profile.gender, out Gender userGender);
-                return View("Profile", new ProfileViewModel { firstname = profile.firstname, profilePictureRelativePath = profilePicture.path, age=profile.age, gender= userGender, lastname=profile.lastname});
+                return View("Profile", new ProfileViewModel(profile));
             }
    
         }
