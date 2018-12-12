@@ -32,6 +32,7 @@ namespace FacebookClone.Models
         public HttpPostedFileBase picture { get; set; }
         public List<PostViewModel> Posts { get; set; }
         public String profilePictureRelativePath { get; set; }
+        public PostViewModel newPost { get; set; }
 
         public ProfileViewModel(){}
 
@@ -44,6 +45,8 @@ namespace FacebookClone.Models
             gender = userGender;
             profilePictureRelativePath = profile.Albums.Where(x => x.name.Equals("ProfileAlbum")).FirstOrDefault().Pictures.OrderByDescending(x => x.date).FirstOrDefault().path;
             Posts = posts;
+            newPost = new PostViewModel();
+            newPost.appLocation = posts[0].appLocation;
         }
 
         public IEnumerable<SelectListItem> getGenderList()
@@ -81,7 +84,7 @@ namespace FacebookClone.Models
         public void addNewProfileToUser(String user_id, String profilePath)
         {
             var databaseEntities = new FacebookDatabaseEntities();
-            PostViewModel.addPostFrom(user_id, databaseEntities, profilePath,true);
+            PostViewModel.addPostFrom(user_id, databaseEntities, profilePath,"I changed my profile picture",true);
             //var databaseEntities = new FacebookDatabaseEntities();
             //var profileAlbum = databaseEntities.Albums.Where(x => x.name.Equals("ProfileAlbum") && x.user_id == user_id).FirstOrDefault();
 

@@ -1,5 +1,10 @@
-﻿
+﻿@model FacebookClone.Models.PostViewModel
+@{
+    ViewBag.Title = "PostPartialView";
+}
 <br/>
+@using (Html.BeginForm("AddPost", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
 <div style="border:1px solid black; padding:10px;">
     <h3>Tell the people what's on your mind!</h3> 
     <input type="text" name="content" id="txtContent" /><br />
@@ -9,5 +14,9 @@
     <div id="divButtons" style="clear:both;">
         <button type="submit">Post</button>
     </div>
+    <div hidden="hidden">
+        @Html.EditorFor(model => model.appLocation)
+    </div>
     <br><br>
 </div>
+}

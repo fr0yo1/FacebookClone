@@ -1,4 +1,5 @@
-﻿using FacebookClone.Models;
+﻿using FacebookClone.Handlers;
+using FacebookClone.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -21,8 +22,14 @@ namespace FacebookClone.Controllers
         public ActionResult AddPost(PostViewModel postViewModel)
         {
             var userId = User.Identity.GetUserId();
-            PostViewModel.addPostFrom(userId, databaseEntities,postViewModel.profilePath);
-            var aspNetUser = databaseEntities.AspNetUsers.Find(userId);
+            var path = FilesHandler.saveImage(postViewModel.picture, Server);
+            if(postViewModel.picture==null || path!=null)
+            {
+                PostViewModel.addPostFrom(userId, databaseEntities, path,postViewModel.content);
+            }
+            else
+                ModelState.AddModelError("imageError", "Something went wrong we were unable to save the photo");
+
             switch (postViewModel.appLocation)
             {
                 case "Profile":
@@ -32,6 +39,7 @@ namespace FacebookClone.Controllers
                 default:
                     return Index();
             }
+
 
         }
     }

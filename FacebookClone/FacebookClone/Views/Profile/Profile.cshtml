@@ -35,7 +35,7 @@
             <-- TODO !--></-->
         </div>
         <div id="divPosts" style="float:right; width:45%;">
-           @Html.Partial("CreatePostPartialView")
+           @Html.Partial("CreatePostPartialView",@Model.newPost)
             @foreach (var post in @Model.Posts)
             {
                 @Html.Partial("PostPartialView", post)

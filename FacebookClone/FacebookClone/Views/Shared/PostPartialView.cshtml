@@ -35,6 +35,10 @@
                         <p>
                            @Model.content
                         </p>
+                            @if (Model.postPictureRelativePath != "")
+                            {
+                                <img src=@Url.Content(Model.postPictureRelativePath) style="width:100%;" />
+                            }
                     </section>
                     <section class="post-footer">
                         <hr>

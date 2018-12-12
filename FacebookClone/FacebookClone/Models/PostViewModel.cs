@@ -16,9 +16,12 @@ namespace FacebookClone.Models
         public string profilePath { get; set; }
         public string appLocation { get; set; }
         public ICollection<Comment> comments { get; set; }
+        public String postPictureRelativePath { get; set; }
 
         [Required]
         public string inputComment { get; set; }
+
+        public HttpPostedFileBase picture { get; set; }
 
         public PostViewModel(Post post, string location)
         {
@@ -27,6 +30,7 @@ namespace FacebookClone.Models
             userName = post.AspNetUser.Profile.firstname + " " + post.AspNetUser.Profile.lastname;
             content = post.content;
             profilePath = post.AspNetUser.Profile.Albums.Where(x => x.name.Equals("ProfileAlbum")).FirstOrDefault().Pictures.OrderByDescending(x => x.date).FirstOrDefault().path;
+            postPictureRelativePath = post.Picture!=null?post.Picture.path:String.Empty;
             comments = post.Comments;
             appLocation = location;
         }
@@ -41,18 +45,20 @@ namespace FacebookClone.Models
             toDataBase.SaveChanges();
         }
 
-        static public void addPostFrom(string user_id, FacebookDatabaseEntities toDataBase, String picturePath, bool isProfilePicture=false)
+        static public void addPostFrom(string user_id, FacebookDatabaseEntities toDataBase, String picturePath,string content, bool isProfilePicture=false)
         {
-            Album profileAlbum = null;
+            Album album = null;
             if(isProfilePicture)
-                profileAlbum = toDataBase.Albums.Where(x => x.name.Equals("ProfileAlbum") && x.user_id == user_id).FirstOrDefault();
+                album = toDataBase.Albums.Where(x => x.name.Equals("ProfileAlbum") && x.user_id == user_id).FirstOrDefault();
             else
             {
-                //todo
+                album = toDataBase.Albums.Where(x => x.name.Equals("PostedPicturesAlbum") && x.user_id == user_id).FirstOrDefault();
+                if(album==null)
+                    album = toDataBase.Albums.Add(new Album { user_id = user_id, name = "PostedPicturesAlbum", date = DateTime.Now });
             }
             var aspNetUser = toDataBase.AspNetUsers.Find(user_id);
             Picture profilePicture = new Picture();
-            profilePicture.album_id = profileAlbum.album_id;
+            profilePicture.album_id = album.album_id;
             profilePicture.path = picturePath;
             profilePicture.date = DateTime.Now;
             profilePicture.description = "ProfilePicture";
@@ -60,7 +66,7 @@ namespace FacebookClone.Models
             toDataBase.Pictures.Add(profilePicture);
 
             Post newPost = new Post();
-            newPost.content = "I changed my profile picture!";
+            newPost.content = content;
             newPost.AspNetUser = aspNetUser;
             newPost.Picture = profilePicture;
             newPost.date = DateTime.Now;
