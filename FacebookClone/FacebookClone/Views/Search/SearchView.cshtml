@@ -1,0 +1,27 @@
+﻿@model FacebookClone.Models.SearchViewModel
+@using FacebookClone.Models
+@{
+    ViewBag.Title = "SearchView";
+}
+<br />
+<div class="container">
+    <h2>Groups:</h2>
+    @foreach (var genericItem in @Model.groupsResult)
+    {
+        @Html.Partial("GenericItemPartialView", genericItem)
+    }
+    @if (!@Model.groupsResult.Any())
+    {
+        <p>No result</p>
+    }
+    <h2>Users:</h2>
+    @foreach (var genericItem in @Model.usersResult)
+    {
+        @Html.Partial("GenericItemPartialView", genericItem)
+    }
+    @if (!@Model.usersResult.Any())
+    {
+        <p>No result</p>
+    }
+</div>
+

@@ -23,6 +23,13 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Profile", "Show", "Profile")</li>
                     <li>@Html.ActionLink("NewsFeed", "Index", "NewsFeed")</li>
+                    <li style="margin: auto">
+                        @using (Html.BeginForm("Search", "Home", FormMethod.Post,
+                                      new { enctype = "multipart/form-data", }))
+                        {
+                            <input type="text" name="searchInput" value="@ViewBag.searchInput"/><input type="submit" value="Search" />
+                        }
+                    </li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
