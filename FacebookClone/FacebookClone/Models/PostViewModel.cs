@@ -40,5 +40,32 @@ namespace FacebookClone.Models
             user.Comments.Add(new Comment {post_id = id, user_id = user.Id, date = DateTime.Now, content = inputComment});
             toDataBase.SaveChanges();
         }
+
+        static public void addPostFrom(string user_id, FacebookDatabaseEntities toDataBase, String picturePath, bool isProfilePicture=false)
+        {
+            Album profileAlbum = null;
+            if(isProfilePicture)
+                profileAlbum = toDataBase.Albums.Where(x => x.name.Equals("ProfileAlbum") && x.user_id == user_id).FirstOrDefault();
+            else
+            {
+                //todo
+            }
+            var aspNetUser = toDataBase.AspNetUsers.Find(user_id);
+            Picture profilePicture = new Picture();
+            profilePicture.album_id = profileAlbum.album_id;
+            profilePicture.path = picturePath;
+            profilePicture.date = DateTime.Now;
+            profilePicture.description = "ProfilePicture";
+
+            toDataBase.Pictures.Add(profilePicture);
+
+            Post newPost = new Post();
+            newPost.content = "I changed my profile picture!";
+            newPost.AspNetUser = aspNetUser;
+            newPost.Picture = profilePicture;
+            newPost.date = DateTime.Now;
+            toDataBase.Posts.Add(newPost);
+            toDataBase.SaveChanges();
+        }
     }
 }
