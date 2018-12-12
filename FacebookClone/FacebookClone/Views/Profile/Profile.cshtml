@@ -6,14 +6,15 @@
     @using (Html.BeginForm("AddNewProfilePicture", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <div id="divProfilePicture" style="float:left; width:45%;">
-            <img src=@Url.Content(Model.profilePictureRelativePath) style="width:100%;" />
+            <img src=@Url.Content(Model.profilePictureRelativePath) style="width:100%; border-radius: 50%;" />
             <br /><br />
             <label for="file">Upload profile picture:</label>
             <br />
-            <input type="file" name="picture" id="file" /><br><br>
+            <input type="file" name="picture" id="file" /><br/>
             <div id="divButtons" style="clear:both;">
                 <button type="submit">Save Profile</button>
             </div>
+            <br><br>
         </div>
     }
     <div id="divProfileInfo" style="float:right; width:45%;">
@@ -27,12 +28,9 @@
         <br />
         <input type="text" name="gender" value="@Model.gender.ToString()" readonly />
     </div>
-
-
-    }
-    <br /><br />
-    <hr />
+  
     <div style="clear:both;">
+        <hr />
         <div id="divGallery" style="float:left; width:45%;">
             <-- TODO !--></-->
         </div>
