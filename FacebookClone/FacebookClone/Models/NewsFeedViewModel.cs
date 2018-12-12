@@ -24,7 +24,7 @@ namespace FacebookClone.Models
             this.posts = new List<PostViewModel>();
             foreach (var post in posts)
             {
-                this.posts.Add(new PostViewModel(post));
+                this.posts.Add(new PostViewModel(post,"Newsfeed"));
             }
         }
     }
