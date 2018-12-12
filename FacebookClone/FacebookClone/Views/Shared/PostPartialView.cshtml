@@ -40,10 +40,13 @@
                         <hr>
                         <div class="post-footer-option container">
 
-                            @using (Html.BeginForm("AddComment", "NewsFeed", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            @using (Html.BeginForm("AddComment", "Comment", FormMethod.Post, new { enctype = "multipart/form-data" }))
                             {
                             <div hidden="hidden">
                                 @Html.EditorFor(model => model.id)
+                            </div>
+                            <div hidden="hidden">
+                                @Html.EditorFor(model =>model.appLocation)
                             </div>
                                 @Html.TextBoxFor(m => m.inputComment)
                                 <i class="glyphicon glyphicon-comment"> </i> <input type="submit" value="Comment" />

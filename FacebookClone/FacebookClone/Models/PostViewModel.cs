@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -13,12 +14,13 @@ namespace FacebookClone.Models
         public string userName { get; set; }
         public string content { get; set; }
         public string profilePath { get; set; }
+        public string appLocation { get; set; }
         public ICollection<Comment> comments { get; set; }
 
         [Required]
         public string inputComment { get; set; }
 
-        public PostViewModel(Post post)
+        public PostViewModel(Post post, string location)
         {
             id = post.post_id;
             date = post.date;
@@ -26,6 +28,7 @@ namespace FacebookClone.Models
             content = post.content;
             profilePath = post.AspNetUser.Profile.Albums.Where(x => x.name.Equals("ProfileAlbum")).FirstOrDefault().Pictures.OrderByDescending(x => x.date).FirstOrDefault().path;
             comments = post.Comments;
+            appLocation = location;
         }
 
         public PostViewModel()

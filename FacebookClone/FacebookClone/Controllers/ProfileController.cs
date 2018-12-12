@@ -67,7 +67,7 @@ namespace FacebookClone.Controllers
                 List<PostViewModel> userPosts = new List<PostViewModel>();
                 foreach (var post in posts)
                 {
-                    userPosts.Add(new PostViewModel(post));
+                    userPosts.Add(new PostViewModel(post,"Profile"));
                 }
                 return View("Profile", new ProfileViewModel(profile, userPosts));
             }
