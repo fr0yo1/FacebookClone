@@ -10,49 +10,56 @@
 else
 {
     <div style="width:100%;">
-    @using (Html.BeginForm("AddNewProfilePicture", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
         <div id="divProfilePicture" style="float:left; width:45%;">
             <img src=@Url.Content(Model.profilePictureRelativePath) style="width:100%; border-radius: 50%;" />
             <br /><br />
-            <label for="file">Upload profile picture:</label>
+
+            @if (!Model.iAmaVisitor)
+            {
+                using (Html.BeginForm("AddNewProfilePicture", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <label for="file">Upload profile picture:</label>
+                    <br />
+                    <input type="file" name="picture" id="file" /><br />
+                    <div id="divButtons" style="clear:both;">
+                        <button type="submit">Save Profile</button>
+                    </div>
+                    <br><br>
+                }
+            }
+        </div>
+        <div id="divProfileInfo" style="float:right; width:45%;">
+            <h3>@Model.firstname @Model.lastname</h3>
+            <br /><br />
+            <label>Age</label>
             <br />
-            <input type="file" name="picture" id="file" /><br/>
-            <div id="divButtons" style="clear:both;">
-                <button type="submit">Save Profile</button>
+            <input type="text" name="age" value="@Model.age" readonly />
+            <br /> <br />
+            <label>Gender</label>
+            <br />
+            <input type="text" name="gender" value="@Model.gender.ToString()" readonly />
+        </div>
+
+        <div style="clear:both;">
+            <hr />
+            <div id="divGallery" style="float:left; width:45%;">
+                @foreach (var album in @Model.albums)
+                {
+                    @Html.Partial("AlbumPartialView", album)
+                }
+                @*TODO ADD OPTION TO ADD NEW ALBUM
+                    @Html.Partial("AlbumPartialView", album)*@
             </div>
-            <br><br>
-        </div>
-    }
-    <div id="divProfileInfo" style="float:right; width:45%;">
-        <h3>@Model.firstname @Model.lastname</h3>
-        <br /><br />
-        <label>Age</label>
-        <br />
-        <input type="text" name="age" value="@Model.age" readonly />
-        <br /> <br />
-        <label>Gender</label>
-        <br />
-        <input type="text" name="gender" value="@Model.gender.ToString()" readonly />
-    </div>
-  
-    <div style="clear:both;">
-        <hr />
-        <div id="divGallery" style="float:left; width:45%;">
-            @foreach (var album in @Model.albums)
-            {
-                @Html.Partial("AlbumPartialView", album)
-            }
-            @*TODO ADD OPTION TO ADD NEW ALBUM
-            @Html.Partial("AlbumPartialView", album)*@
-        </div>
-        <div id="divPosts" style="float:right; width:45%;">
-           @Html.Partial("CreatePostPartialView",@Model.newPost)
-            @foreach (var post in @Model.Posts)
-            {
-                @Html.Partial("PostPartialView", post)
-            }
+            <div id="divPosts" style="float:right; width:45%;">
+                @if (!Model.iAmaVisitor)
+                {
+                    @Html.Partial("CreatePostPartialView", @Model.newPost)
+                }
+                @foreach (var post in @Model.Posts)
+                {
+                    @Html.Partial("PostPartialView", post)
+                }
+            </div>
         </div>
     </div>
-</div>
 }

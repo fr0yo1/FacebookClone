@@ -59,6 +59,12 @@ namespace FacebookClone.Controllers
                 return View("Profile",null);
             }
 
+            var iAmaVisitor = true;
+            if (User.Identity.GetUserId() == id)
+            {
+                iAmaVisitor = false;
+            }
+
             Profile profile = databaseEntities.Profiles.Find(id);
             if (profile == null)
             {
@@ -80,7 +86,9 @@ namespace FacebookClone.Controllers
                     List<string>picturesPath=album.Pictures.Select(i => i.path).ToList();
                     userAlbums.Add(new AlbumViewModel(picturesPath, album.name, "Profile"));
                 }
-                return View("Profile", new ProfileViewModel(profile, userAlbums, userPosts));
+                var profileViewModel = new ProfileViewModel(profile, userAlbums, userPosts);
+                profileViewModel.iAmaVisitor = iAmaVisitor;
+                return View("Profile", profileViewModel);
             }
    
         }

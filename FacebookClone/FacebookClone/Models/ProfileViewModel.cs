@@ -34,6 +34,7 @@ namespace FacebookClone.Models
         public String profilePictureRelativePath { get; set; }
         public PostViewModel newPost { get; set; }
         public List<AlbumViewModel> albums { get; set; }
+        public bool iAmaVisitor { get; set; }
 
         public ProfileViewModel(){}
 
