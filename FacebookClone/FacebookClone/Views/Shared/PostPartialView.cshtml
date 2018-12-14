@@ -7,8 +7,8 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <div class="container" style="width: 150%" >
-        <div class="col-md-5">
+    <div class="container">
+        <div class="col-md-5" style="width: 60%">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <section class="post-heading">
@@ -43,14 +43,10 @@
                     <section class="post-footer">
                         <hr>
                         <div class="post-footer-option container">
-
                             @using (Html.BeginForm("AddComment", "Comment", FormMethod.Post, new { enctype = "multipart/form-data" }))
                             {
                             <div hidden="hidden">
-                                @Html.EditorFor(model => model.id)
-                            </div>
-                            <div hidden="hidden">
-                                @Html.EditorFor(model =>model.appLocation)
+                                @Html.EditorFor(model => model)
                             </div>
                                 @Html.TextBoxFor(m => m.inputComment)
                                 <i class="glyphicon glyphicon-comment"> </i> <input type="submit" value="Comment" />

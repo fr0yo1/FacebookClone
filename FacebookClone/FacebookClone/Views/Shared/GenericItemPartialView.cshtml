@@ -4,5 +4,13 @@
 }
 
 <ul class="list-group">
-    <li class="list-group-item">@Model.content  <a href="#">@Model.clickOption</a></li>
+    <li class="list-group-item">
+        <a href="~/@Model.myController/@Model.clickOption/@Model.id">
+            <div style="display: inline-block; width:50px ; height:50px; overflow:hidden">
+                <img src=@Model.imagePath style="height: 50px; width: auto;" />
+            </div>
+            <span>@Model.content</span>
+        </a>
+
+    </li>
 </ul>

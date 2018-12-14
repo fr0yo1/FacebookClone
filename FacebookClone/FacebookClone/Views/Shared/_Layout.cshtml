@@ -21,13 +21,13 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Profile", "Show", "Profile")</li>
+                    <li>@Html.ActionLink("Profile", "ShowMyProfile", "Profile")</li>
                     <li>@Html.ActionLink("NewsFeed", "Index", "NewsFeed")</li>
-                    <li style="margin: auto">
+                    <li class="navbar-brand">
                         @using (Html.BeginForm("Search", "Home", FormMethod.Post,
-                                      new { enctype = "multipart/form-data", }))
+                                      new { enctype = "multipart/form-data"}))
                         {
-                            <input type="text" name="searchInput" value="@ViewBag.searchInput"/><input type="submit" value="Search" />
+                            <input type="text" style="color:#000000;" name="searchInput" value="@ViewBag.searchInput" /><input type="submit" value="Search" />
                         }
                     </li>
                 </ul>

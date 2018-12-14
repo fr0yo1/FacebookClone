@@ -15,7 +15,7 @@ namespace FacebookClone.Controllers
         public ActionResult Index()
         {
             if (User.Identity.IsAuthenticated) { 
-                return RedirectToAction("Show", "Profile");
+                return RedirectToAction("ShowMyProfile", "Profile");
             }
             //TO-DO on else add a view with a login form like on Filelist.
             return View();

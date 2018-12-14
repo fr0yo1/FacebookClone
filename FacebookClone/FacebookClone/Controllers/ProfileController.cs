@@ -50,26 +50,30 @@ namespace FacebookClone.Controllers
         }
 
         [Authorize]
-        public ActionResult Show()
+        public ActionResult Show(string id)
         {
-            var currentUserId = User.Identity.GetUserId();
             var databaseEntities = new FacebookDatabaseEntities();
 
-            Profile profile = databaseEntities.Profiles.Find(currentUserId);
+            if (databaseEntities.AspNetUsers.Find(id) == null)
+            {
+                return View("Profile",null);
+            }
+
+            Profile profile = databaseEntities.Profiles.Find(id);
             if (profile == null)
             {
                 return View("AddProfile", new ProfileViewModel());
             } else
             {
-                //TBD add properties to ProfileViewModel like : albums, posts and personal informations and show them into view.
-                var aspNetUser = databaseEntities.AspNetUsers.Find(currentUserId);
+                //TO-DO: add properties to ProfileViewModel like : albums, posts and personal informations and show them into view.
+                var aspNetUser = databaseEntities.AspNetUsers.Find(id);
                 var posts = aspNetUser.Posts;
                 List<PostViewModel> userPosts = new List<PostViewModel>();
                 foreach (var post in posts)
                 {
                     userPosts.Add(new PostViewModel(post,"Profile"));
                 }
-                List<Album> albums = databaseEntities.Albums.Where(x => x.user_id==currentUserId).ToList();
+                List<Album> albums = databaseEntities.Albums.Where(x => x.user_id==id).ToList();
                 List<AlbumViewModel> userAlbums = new List<AlbumViewModel>();
                 foreach(Album album in albums)
                 {
@@ -79,6 +83,13 @@ namespace FacebookClone.Controllers
                 return View("Profile", new ProfileViewModel(profile, userAlbums, userPosts));
             }
    
+        }
+
+        [Authorize]
+        public ActionResult ShowMyProfile()
+        {
+            var id = User.Identity.GetUserId();
+            return RedirectToAction("Show", "Profile", new { id = id});
         }
     }
 }
