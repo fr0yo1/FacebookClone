@@ -9,7 +9,7 @@ namespace FacebookClone.Models
 {
     public class PostViewModel
     {
-        public int id { get; set; }
+        public int post_id { get; set; }
         public Nullable<int> group_id { get; set; }
         public DateTime date { get; set; }
         public string userName { get; set; }
@@ -26,7 +26,7 @@ namespace FacebookClone.Models
 
         public PostViewModel(Post post, string location)
         {
-            id = post.post_id;
+            post_id = post.post_id;
             group_id = post.group_id;
             date = post.date;
             userName = post.AspNetUser.Profile.firstname + " " + post.AspNetUser.Profile.lastname;
@@ -43,7 +43,7 @@ namespace FacebookClone.Models
 
         public void addCommentFrom(AspNetUser user, FacebookDatabaseEntities toDataBase)
         {
-            user.Comments.Add(new Comment {post_id = id, user_id = user.Id, date = DateTime.Now, content = inputComment});
+            user.Comments.Add(new Comment {post_id = post_id, user_id = user.Id, date = DateTime.Now, content = inputComment});
             toDataBase.SaveChanges();
         }
 

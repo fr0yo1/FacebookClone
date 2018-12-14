@@ -45,9 +45,11 @@
                         <div class="post-footer-option container">
                             @using (Html.BeginForm("AddComment", "Comment", FormMethod.Post, new { enctype = "multipart/form-data" }))
                             {
-                            <div hidden="hidden">
-                                @Html.EditorFor(model => model)
-                            </div>
+                                <div hidden="hidden">
+                                    @Html.EditorFor(m => m.post_id)
+                                    @Html.EditorFor(m => m.group_id)
+                                    @Html.EditorFor(m => m.appLocation)
+                                </div>
                                 @Html.TextBoxFor(m => m.inputComment)
                                 <i class="glyphicon glyphicon-comment"> </i> <input type="submit" value="Comment" />
                             }
