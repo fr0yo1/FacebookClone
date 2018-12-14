@@ -27,9 +27,11 @@ namespace FacebookClone.Controllers
             switch (postViewModel.appLocation)
             {
                 case "Profile":
-                    return RedirectToAction("Show", "Profile");
+                    return RedirectToAction("Show", "Profile",new { id = user.Profile.Id });
                 case "Newsfeed":
                     return RedirectToAction("Index", "NewsFeed");
+                case "Groups":
+                    return RedirectToAction("Show", "Groups");
                 default:
                     return Index();
             }
