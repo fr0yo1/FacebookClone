@@ -50,19 +50,23 @@ namespace FacebookClone.Controllers
         }
 
         [Authorize]
-        public ActionResult Show()
+        public ActionResult Show(string id)
         {
-            var currentUserId = User.Identity.GetUserId();
             var databaseEntities = new FacebookDatabaseEntities();
 
-            Profile profile = databaseEntities.Profiles.Find(currentUserId);
+            if (databaseEntities.AspNetUsers.Find(id) == null)
+            {
+                return View("Profile",null);
+            }
+
+            Profile profile = databaseEntities.Profiles.Find(id);
             if (profile == null)
             {
                 return View("AddProfile", new ProfileViewModel());
             } else
             {
                 //TO-DO: add properties to ProfileViewModel like : albums, posts and personal informations and show them into view.
-                var aspNetUser = databaseEntities.AspNetUsers.Find(currentUserId);
+                var aspNetUser = databaseEntities.AspNetUsers.Find(id);
                 var posts = aspNetUser.Posts;
                 List<PostViewModel> userPosts = new List<PostViewModel>();
                 foreach (var post in posts)
@@ -72,6 +76,13 @@ namespace FacebookClone.Controllers
                 return View("Profile", new ProfileViewModel(profile, userPosts));
             }
    
+        }
+
+        [Authorize]
+        public ActionResult ShowMyProfile()
+        {
+            var id = User.Identity.GetUserId();
+            return RedirectToAction("Show", "Profile", new { id = id});
         }
     }
 }

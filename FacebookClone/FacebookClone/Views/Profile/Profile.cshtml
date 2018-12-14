@@ -2,6 +2,13 @@
 @{
     ViewBag.Title = "Profile";
 }
+
+@if (Model == null)
+{
+    <h1>No profile found</h1>
+}
+else
+{
     <div style="width:100%;">
     @using (Html.BeginForm("AddNewProfilePicture", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
@@ -42,4 +49,4 @@
         </div>
     </div>
 </div>
-
+}
