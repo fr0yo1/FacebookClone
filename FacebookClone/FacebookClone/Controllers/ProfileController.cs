@@ -61,7 +61,7 @@ namespace FacebookClone.Controllers
                 return View("AddProfile", new ProfileViewModel());
             } else
             {
-                //TO-DO: add properties to ProfileViewModel like : albums, posts and personal informations and show them into view.
+                //TBD add properties to ProfileViewModel like : albums, posts and personal informations and show them into view.
                 var aspNetUser = databaseEntities.AspNetUsers.Find(currentUserId);
                 var posts = aspNetUser.Posts;
                 List<PostViewModel> userPosts = new List<PostViewModel>();
@@ -69,7 +69,14 @@ namespace FacebookClone.Controllers
                 {
                     userPosts.Add(new PostViewModel(post,"Profile"));
                 }
-                return View("Profile", new ProfileViewModel(profile, userPosts));
+                List<Album> albums = databaseEntities.Albums.Where(x => x.user_id==currentUserId).ToList();
+                List<AlbumViewModel> userAlbums = new List<AlbumViewModel>();
+                foreach(Album album in albums)
+                {
+                    List<string>picturesPath=album.Pictures.Select(i => i.path).ToList();
+                    userAlbums.Add(new AlbumViewModel(picturesPath, album.name, "Profile"));
+                }
+                return View("Profile", new ProfileViewModel(profile, userAlbums, userPosts));
             }
    
         }

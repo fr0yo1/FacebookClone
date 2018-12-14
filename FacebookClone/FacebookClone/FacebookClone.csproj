@@ -212,6 +212,7 @@
     <Compile Include="Models\Album.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AlbumViewModel.cs" />
     <Compile Include="Models\AspNetRole.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -363,6 +364,7 @@
     <Content Include="Views\Shared\CommentPartialView.cshtml" />
     <Content Include="Views\Search\SearchView.cshtml" />
     <Content Include="Views\Shared\GenericItemPartialView.cshtml" />
+    <Content Include="Views\Shared\AlbumPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Comment\" />

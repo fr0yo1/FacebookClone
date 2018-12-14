@@ -1,0 +1,34 @@
+﻿@model FacebookClone.Models.AlbumViewModel
+@{
+    ViewBag.Title = "Album";
+}
+<div class="gallery">
+    <a target="_blank" href="forest.jpg">
+        <img src=@Url.Content(Model.albumPicturesRelativePath[Model.albumPicturesRelativePath.Count-1])  width="300" height="200">
+    </a>
+    <div class="desc">@Model.albumName</div>
+</div>
+<style>
+    div.gallery {
+        margin: 5px;
+        border: 1px solid #ccc;
+        float: left;
+        width: 180px;
+    }
+
+        div.gallery:hover {
+            border: 1px solid #777;
+        }
+
+        div.gallery img {
+            width: 100%;
+            height: auto;
+        }
+
+    div.desc {
+        padding: 15px;
+        text-align: center;
+
+    }
+    
+</style>

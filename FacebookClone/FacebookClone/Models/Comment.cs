@@ -20,7 +20,7 @@ namespace FacebookClone.Models
         public string content { get; set; }
         public string user_id { get; set; }
     
-        public virtual Post Post { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
+        public virtual Post Post { get; set; }
     }
 }

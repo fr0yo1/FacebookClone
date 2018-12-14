@@ -33,10 +33,11 @@ namespace FacebookClone.Models
         public List<PostViewModel> Posts { get; set; }
         public String profilePictureRelativePath { get; set; }
         public PostViewModel newPost { get; set; }
+        public List<AlbumViewModel> albums { get; set; }
 
         public ProfileViewModel(){}
 
-        public ProfileViewModel(Profile profile, List<PostViewModel> posts=null)
+        public ProfileViewModel(Profile profile, List<AlbumViewModel> albums, List<PostViewModel> posts=null)
         {
             firstname = profile.firstname;
             lastname = profile.lastname;
@@ -45,8 +46,10 @@ namespace FacebookClone.Models
             gender = userGender;
             profilePictureRelativePath = profile.Albums.Where(x => x.name.Equals("ProfileAlbum")).FirstOrDefault().Pictures.OrderByDescending(x => x.date).FirstOrDefault().path;
             Posts = posts;
+            this.albums = albums;
             newPost = new PostViewModel();
-            newPost.appLocation = posts[0].appLocation;
+            if(posts!=null && posts.Count!=0)
+                newPost.appLocation = posts[0].appLocation;
         }
 
         public IEnumerable<SelectListItem> getGenderList()

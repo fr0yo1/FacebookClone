@@ -32,7 +32,12 @@
     <div style="clear:both;">
         <hr />
         <div id="divGallery" style="float:left; width:45%;">
-            <-- TODO !--></-->
+            @foreach (var album in @Model.albums)
+            {
+                @Html.Partial("AlbumPartialView", album)
+            }
+            @*TODO ADD OPTION TO ADD NEW ALBUM
+            @Html.Partial("AlbumPartialView", album)*@
         </div>
         <div id="divPosts" style="float:right; width:45%;">
            @Html.Partial("CreatePostPartialView",@Model.newPost)
