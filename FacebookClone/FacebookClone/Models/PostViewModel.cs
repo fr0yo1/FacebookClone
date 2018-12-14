@@ -10,6 +10,7 @@ namespace FacebookClone.Models
     public class PostViewModel
     {
         public int id { get; set; }
+        public Nullable<int> group_id { get; set; }
         public DateTime date { get; set; }
         public string userName { get; set; }
         public string content { get; set; }
@@ -26,6 +27,7 @@ namespace FacebookClone.Models
         public PostViewModel(Post post, string location)
         {
             id = post.post_id;
+            group_id = post.group_id;
             date = post.date;
             userName = post.AspNetUser.Profile.firstname + " " + post.AspNetUser.Profile.lastname;
             content = post.content;
@@ -45,7 +47,7 @@ namespace FacebookClone.Models
             toDataBase.SaveChanges();
         }
 
-        static public void addPostFrom(string user_id, FacebookDatabaseEntities toDataBase, String picturePath,string content, bool isProfilePicture=false)
+        static public void addPostFrom(string user_id, FacebookDatabaseEntities toDataBase, String picturePath,string content, Nullable<int> group_id = null,bool isProfilePicture=false)
         {
             Album album = null;
             if(isProfilePicture)
@@ -66,6 +68,7 @@ namespace FacebookClone.Models
             toDataBase.Pictures.Add(profilePicture);
 
             Post newPost = new Post();
+            newPost.group_id = group_id;
             newPost.content = content;
             newPost.AspNetUser = aspNetUser;
             newPost.Picture = profilePicture;

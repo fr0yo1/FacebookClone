@@ -25,7 +25,7 @@ namespace FacebookClone.Controllers
             var path = FilesHandler.saveImage(postViewModel.picture, Server);
             if(postViewModel.picture==null || path!=null)
             {
-                PostViewModel.addPostFrom(userId, databaseEntities, path,postViewModel.content);
+                PostViewModel.addPostFrom(userId, databaseEntities, path,postViewModel.content,postViewModel.group_id);
             }
             else
                 ModelState.AddModelError("imageError", "Something went wrong we were unable to save the photo");
@@ -36,6 +36,8 @@ namespace FacebookClone.Controllers
                     return RedirectToAction("ShowMyProfile", "Profile");
                 case "Newsfeed":
                     return RedirectToAction("Index", "NewsFeed");
+                case "Groups":
+                    return RedirectToAction("Show", "Groups");
                 default:
                     return Index();
             }

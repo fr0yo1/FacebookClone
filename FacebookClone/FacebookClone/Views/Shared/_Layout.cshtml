@@ -23,9 +23,10 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Profile", "ShowMyProfile", "Profile")</li>
                     <li>@Html.ActionLink("NewsFeed", "Index", "NewsFeed")</li>
+                    <li>@Html.ActionLink("Groups", "Show", "Groups")</li>
                     <li class="navbar-brand">
                         @using (Html.BeginForm("Search", "Home", FormMethod.Post,
-                                      new { enctype = "multipart/form-data"}))
+                                      new { enctype = "multipart/form-data" }))
                         {
                             <input type="text" style="color:#000000;" name="searchInput" value="@ViewBag.searchInput" /><input type="submit" value="Search" />
                         }

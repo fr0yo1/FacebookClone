@@ -87,7 +87,7 @@ namespace FacebookClone.Models
         public void addNewProfileToUser(String user_id, String profilePath)
         {
             var databaseEntities = new FacebookDatabaseEntities();
-            PostViewModel.addPostFrom(user_id, databaseEntities, profilePath,"I changed my profile picture",true);
+            PostViewModel.addPostFrom(user_id, databaseEntities, profilePath,"I changed my profile picture",null,true);
             //var databaseEntities = new FacebookDatabaseEntities();
             //var profileAlbum = databaseEntities.Albums.Where(x => x.name.Equals("ProfileAlbum") && x.user_id == user_id).FirstOrDefault();
 

@@ -29,12 +29,12 @@ namespace FacebookClone.Models
 
             groupsResult = userGroups.Select(x => new GenericItemViewModel { content = x.name,
                                                                              id= x.group_id.ToString(),
-                                                                             myController = "Group",
+                                                                             myController = "Groups",
                                                                              clickOption = "Show"})
                                                                              .ToList();
             groupsResult = groupsResult.Union(otherGroups.Select(x => new GenericItemViewModel { content = x.name,
                                                                                                  id = x.group_id.ToString(),
-                                                                                                 myController = "Group",
+                                                                                                 myController = "Groups",
                                                                                                  clickOption = "Show"})
                                                                                                  .ToList());
 
