@@ -32,6 +32,8 @@ namespace FacebookClone.Controllers
                     return RedirectToAction("Index", "NewsFeed");
                 case "Groups":
                     return RedirectToAction("Show", "Groups");
+                case "Gallery":
+                    return RedirectToAction("ShowPostFromAlbum", "Album",postViewModel);
                 default:
                     return Index();
             }

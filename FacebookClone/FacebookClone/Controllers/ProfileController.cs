@@ -83,8 +83,7 @@ namespace FacebookClone.Controllers
                 List<AlbumViewModel> userAlbums = new List<AlbumViewModel>();
                 foreach(Album album in albums)
                 {
-                    List<string>picturesPath=album.Pictures.Select(i => i.path).ToList();
-                    userAlbums.Add(new AlbumViewModel(picturesPath, album.name, "Profile"));
+                    userAlbums.Add(new AlbumViewModel(album.name, "Profile",album.album_id,userPosts));
                 }
                 var profileViewModel = new ProfileViewModel(profile, userAlbums, userPosts);
                 profileViewModel.iAmaVisitor = iAmaVisitor;

@@ -18,6 +18,8 @@ namespace FacebookClone.Models
         public string appLocation { get; set; }
         public ICollection<Comment> comments { get; set; }
         public String postPictureRelativePath { get; set; }
+        public int albumID { get; set; }
+        public string userID { get; set; }
 
         [Required]
         public string inputComment { get; set; }
@@ -35,6 +37,9 @@ namespace FacebookClone.Models
             postPictureRelativePath = post.Picture!=null?post.Picture.path:String.Empty;
             comments = post.Comments;
             appLocation = location;
+            if(post.Picture!=null)
+                 albumID = post.Picture.album_id;
+            userID = post.sender_id;
         }
 
         public PostViewModel()

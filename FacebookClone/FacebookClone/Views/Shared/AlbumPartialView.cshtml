@@ -2,12 +2,19 @@
 @{
     ViewBag.Title = "Album";
 }
+
 <div class="gallery">
-    <a target="_blank" href="forest.jpg">
-        <img src=@Url.Content(Model.albumPicturesRelativePath[Model.albumPicturesRelativePath.Count-1])  width="300" height="200">
-    </a>
+@using (Html.BeginForm("ShowAlbum", "Album", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="image" src=@Url.Content(Model.picturesRelativePath[Model.picturesRelativePath.Count - 1])  style="width:170px;height:200px;">
+        @*<img src=@Url.Content(Model.albumPicturesRelativePath[Model.albumPicturesRelativePath.Count - 1])  width="300" height="200">*@
+    <div hidden="hidden">
+        @Html.EditorFor(model => model)
+    </div>
+}
     <div class="desc">@Model.albumName</div>
 </div>
+
 <style>
     div.gallery {
         margin: 5px;
@@ -22,7 +29,7 @@
 
         div.gallery img {
             width: 100%;
-            height: auto;
+            height:150px;
         }
 
     div.desc {
