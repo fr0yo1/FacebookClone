@@ -35,7 +35,7 @@
                         <p>
                            @Model.content
                         </p>
-                            @if (Model.postPictureRelativePath != "")
+                            @if (Model.postPictureRelativePath != "" && Model.postPictureRelativePath != null)
                             {
                                 <img src=@Url.Content(Model.postPictureRelativePath) style="width:100%;" />
                             }

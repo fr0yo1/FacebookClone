@@ -35,7 +35,13 @@ namespace FacebookClone.Controllers
         [Authorize]
         public ActionResult ShowPostFromAlbum(PostViewModel postViewModel)
         {
-           // postViewModel = new PostViewModel(postViewModel.)
+            var databaseEntities = new FacebookDatabaseEntities();
+            var aspNetUser = databaseEntities.AspNetUsers.Find(postViewModel.userID);
+            var posts = aspNetUser.Posts;
+            var thisPost = posts.Where(x => x.post_id == postViewModel.post_id).FirstOrDefault();
+            postViewModel = new PostViewModel(thisPost, "Gallery");
+            
+            // postViewModel = new PostViewModel(postViewModel.)
             return View("PostPartialView", postViewModel);
         }
     }
