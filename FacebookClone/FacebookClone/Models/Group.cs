@@ -23,7 +23,10 @@ namespace FacebookClone.Models
     
         public int group_id { get; set; }
         public string name { get; set; }
+        public string administrator { get; set; }
+        public string picture_path { get; set; }
     
+        public virtual AspNetUser AspNetUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Post> Posts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
