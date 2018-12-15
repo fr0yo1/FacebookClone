@@ -12,8 +12,9 @@ namespace FacebookClone.Models
         public List<Group> myGroups { get; set; }
         public Group selectedGroup { get; set; }
         public PostViewModel newPost { get; set; }
+        public bool hasViewAcces { get; set; }
 
-       public GroupsViewModel(Group selectedGroup, List<Group> myGroups)
+        public GroupsViewModel(Group selectedGroup, List<Group> myGroups)
         {
             this.myGroups = myGroups;
             this.selectedGroup = selectedGroup;

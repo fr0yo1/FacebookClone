@@ -17,7 +17,8 @@
         }
     </div>
     <div id="divPosts" style="float:right; width:80%;">
-        @if (Model.selectedGroup != null) {
+        @if (Model.selectedGroup != null && Model.hasViewAcces)
+        {
             <h2>@Model.selectedGroup.name</h2>
 
             @Html.Partial("CreatePostPartialView", @Model.newPost)
@@ -26,8 +27,19 @@
             {
                 @Html.Partial("PostPartialView", new PostViewModel(post, "Groups"))
             }
-        } else {
-            <h2>No group selected</h2>
+        }
+        else if (!Model.hasViewAcces)
+        {
+            <h2>You have to join this group first.</h2>
+            using (Html.BeginForm("#", "Groups", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <button type="submit" class="btn btn-dark">Join group.</button>
+            }
+
+        }
+        else
+        {
+            <h2>No group selected.</h2>
         }
 
     </div>
