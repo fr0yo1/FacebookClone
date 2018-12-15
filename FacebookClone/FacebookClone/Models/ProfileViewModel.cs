@@ -82,6 +82,7 @@ namespace FacebookClone.Models
             databaseEntities.Profiles.Add(newProfile);
             var album = databaseEntities.Albums.Add(new Album { user_id = user_id, name = "ProfileAlbum", date = DateTime.Now });
             var picture = databaseEntities.Pictures.Add(new Picture { album_id = album.album_id, path = profilePath, date = DateTime.Now, description = "ProfilePicture" });
+            var post = databaseEntities.Posts.Add(new Post { picture_id = picture.picture_id, sender_id = user_id, date = DateTime.Now, content=""});
             databaseEntities.SaveChanges();
         }
 
