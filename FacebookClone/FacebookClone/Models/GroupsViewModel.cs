@@ -22,22 +22,25 @@ namespace FacebookClone.Models
 
             if (selectedId != null)
             {
-
                 selectedGroup = databaseEntities.Groups.Find(int.Parse(selectedId));
-                newPost = new PostViewModel { appLocation = "Groups", group_id = selectedGroup.group_id };
             }
             else
             {
                 selectedGroup = databaseEntities.AspNetUsers.Find(userId).Groups.FirstOrDefault();
             }
 
-            if (selectedGroup.AspNetUsers.Contains(user))
+            //TO-DO add administrator permission
+            if (selectedGroup != null)
             {
-                accesPermision = AccesPermision.readPermissions;
-            }
-            else
-            {
-                accesPermision = AccesPermision.noPermission;
+                newPost = new PostViewModel { appLocation = "Groups", group_id = selectedGroup.group_id };
+                if (selectedGroup.AspNetUsers.Contains(user))
+                {
+                    accesPermision = AccesPermision.readPermissions;
+                }
+                else
+                {
+                    accesPermision = AccesPermision.noPermission;
+                }
             }
         }
     }
