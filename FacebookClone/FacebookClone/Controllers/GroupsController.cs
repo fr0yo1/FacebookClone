@@ -28,5 +28,24 @@ namespace FacebookClone.Controllers
             var myGroups = databaseEntities.AspNetUsers.Find(currentUserId).Groups;
             return View("GroupsView",new GroupsViewModel(selectedGroup,myGroups.ToList()));
         }
+
+        [Authorize]
+        public ActionResult CreateGroupForm()
+        {
+            return View(new CreateGroupViewModel());
+        }
+
+        [Authorize]
+        public ActionResult SaveGroup(CreateGroupViewModel newGroup)
+        {
+            if (ModelState.IsValid)
+            {
+                var currentUserId = User.Identity.GetUserId();
+                var group_id = newGroup.saveToDatabase(currentUserId, Server);
+                return RedirectToAction("Show", "Groups", group_id);
+            }
+            return View("CreateGroupForm",new CreateGroupViewModel());
+        }
+        
     }
 }

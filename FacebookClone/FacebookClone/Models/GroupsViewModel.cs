@@ -1,5 +1,7 @@
-﻿using System;
+﻿using FacebookClone.Handlers;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -15,7 +17,31 @@ namespace FacebookClone.Models
         {
             this.myGroups = myGroups;
             this.selectedGroup = selectedGroup;
-            this.newPost = new PostViewModel { appLocation = "Groups", group_id = selectedGroup.group_id };
+            if (selectedGroup != null)
+            {
+                this.newPost = new PostViewModel { appLocation = "Groups", group_id = selectedGroup.group_id };
+            }
+        }
+    }
+
+    public class CreateGroupViewModel
+    {
+        [Required]
+        public string name { get; set; }
+        [Required]
+        public HttpPostedFileBase picture { get; set; }
+
+        public int saveToDatabase(string administrator,HttpServerUtilityBase server)
+        {
+            var databaseEntities = new FacebookDatabaseEntities();
+            var relativePath = FilesHandler.saveImage(picture, server);
+
+            var group = databaseEntities.Groups.Add(new Group { name = name, administrator = administrator, picture_path = relativePath });
+            var user = databaseEntities.AspNetUsers.Find(administrator);
+            group.AspNetUsers.Add(user);
+
+            databaseEntities.SaveChanges();
+            return group.group_id;
         }
     }
 }

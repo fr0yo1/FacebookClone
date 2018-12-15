@@ -5,20 +5,31 @@
 @using FacebookClone.Models;
 <div style="width:100%;">
     <div id="divGallery" style="float:left; width:15%; border-right: thin solid #000000;">
+        <br />
+        @using (Html.BeginForm("CreateGroupForm", "Groups", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <button type="submit" class="btn btn-dark">+ Create a new group</button>
+        }
         <h2>My groups:</h2>
-        @foreach (var group in Model.myGroups) {
-            @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { myController = "Groups", clickOption = "Show", content = group.name, id = group.group_id.ToString() })
-         }
+        @foreach (var group in Model.myGroups)
+        {
+         @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { myController = "Groups", clickOption = "Show", content = group.name, id = group.group_id.ToString() })
+        }
     </div>
     <div id="divPosts" style="float:right; width:80%;">
-        <h2>@Model.selectedGroup.name</h2>
+        @if (Model.selectedGroup != null) {
+            <h2>@Model.selectedGroup.name</h2>
 
-        @Html.Partial("CreatePostPartialView", @Model.newPost)
+            @Html.Partial("CreatePostPartialView", @Model.newPost)
 
-        @foreach (var post in Model.selectedGroup.Posts)
-        {
-            @Html.Partial("PostPartialView", new PostViewModel(post, "Groups"))
+            foreach (var post in Model.selectedGroup.Posts)
+            {
+                @Html.Partial("PostPartialView", new PostViewModel(post, "Groups"))
+            }
+        } else {
+            <h2>No group selected</h2>
         }
+
     </div>
 </div>
 

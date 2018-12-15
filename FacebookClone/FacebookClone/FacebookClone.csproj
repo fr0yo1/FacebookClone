@@ -371,6 +371,7 @@
     <Content Include="Views\Groups\GroupsView.cshtml" />
     <Content Include="Views\Shared\PhotoGalleryPartialView.cshtml" />
     <Content Include="Views\Shared\PhotoPartialView.cshtml" />
+    <Content Include="Views\Groups\CreateGroupForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Album\" />
