@@ -12,15 +12,32 @@ namespace FacebookClone.Models
         public List<Group> myGroups { get; set; }
         public Group selectedGroup { get; set; }
         public PostViewModel newPost { get; set; }
-        public bool hasViewAcces { get; set; }
+        public AccesPermision accesPermision { get; set; }
 
-        public GroupsViewModel(Group selectedGroup, List<Group> myGroups)
+        public GroupsViewModel(string selectedId, string userId)
         {
-            this.myGroups = myGroups;
-            this.selectedGroup = selectedGroup;
-            if (selectedGroup != null)
+            var databaseEntities = new FacebookDatabaseEntities();
+            var user = databaseEntities.AspNetUsers.Find(userId);
+            myGroups = user.Groups.ToList();
+
+            if (selectedId != null)
             {
-                this.newPost = new PostViewModel { appLocation = "Groups", group_id = selectedGroup.group_id };
+
+                selectedGroup = databaseEntities.Groups.Find(int.Parse(selectedId));
+                newPost = new PostViewModel { appLocation = "Groups", group_id = selectedGroup.group_id };
+            }
+            else
+            {
+                selectedGroup = databaseEntities.AspNetUsers.Find(userId).Groups.FirstOrDefault();
+            }
+
+            if (selectedGroup.AspNetUsers.Contains(user))
+            {
+                accesPermision = AccesPermision.readPermissions;
+            }
+            else
+            {
+                accesPermision = AccesPermision.noPermission;
             }
         }
     }

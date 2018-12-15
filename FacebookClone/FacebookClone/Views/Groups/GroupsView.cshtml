@@ -3,6 +3,7 @@
     ViewBag.Title = "GroupsView";
 }
 @using FacebookClone.Models;
+@using FacebookClone.Handlers;
 <div style="width:100%;">
     <div id="divGallery" style="float:left; width:15%; border-right: thin solid #000000;">
         <br />
@@ -13,29 +14,42 @@
         <h2>My groups:</h2>
         @foreach (var group in Model.myGroups)
         {
-         @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { myController = "Groups", clickOption = "Show", content = group.name, id = group.group_id.ToString() })
+            @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { myController = "Groups", clickOption = "Show", content = group.name, id = group.group_id.ToString() })
         }
     </div>
     <div id="divPosts" style="float:right; width:80%;">
-        @if (Model.selectedGroup != null && Model.hasViewAcces)
+        @if (Model.selectedGroup != null)
         {
-            <h2>@Model.selectedGroup.name</h2>
-
-            @Html.Partial("CreatePostPartialView", @Model.newPost)
-
-            foreach (var post in Model.selectedGroup.Posts)
+            switch (Model.accesPermision)
             {
-                @Html.Partial("PostPartialView", new PostViewModel(post, "Groups"))
-            }
-        }
-        else if (!Model.hasViewAcces)
-        {
-            <h2>You have to join this group first.</h2>
-            using (Html.BeginForm("#", "Groups", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <button type="submit" class="btn btn-dark">Join group.</button>
-            }
+                case AccesPermision.fullPermissions:
+                    <h2> @Model.selectedGroup.name </h2>
 
+                    @Html.Partial("CreatePostPartialView", @Model.newPost)
+
+                    foreach (var post in Model.selectedGroup.Posts)
+                    {
+                        @Html.Partial("PostPartialView", new PostViewModel(post, "Groups"))
+                    }
+                    break;
+                case AccesPermision.noPermission:
+                    <h2> You have to join this group first.</h2>
+                    using (Html.BeginForm("#", "Groups", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <button type="submit" class="btn btn-dark">Join group.</button>
+                    }
+                    break;
+                case AccesPermision.readPermissions:
+                    <h2> @Model.selectedGroup.name </h2>
+
+                    @Html.Partial("CreatePostPartialView", @Model.newPost)
+
+                    foreach (var post in Model.selectedGroup.Posts)
+                    {
+                        @Html.Partial("PostPartialView", new PostViewModel(post, "Groups"))
+                    }
+                    break;
+            }
         }
         else
         {

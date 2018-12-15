@@ -14,28 +14,8 @@ namespace FacebookClone.Controllers
         [Authorize]
         public ActionResult Show(string id = null)
         {
-            bool hasViewAcces = false;
-            var databaseEntities = new FacebookDatabaseEntities();
             var currentUserId = User.Identity.GetUserId();
-            var user = databaseEntities.AspNetUsers.Find(currentUserId);
-            var myGroups = user.Groups;
-
-            Group selectedGroup = new Group();
-            if (id != null)
-            {
-                var group = databaseEntities.Groups.Find(int.Parse(id));
-                if (group.AspNetUsers.Contains(user))
-                {
-                    hasViewAcces = true;
-                }
-            } else
-            {
-                selectedGroup = databaseEntities.AspNetUsers.Find(currentUserId).Groups.FirstOrDefault();
-                hasViewAcces = true;
-            }
-           
-           
-            return View("GroupsView",new GroupsViewModel(selectedGroup, myGroups.ToList()) { hasViewAcces = hasViewAcces});
+            return View("GroupsView",new GroupsViewModel(id,currentUserId));
         }
 
         [Authorize]
