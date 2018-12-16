@@ -34,7 +34,7 @@
                 switch (message.type)
                 {
                     case MessageTypes.friendRequest:
-                        @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = message.sender.Profile.firstname + " " + message.sender.Profile.lastname + ":" + message.content });
+                        @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString =  message.content });
                         using (Html.BeginForm("AcceptFriendRequest", "Messenger", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
                             <div hidden="hidden">
@@ -47,11 +47,11 @@
                         @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = message.sender.Profile.firstname + " " + message.sender.Profile.firstname + ":" + message.content });
                         break;
                     case MessageTypes.groupRequest:
-                        @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = message.sender.Profile.firstname + " " + message.sender.Profile.lastname + ":" + message.content });
+                        @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = message.content });
                         using (Html.BeginForm("AcceptGroupRequest", "Messenger", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
                             <div hidden="hidden">
-                                @Html.EditorFor(m => m.conversation.messages.ElementAt(i).content)
+                                @Html.EditorFor(m => m.conversation.messages.ElementAt(i).actionId)
                                 @Html.EditorFor(m => m.conversation.messages.ElementAt(i).sender)
                                 @Html.EditorFor(m => m.conversation.messages.ElementAt(i).message_id)
                             </div>

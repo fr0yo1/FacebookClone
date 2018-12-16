@@ -34,10 +34,9 @@ namespace FacebookClone.Controllers
         }
 
         [Authorize]
-        public ActionResult AcceptGroupRequest(AspNetUser sender,string content,int message_id)
+        public ActionResult AcceptGroupRequest(AspNetUser sender,string actionId, int message_id)
         {   
-            //Now content is used in multiple cases like sending id, input, text message... Maybe we will refactor this later.
-            var group_id = int.Parse(content);
+            var group_id = int.Parse(actionId);
             var receiver_id = User.Identity.GetUserId();
             GroupHandler.addUserToGroup(sender.Id, group_id, message_id);
             return RedirectToAction("ShowChat", "Messenger", new { id = sender.Id});
