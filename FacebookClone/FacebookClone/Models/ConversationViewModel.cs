@@ -8,11 +8,20 @@ namespace FacebookClone.Models
     public class ConversationViewModel
     {
         public List<MessageViewModel> messages { get; set; }
+        public string sendToUserId { get; set; }
         public string inputText { get; set; }
+        public bool userCanSendMessages { get; set; }
 
-        public ConversationViewModel(List<Message> messages)
+        public ConversationViewModel(List<Message> messages,bool userCanSendMessages,string sendToUserId)
         {
-            this.messages = messages.Select(x=> new MessageViewModel(x)).ToList();
+            this.sendToUserId = sendToUserId;
+            this.userCanSendMessages = userCanSendMessages;
+            this.messages = messages.Select(x=> new MessageViewModel(x, sendToUserId)).ToList();
+        }
+
+        public ConversationViewModel()
+        {
+
         }
     }
 }

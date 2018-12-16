@@ -11,14 +11,64 @@
         {
             switch (message.type)
             {
-                case 1:
-                    @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = message.content.Substring(0, 15) + "...", myController = "Messenger", clickOption = "ShowChat", content = message.AspNetUser1.Profile.firstname + " " + message.AspNetUser1.Profile.firstname, id = message.AspNetUser1.Id });
-                    break;
                 case 2:
-                    @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = "Friend request...", myController = "Messenger", clickOption = "ShowChat", content = message.AspNetUser1.Profile.firstname + " " + message.AspNetUser1.Profile.firstname, id = message.AspNetUser1.Id });
+                    @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = "Friend request...", myController = "Messenger", clickOption = "ShowChat", content = message.AspNetUser1.Profile.firstname + " " + message.AspNetUser1.Profile.lastname, id = message.AspNetUser1.Id });
                     break;
                 case 3:
-                    @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = "Request to join...", myController = "Messenger", clickOption = "ShowChat", content = message.AspNetUser1.Profile.firstname + " " + message.AspNetUser1.Profile.firstname, id = message.AspNetUser1.Id });
+                    @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = "Request to join...", myController = "Messenger", clickOption = "ShowChat", content = message.AspNetUser1.Profile.firstname + " " + message.AspNetUser1.Profile.lastname, id = message.AspNetUser1.Id });
+                    break;
+            }
+        }
+        @foreach (var message in Model.sentRequests)
+        {
+            switch (message.type)
+            {
+                case 2:
+                    @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = "Friend request...", myController = "Messenger", clickOption = "ShowChat", content = message.AspNetUser.Profile.firstname + " " + message.AspNetUser.Profile.lastname, id = message.AspNetUser.Id });
+                    break;
+                case 3:
+                    @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = "Request to join...", myController = "Messenger", clickOption = "ShowChat", content = message.AspNetUser.Profile.firstname + " " + message.AspNetUser.Profile.lastname, id = message.AspNetUser.Id });
+                    break;
+            }
+        }
+        @foreach (var friend in Model.friends)
+        {
+            var lastReceivedMessage = friend.Messages.LastOrDefault();
+            var lastSentMessage = friend.Messages1.LastOrDefault();
+            var lastMessage = new Message();
+            if (lastReceivedMessage != null && lastSentMessage != null)
+            {
+                if (lastReceivedMessage.date > lastSentMessage.date)
+                {
+                    lastMessage = lastReceivedMessage;
+                }
+                else
+                {
+                    lastMessage = lastSentMessage;
+                }
+            }
+            else if (lastSentMessage != null)
+            {
+                lastMessage = lastSentMessage;
+            }
+            else if (lastReceivedMessage != null)
+            {
+                lastMessage = lastReceivedMessage;
+            }
+            else
+            {
+                @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = "say hi to your frined" + "...", myController = "Messenger", clickOption = "ShowChat", content = friend.Profile.firstname + " " + friend.Profile.lastname, id = friend.Id });
+            }
+            switch (lastMessage.type)
+            {
+                case 1:
+                    @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = lastMessage.content.Substring(0, Math.Min(15, lastMessage.content.Length)) + "...", myController = "Messenger", clickOption = "ShowChat", content = friend.Profile.firstname + " " + friend.Profile.lastname, id = friend.Id });
+                    break;
+                case 2:
+                    @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = "Friend request...", myController = "Messenger", clickOption = "ShowChat", content = lastMessage.AspNetUser1.Profile.firstname + " " + friend.Profile.firstname, id = lastMessage.AspNetUser1.Id });
+                    break;
+                case 3:
+                    @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = "Request to join...", myController = "Messenger", clickOption = "ShowChat", content = lastMessage.AspNetUser1.Profile.firstname + " " + friend.Profile.firstname, id = friend.Id });
                     break;
             }
         }
@@ -34,34 +84,53 @@
                 switch (message.type)
                 {
                     case MessageTypes.friendRequest:
-                        @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString =  message.content });
-                        using (Html.BeginForm("AcceptFriendRequest", "Messenger", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = message.content });
+                        if (message.state == State.received)
                         {
+                            using (Html.BeginForm("AcceptFriendRequest", "Messenger", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
                             <div hidden="hidden">
                                 @Html.EditorFor(m => m.conversation.messages.ElementAt(i).sender.Id)
                             </div>
                             <button type="submit" class="btn btn-dark">Accept friend request.</button>
+                            }
                         }
                         break;
                     case MessageTypes.normalMessage:
-                        @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = message.sender.Profile.firstname + " " + message.sender.Profile.firstname + ":" + message.content });
+                        @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = message.content });
                         break;
                     case MessageTypes.groupRequest:
                         @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = message.content });
-                        using (Html.BeginForm("AcceptGroupRequest", "Messenger", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        if (message.state == State.received)
                         {
+                            using (Html.BeginForm("AcceptGroupRequest", "Messenger", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
                             <div hidden="hidden">
                                 @Html.EditorFor(m => m.conversation.messages.ElementAt(i).actionId)
                                 @Html.EditorFor(m => m.conversation.messages.ElementAt(i).sender)
                                 @Html.EditorFor(m => m.conversation.messages.ElementAt(i).message_id)
                             </div>
                             <button type="submit" class="btn btn-dark">Accept group request.</button>
+                            }
                         }
                         break;
                 }
                 i++;
             }
+
+            if (Model.conversation.userCanSendMessages)
+            {
+                using (Html.BeginForm("SendMessage", "Messenger", FormMethod.Post))
+                {
+                    <div hidden = "hidden" >
+                        @Html.EditorFor(m => m.conversation.sendToUserId);
+                    </div>
+                    @Html.EditorFor(m => m.conversation.inputText)
+                    <button type="submit" class="btn btn-dark">Send message</button>
+                }
+            }
         }
+
     </div>
 </div>
 
