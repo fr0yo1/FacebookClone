@@ -1,0 +1,67 @@
+﻿@model FacebookClone.Models.MessengerViewModel
+@{
+    ViewBag.Title = "ShowMessenger";
+}
+@using FacebookClone.Models
+
+<div style="width:100%;">
+    <div id="divUserList" style="float:left; width:15%; border-right: thin solid #000000;">
+        <h2> Users list:</h2>
+        @foreach (var message in Model.requests)
+        {
+            switch (message.type)
+            {
+                case 1:
+                    @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = message.content.Substring(0, 15) + "...", myController = "Messenger", clickOption = "ShowChat", content = message.AspNetUser1.Profile.firstname + " " + message.AspNetUser1.Profile.firstname, id = message.AspNetUser1.Id });
+                    break;
+                case 2:
+                    @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = "Friend request...", myController = "Messenger", clickOption = "ShowChat", content = message.AspNetUser1.Profile.firstname + " " + message.AspNetUser1.Profile.firstname, id = message.AspNetUser1.Id });
+                    break;
+                case 3:
+                    @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = "Request to join...", myController = "Messenger", clickOption = "ShowChat", content = message.AspNetUser1.Profile.firstname + " " + message.AspNetUser1.Profile.firstname, id = message.AspNetUser1.Id });
+                    break;
+            }
+        }
+    </div>
+    <div id="divMessages" style="float:right; width:80%;">
+        <br />
+        @if (Model.conversation != null)
+        {
+            int i = 0;
+            foreach (var message in Model.conversation.messages)
+            {
+
+                switch (message.type)
+                {
+                    case MessageTypes.friendRequest:
+                        @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = message.sender.Profile.firstname + " " + message.sender.Profile.lastname + ":" + message.content });
+                        using (Html.BeginForm("AcceptFriendRequest", "Messenger", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            <div hidden="hidden">
+                                @Html.EditorFor(m => m.conversation.messages.ElementAt(i).sender.Id)
+                            </div>
+                            <button type="submit" class="btn btn-dark">Accept friend request.</button>
+                        }
+                        break;
+                    case MessageTypes.normalMessage:
+                        @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = message.sender.Profile.firstname + " " + message.sender.Profile.firstname + ":" + message.content });
+                        break;
+                    case MessageTypes.groupRequest:
+                        @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = message.sender.Profile.firstname + " " + message.sender.Profile.lastname + ":" + message.content });
+                        using (Html.BeginForm("AcceptGroupRequest", "Messenger", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            <div hidden="hidden">
+                                @Html.EditorFor(m => m.conversation.messages.ElementAt(i).content)
+                                @Html.EditorFor(m => m.conversation.messages.ElementAt(i).sender)
+                                @Html.EditorFor(m => m.conversation.messages.ElementAt(i).message_id)
+                            </div>
+                            <button type="submit" class="btn btn-dark">Accept group request.</button>
+                        }
+                        break;
+                }
+                i++;
+            }
+        }
+    </div>
+</div>
+

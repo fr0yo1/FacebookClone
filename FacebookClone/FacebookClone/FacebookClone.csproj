@@ -200,6 +200,7 @@
     <Compile Include="Controllers\AlbumController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
+    <Compile Include="Controllers\MessengerController.cs" />
     <Compile Include="Controllers\NewsFeedController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -211,6 +212,8 @@
     </Compile>
     <Compile Include="Handlers\AccesPermision.cs" />
     <Compile Include="Handlers\FilesHandler.cs" />
+    <Compile Include="Handlers\GroupHandler.cs" />
+    <Compile Include="Handlers\MessageHandler.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Album.cs">
       <DependentUpon>Model.tt</DependentUpon>
@@ -231,6 +234,7 @@
     <Compile Include="Models\Comment.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ConversationViewModel.cs" />
     <Compile Include="Models\C__MigrationHistory.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -244,6 +248,11 @@
     <Compile Include="Models\Message.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MessageType.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MessageViewModel.cs" />
+    <Compile Include="Models\MessengerViewModel.cs" />
     <Compile Include="Models\Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -301,6 +310,7 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\PopulateDatabase.edmx.sql" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -373,10 +383,12 @@
     <Content Include="Views\Shared\PhotoGalleryPartialView.cshtml" />
     <Content Include="Views\Shared\PhotoPartialView.cshtml" />
     <Content Include="Views\Groups\CreateGroupForm.cshtml" />
+    <Content Include="Views\Messenger\ShowMessenger.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Album\" />
     <Folder Include="Views\Comment\" />
+    <Folder Include="Views\Message\" />
     <Folder Include="Views\Post\" />
   </ItemGroup>
   <ItemGroup>

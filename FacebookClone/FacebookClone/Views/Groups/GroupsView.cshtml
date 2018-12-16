@@ -34,8 +34,11 @@
                     break;
                 case AccesPermision.noPermission:
                     <h2> You have to join this group first.</h2>
-                    using (Html.BeginForm("#", "Groups", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    using (Html.BeginForm("RequestToJoinSelectedGroup", "Groups", FormMethod.Post, new { enctype = "multipart/form-data" }))
                     {
+                        <div hidden="hidden">
+                            @Html.EditorFor(m => m.selectedGroup.group_id)
+                        </div>
                         <button type="submit" class="btn btn-dark">Join group.</button>
                     }
                     break;

@@ -14,11 +14,25 @@ namespace FacebookClone.Models
         public PostViewModel newPost { get; set; }
         public AccesPermision accesPermision { get; set; }
 
+        private class GroupComparator : IEqualityComparer<Group>
+        {
+            public bool Equals(Group x, Group y)
+            {
+                return x.group_id == y.group_id;
+            }
+
+            public int GetHashCode(Group obj)
+            {
+                return obj.group_id.GetHashCode();
+            }
+        }
+
         public GroupsViewModel(string selectedId, string userId)
         {
             var databaseEntities = new FacebookDatabaseEntities();
             var user = databaseEntities.AspNetUsers.Find(userId);
-            myGroups = user.Groups.ToList();
+            var groups = user.Groups;
+            myGroups = groups.Union(user.Groups1,new GroupComparator()).ToList();
 
             if (selectedId != null)
             {
@@ -26,7 +40,7 @@ namespace FacebookClone.Models
             }
             else
             {
-                selectedGroup = databaseEntities.AspNetUsers.Find(userId).Groups.FirstOrDefault();
+                selectedGroup = myGroups.FirstOrDefault();
             }
 
             //TO-DO add administrator permission
@@ -42,6 +56,11 @@ namespace FacebookClone.Models
                     accesPermision = AccesPermision.noPermission;
                 }
             }
+        }
+
+        public GroupsViewModel()
+        {
+
         }
     }
 
