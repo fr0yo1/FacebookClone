@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FacebookClone.Handlers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -35,6 +36,8 @@ namespace FacebookClone.Models
         public PostViewModel newPost { get; set; }
         public List<AlbumViewModel> albums { get; set; }
         public bool iAmaVisitor { get; set; }
+        public string profileVisitorID { get; set; }
+        public FriendshipStatus relationshipStatus { get; set; }
         public CreateAlbumViewModel newAlbum { get; set; }
         public List<FriendViewModel> friends { get; set; }
 
@@ -95,18 +98,6 @@ namespace FacebookClone.Models
         {
             var databaseEntities = new FacebookDatabaseEntities();
             PostViewModel.addPostFrom(user_id, databaseEntities, profilePath,"I changed my profile picture",-1,null,true);
-            //var databaseEntities = new FacebookDatabaseEntities();
-            //var profileAlbum = databaseEntities.Albums.Where(x => x.name.Equals("ProfileAlbum") && x.user_id == user_id).FirstOrDefault();
-
-            //Picture profilePicture = new Picture();
-            //profilePicture.album_id = profileAlbum.album_id;
-            //profilePicture.path = profilePath;
-            //profilePicture.date = DateTime.Now;
-            //profilePicture.description = "ProfilePicture";
-
-            //databaseEntities.Pictures.Add(profilePicture);
-            //databaseEntities.SaveChanges();
-
         }
     }
 

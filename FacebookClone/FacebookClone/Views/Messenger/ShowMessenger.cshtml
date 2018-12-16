@@ -35,11 +35,11 @@
                 {
                     case MessageTypes.friendRequest:
                         @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString =  message.content });
-                        using (Html.BeginForm("AcceptFriendRequest", "Messenger", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        using (Html.BeginForm("AcceptFriendRequest", "Messenger", new {senderID = Model.conversation.messages.ElementAt(i).sender.Id },FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
-                            <div hidden="hidden">
+                            @*<div hidden="hidden">
                                 @Html.EditorFor(m => m.conversation.messages.ElementAt(i).sender.Id)
-                            </div>
+                            </div>*@
                             <button type="submit" class="btn btn-dark">Accept friend request.</button>
                         }
                         break;

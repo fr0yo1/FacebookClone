@@ -30,7 +30,38 @@ else
         </div>
         <div id="divProfileInfo" style="float:right; width:45%;">
             <h3>@Model.firstname @Model.lastname</h3>
+
             <br /><br />
+
+            @if (Model.iAmaVisitor)
+            {
+                if (Model.relationshipStatus == FacebookClone.Handlers.FriendshipStatus.friends)
+                {
+                    <p>&#10004;Friends</p>
+                }
+                else if ((Model.relationshipStatus == FacebookClone.Handlers.FriendshipStatus.notSent))
+                {
+                    using (Html.BeginForm("SendFriendRequest", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                    <button type="submit">Send friend request</button>
+                    @Html.Hidden("senderID", Model.profileVisitorID)
+                        @Html.Hidden("receiverID", Model.newPost.userID)
+                    }
+                }
+                else if ((Model.relationshipStatus == FacebookClone.Handlers.FriendshipStatus.pendingSentByHim))
+                {
+                    <p> You have a friend request from @Model.firstname. Please check your messages.</p>
+                }
+                else if ((Model.relationshipStatus == FacebookClone.Handlers.FriendshipStatus.pendingSentByMe))
+                {
+                    <p>
+                        You have sent a friend request to @Model.firstname. Please wait his response.
+                    </p>
+                    }
+
+            }
+            <br /><br />
+
             <label>Age</label>
             <br />
             <input type="text" name="age" value="@Model.age" readonly />
@@ -39,7 +70,7 @@ else
             <br />
             <input type="text" name="gender" value="@Model.gender.ToString()" readonly />
         </div>
-        <div id="divFriendsList"  style="float:right; width:45%;">
+        <div id="divFriendsList" style="float:right; width:45%;">
             <br /><br />
             <label>Friends</label>
             <br /><br />
@@ -69,18 +100,18 @@ else
                         @Html.Partial("NewAlbumView", Model.newAlbum)
                     </div>
                 }
-                </div>
+            </div>
 
-                <div id="divPosts" style="float:right; width:45%;">
-                    @if (!Model.iAmaVisitor)
-                    {
-                        @Html.Partial("CreatePostPartialView", @Model.newPost)
-                    }
-                    @foreach (var post in @Model.Posts)
-                    {
-                        @Html.Partial("PostPartialView", post)
-                    }
-                </div>
+            <div id="divPosts" style="float:right; width:45%;">
+                @if (!Model.iAmaVisitor)
+                {
+                    @Html.Partial("CreatePostPartialView", @Model.newPost)
+                }
+                @foreach (var post in @Model.Posts)
+                {
+                    @Html.Partial("PostPartialView", post)
+                }
             </div>
         </div>
-                }
+    </div>
+}
