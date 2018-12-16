@@ -1,0 +1,15 @@
+﻿@model FacebookClone.Models.CreateAlbumViewModel
+@{
+    ViewBag.Title = "CreateGroupForm";
+}
+
+@using (Html.BeginForm("SaveAlbum", "Album", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <h3 style=" text-align:center;">Create a new album</h3>
+    <label>Album name</label>
+    <br />
+    <input type="text" name="name" value="@Model.name" />
+    <br><br>
+    <button type="submit">Create</button>
+}

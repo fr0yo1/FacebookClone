@@ -383,6 +383,7 @@
     <Content Include="Views\Shared\PhotoGalleryPartialView.cshtml" />
     <Content Include="Views\Shared\PhotoPartialView.cshtml" />
     <Content Include="Views\Groups\CreateGroupForm.cshtml" />
+    <Content Include="Views\Shared\NewAlbumView.cshtml" />
     <Content Include="Views\Messenger\ShowMessenger.cshtml" />
   </ItemGroup>
   <ItemGroup>

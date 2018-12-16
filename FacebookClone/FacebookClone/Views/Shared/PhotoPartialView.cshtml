@@ -4,7 +4,7 @@
 }
 @using (Html.BeginForm("ShowPostFromAlbum", "Album", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <input type="image" src=@Url.Content(@Model.postPictureRelativePath) style="width:170px;height:200px;">
+    <input id="img" type="image" src=@Url.Content(@Model.postPictureRelativePath) style="width:170px;height:200px;">
     <div hidden="hidden">
         @Html.EditorFor(m => m.post_id)
         @Html.EditorFor(m => m.userID)
@@ -13,7 +13,7 @@
     <div class="desc">@Model.content</div>
 }
 <style>
-    input {
+    input.img {
         width: 100%;
         height: 150px;
     }

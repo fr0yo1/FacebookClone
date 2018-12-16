@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace FacebookClone.Models
 {
@@ -52,15 +53,18 @@ namespace FacebookClone.Models
             toDataBase.SaveChanges();
         }
 
-        static public void addPostFrom(string user_id, FacebookDatabaseEntities toDataBase, String picturePath,string content, Nullable<int> group_id = null,bool isProfilePicture=false)
+        static public void addPostFrom(string user_id, FacebookDatabaseEntities toDataBase, String picturePath,string content, int albumID, Nullable<int> group_id = null, bool isProfilePicture=false)
         {
             Album album = null;
             if(isProfilePicture)
                 album = toDataBase.Albums.Where(x => x.name.Equals("ProfileAlbum") && x.user_id == user_id).FirstOrDefault();
             else
             {
-                album = toDataBase.Albums.Where(x => x.name.Equals("PostedPicturesAlbum") && x.user_id == user_id).FirstOrDefault();
-                if(album==null)
+                if(albumID!=-1) //if we have an album to add the post to
+                    album = toDataBase.Albums.Where(x => x.album_id==albumID).FirstOrDefault();
+                if(album==null) //if we have not specified the id put it to posted pictures
+                    album = toDataBase.Albums.Where(x => x.name.Equals("PostedPicturesAlbum") && x.user_id == user_id).FirstOrDefault();
+                if(album==null) //if we have not specified the album and we also do not have the posted picture album created
                     album = toDataBase.Albums.Add(new Album { user_id = user_id, name = "PostedPicturesAlbum", date = DateTime.Now });
             }
             var aspNetUser = toDataBase.AspNetUsers.Find(user_id);
@@ -80,6 +84,22 @@ namespace FacebookClone.Models
             newPost.date = DateTime.Now;
             toDataBase.Posts.Add(newPost);
             toDataBase.SaveChanges();
+        }
+        
+        public IEnumerable<SelectListItem> GetAlbumNames(string id)
+        {
+            var selectList = new List<SelectListItem>();
+            var databaseEntities = new FacebookDatabaseEntities();
+            List<Album> albums = databaseEntities.Albums.Where(x => x.user_id.Equals(id)).ToList();
+            foreach (var album in albums)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Value = album.album_id.ToString(),
+                    Text = album.name
+                });
+            }
+            return selectList;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace FacebookClone.Models
         {
             var groups = user.Groups;
             List<Post> posts = new List<Post>();
-
+            //TODO TBD posts are shown twice
             foreach (var group in groups)
             {
                 posts.AddRange(group.Posts);

@@ -47,9 +47,14 @@ else
                 {
                     @Html.Partial("AlbumPartialView", album)
                 }
+                
                 @*TODO ADD OPTION TO ADD NEW ALBUM
                     @Html.Partial("AlbumPartialView", album)*@
+                <div style="border:1px solid black; padding:10px; clear:both;">
+                    @Html.Partial("NewAlbumView", Model.newAlbum)
+                </div>
             </div>
+           
             <div id="divPosts" style="float:right; width:45%;">
                 @if (!Model.iAmaVisitor)
                 {
