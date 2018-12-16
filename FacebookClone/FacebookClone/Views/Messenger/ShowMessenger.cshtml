@@ -7,7 +7,7 @@
 <div style="width:100%;">
     <div id="divUserList" style="float:left; width:15%; border-right: thin solid #000000;">
         <h2> Users list:</h2>
-        @foreach (var message in Model.requests)
+        @foreach (var message in Model.receivedRequests)
         {
             switch (message.type)
             {
