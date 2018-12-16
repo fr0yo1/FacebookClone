@@ -10,13 +10,38 @@
     <input type="text" name="content" id="txtContent" /><br />
     <label for="file">Upload a picture:</label>
     <br />
-    <input type="file" name="picture" id="file" /><br />
+    <input type="file" name="picture" id="file" onchange="readURL(this);" /><br />
+    
+    <div id="ddlAlbums" style="display:none;">
+        <label>Select  the album</label>
+        <br />
+        @Html.DropDownListFor(x => x.albumID, new SelectList(Model.GetAlbumNames(Model.userID), "Value", "Text"), "Select...")
+        <br /><br />
+    </div>
     <div id="divButtons" style="clear:both;">
         <button type="submit">Post</button>
     </div>
     <div hidden="hidden">
         @Html.EditorFor(model => model)
     </div>
-    <br><br>
+    <input type="hidden" value="@Model.appLocation" id="hdnFlag" />
 </div>
 }
+<script>
+    function readURL(input) {
+        var hdnFlagVal = $("#hdnFlag").val();
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                if(hdnFlagVal == "Profile")
+                $('#ddlAlbums').show();
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+        else $('#ddlAlbums').hide();
+
+    }
+</script>

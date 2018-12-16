@@ -28,7 +28,7 @@ namespace FacebookClone.Controllers
             {
                 userPosts.Add(new PostViewModel(post, "Profile"));
             }
-            albumViewModel = new AlbumViewModel(albumViewModel.albumName, albumViewModel.appLocation, albumViewModel.albumID,userPosts);
+            albumViewModel = new AlbumViewModel(albumViewModel.albumName, albumViewModel.appLocation, albumViewModel.albumID,userPosts, albumViewModel.userID);
             return View("PhotoGalleryPartialView", albumViewModel);
         }
 
@@ -43,6 +43,20 @@ namespace FacebookClone.Controllers
             
             // postViewModel = new PostViewModel(postViewModel.)
             return View("PostPartialView", postViewModel);
+        }
+
+        [Authorize]
+        public ActionResult SaveAlbum(CreateAlbumViewModel newAlbum)
+        {
+            string currentUserId = User.Identity.GetUserId();
+
+            if (ModelState.IsValid)
+            {
+                FacebookDatabaseEntities db = new FacebookDatabaseEntities();
+                newAlbum.saveToDatabase(currentUserId, Server, db);
+            }
+            char[] idArgument = currentUserId.ToCharArray();
+            return RedirectToAction("Show", "Profile", new { id = currentUserId });
         }
     }
 }

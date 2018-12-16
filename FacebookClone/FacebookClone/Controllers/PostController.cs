@@ -25,7 +25,7 @@ namespace FacebookClone.Controllers
             var path = FilesHandler.saveImage(postViewModel.picture, Server);
             if(postViewModel.picture==null || path!=null)
             {
-                PostViewModel.addPostFrom(userId, databaseEntities, path,postViewModel.content,postViewModel.group_id);
+                PostViewModel.addPostFrom(userId, databaseEntities, path,postViewModel.content, postViewModel.albumID,postViewModel.group_id);
             }
             else
                 ModelState.AddModelError("imageError", "Something went wrong we were unable to save the photo");

@@ -35,6 +35,7 @@ namespace FacebookClone.Models
         public PostViewModel newPost { get; set; }
         public List<AlbumViewModel> albums { get; set; }
         public bool iAmaVisitor { get; set; }
+        public CreateAlbumViewModel newAlbum { get; set; }
 
         public ProfileViewModel(){}
 
@@ -49,8 +50,10 @@ namespace FacebookClone.Models
             Posts = posts;
             this.albums = albums;
             newPost = new PostViewModel();
-            if(posts!=null && posts.Count!=0)
+            newPost.userID = profile.AspNetUser.Id;
+            if (posts!=null && posts.Count!=0)
                 newPost.appLocation = posts[0].appLocation;
+            newAlbum = new CreateAlbumViewModel();
         }
 
         public IEnumerable<SelectListItem> getGenderList()
@@ -89,7 +92,7 @@ namespace FacebookClone.Models
         public void addNewProfileToUser(String user_id, String profilePath)
         {
             var databaseEntities = new FacebookDatabaseEntities();
-            PostViewModel.addPostFrom(user_id, databaseEntities, profilePath,"I changed my profile picture",null,true);
+            PostViewModel.addPostFrom(user_id, databaseEntities, profilePath,"I changed my profile picture",-1,null,true);
             //var databaseEntities = new FacebookDatabaseEntities();
             //var profileAlbum = databaseEntities.Albums.Where(x => x.name.Equals("ProfileAlbum") && x.user_id == user_id).FirstOrDefault();
 
