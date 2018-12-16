@@ -53,6 +53,19 @@ namespace FacebookClone.Controllers
             return RedirectToAction("ShowChat", "Messenger", new { id = sender.Id});
         }
 
+        [Authorize]
+        [HttpPost]
+        public ActionResult SendMessage(ConversationViewModel conversation)
+        {
+            FacebookDatabaseEntities databaseEntities = new FacebookDatabaseEntities();
+            var currentUserId = User.Identity.GetUserId();
+            var message = new Message() { sender_id = currentUserId, receiver_id = conversation.sendToUserId, content = conversation.inputText, date = DateTime.Now, type = Convert.ToInt32(MessageTypes.normalMessage) };
+
+            MessageHandler.sendMessage(message);
+
+            return RedirectToAction("ShowChat", "Messenger", new { id = conversation.sendToUserId });
+        }
         
+
     }
 }

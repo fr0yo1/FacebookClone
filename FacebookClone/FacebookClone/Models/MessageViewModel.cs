@@ -12,6 +12,12 @@ namespace FacebookClone.Models
         groupRequest = 3
     }
 
+    public enum State
+    {
+        received,
+        sent
+    }
+
     public class MessageViewModel
     {
         public int message_id { get; set; }
@@ -21,8 +27,9 @@ namespace FacebookClone.Models
         public AspNetUser receiver { get;  set; }
         public MessageTypes type { get; set; }
         public string actionId { get; set; }
+        public State state { get; set; }
 
-        public MessageViewModel(Message message)
+        public MessageViewModel(Message message,string sendToUserId)
         {
             message_id = message.message_id;
             date = message.date;
@@ -37,16 +44,26 @@ namespace FacebookClone.Models
                 case 2:
                     type = MessageTypes.friendRequest;
                     actionId = message.content;
-                    content = sender.Profile.firstname + " " + sender.Profile.lastname + " " + " sent you a friend request";
+                    content = " sent a friend request";
                     break;
                 case 3:
                     type = MessageTypes.groupRequest;
                     actionId = message.content;
                     FacebookDatabaseEntities databaseEntities = new FacebookDatabaseEntities();
                     var group = databaseEntities.Groups.Find(int.Parse(actionId));
-                    content = sender.Profile.firstname + " " + sender.Profile.lastname + " " + " sent you a group request for " + group.name;
+                    content = " sent a group request for " + group.name;
                     break;
 
+            }
+
+            if (sender.Id == sendToUserId)
+            {
+                content = sender.Profile.firstname + " " + sender.Profile.lastname + " : " + content;
+                state = State.received;
+            } else
+            {
+                content = " me : " + content;
+                state = State.sent;
             }
         }
     }

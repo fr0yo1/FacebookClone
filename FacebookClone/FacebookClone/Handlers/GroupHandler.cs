@@ -18,6 +18,10 @@ namespace FacebookClone.Handlers
             message.type = Convert.ToInt32(MessageTypes.normalMessage);
             message.content = "Group request accepted";
 
+            var aux = message.sender_id;
+            message.sender_id = message.receiver_id;
+            message.receiver_id = aux;
+
             databaseEntities.SaveChanges();
         }
     }

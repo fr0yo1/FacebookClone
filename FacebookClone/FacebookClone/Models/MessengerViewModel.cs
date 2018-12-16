@@ -14,20 +14,31 @@ namespace FacebookClone.Models
 
         public MessengerViewModel(AspNetUser user)
         {
-            friends = user.AspNetUsers.ToList();
-            receivedRequests = user.Messages.Where(x=> x.type == Convert.ToInt32(MessageTypes.friendRequest) || x.type == Convert.ToInt32(MessageTypes.groupRequest)).ToList();
-            sentRequests = user.Messages1.Where(x => x.type == Convert.ToInt32(MessageTypes.friendRequest) || x.type == Convert.ToInt32(MessageTypes.groupRequest)).ToList();
+            setUserList(user);
         }
 
         public MessengerViewModel(string receiver_id, string sender_id)
         {
             FacebookDatabaseEntities databaseEntities = new FacebookDatabaseEntities();
             var user = databaseEntities.AspNetUsers.Find(receiver_id);
+
+            setUserList(user);
+
+            var messages = databaseEntities.Messages.Where(x => (x.sender_id == sender_id && x.receiver_id == receiver_id) || (x.sender_id == receiver_id && x.receiver_id == sender_id)).ToList();
+            var userCanSendMessages = friends.Select(x => x.Id == sender_id).Any(x => x == true);
+            conversation = new ConversationViewModel(messages, userCanSendMessages, sender_id);
+        }
+
+        private void setUserList(AspNetUser user)
+        {
+            var u = user.AspNetUsers.DefaultIfEmpty();
             friends = user.AspNetUsers.ToList();
             receivedRequests = user.Messages.Where(x => x.type == Convert.ToInt32(MessageTypes.friendRequest) || x.type == Convert.ToInt32(MessageTypes.groupRequest)).ToList();
-
-            var messages = user.Messages.Where(x => x.sender_id == sender_id && x.receiver_id == receiver_id).ToList();
-            conversation = new ConversationViewModel(messages);
+            //remove friend requests as they are shown in conversation.
+            receivedRequests = receivedRequests.Where(x => user.AspNetUsers.Select(y => y.Id == x.sender_id).DefaultIfEmpty().Any(y => y == false)).ToList();
+            sentRequests = user.Messages1.Where(x => x.type == Convert.ToInt32(MessageTypes.friendRequest) || x.type == Convert.ToInt32(MessageTypes.groupRequest)).ToList();
+            //remove friend requests as they are shown in conversation.
+            sentRequests = sentRequests.Where(x => user.AspNetUsers.Select(y => y.Id == x.receiver_id).DefaultIfEmpty().Any(y => y == false)).ToList();
         }
     }
 }
