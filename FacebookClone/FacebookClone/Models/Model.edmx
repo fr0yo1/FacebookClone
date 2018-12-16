@@ -119,6 +119,14 @@
           <Property Name="receiver_id" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="date" Type="datetime" Nullable="false" />
           <Property Name="content" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="type" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MessageType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Pictures">
           <Key>
@@ -323,6 +331,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Messages_MessageType">
+          <End Role="MessageType" Type="Self.MessageType" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MessageType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Picture_ToAlbum">
           <End Role="Albums" Type="Self.Albums" Multiplicity="1" />
           <End Role="Pictures" Type="Self.Pictures" Multiplicity="*" />
@@ -398,6 +418,7 @@
           <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GroupUser" EntityType="Self.GroupUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MessageType" EntityType="Self.MessageType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pictures" EntityType="Self.Pictures" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Posts" EntityType="Self.Posts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profiles" EntityType="Self.Profiles" Schema="dbo" store:Type="Tables" />
@@ -457,6 +478,10 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
+          <AssociationSet Name="FK_Messages_MessageType" Association="Self.FK_Messages_MessageType">
+            <End Role="MessageType" EntitySet="MessageType" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
           <AssociationSet Name="FK_Picture_ToAlbum" Association="Self.FK_Picture_ToAlbum">
             <End Role="Albums" EntitySet="Albums" />
             <End Role="Pictures" EntitySet="Pictures" />
@@ -492,6 +517,7 @@
           <EntitySet Name="Comments" EntityType="FacebookDatabaseModel.Comment" />
           <EntitySet Name="Groups" EntityType="FacebookDatabaseModel.Group" />
           <EntitySet Name="Messages" EntityType="FacebookDatabaseModel.Message" />
+          <EntitySet Name="MessageTypes" EntityType="FacebookDatabaseModel.MessageType" />
           <EntitySet Name="Pictures" EntityType="FacebookDatabaseModel.Picture" />
           <EntitySet Name="Posts" EntityType="FacebookDatabaseModel.Post" />
           <EntitySet Name="Profiles" EntityType="FacebookDatabaseModel.Profile" />
@@ -542,6 +568,10 @@
           <AssociationSet Name="FK_Post_ToGroup" Association="FacebookDatabaseModel.FK_Post_ToGroup">
             <End Role="Group" EntitySet="Groups" />
             <End Role="Post" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_MessageType" Association="FacebookDatabaseModel.FK_Messages_MessageType">
+            <End Role="MessageType" EntitySet="MessageTypes" />
+            <End Role="Message" EntitySet="Messages" />
           </AssociationSet>
           <AssociationSet Name="FK_Posts_ToPicture" Association="FacebookDatabaseModel.FK_Posts_ToPicture">
             <End Role="Picture" EntitySet="Pictures" />
@@ -672,8 +702,18 @@
           <Property Name="receiver_id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="content" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="type" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AspNetUser" Relationship="FacebookDatabaseModel.FK_Message_ToRUser" FromRole="Message" ToRole="AspNetUser" />
           <NavigationProperty Name="AspNetUser1" Relationship="FacebookDatabaseModel.FK_Message_ToUser" FromRole="Message" ToRole="AspNetUser" />
+          <NavigationProperty Name="MessageType" Relationship="FacebookDatabaseModel.FK_Messages_MessageType" FromRole="Message" ToRole="MessageType" />
+        </EntityType>
+        <EntityType Name="MessageType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Messages" Relationship="FacebookDatabaseModel.FK_Messages_MessageType" FromRole="MessageType" ToRole="Message" />
         </EntityType>
         <EntityType Name="Picture">
           <Key>
@@ -864,6 +904,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Messages_MessageType">
+          <End Type="FacebookDatabaseModel.MessageType" Role="MessageType" Multiplicity="1" />
+          <End Type="FacebookDatabaseModel.Message" Role="Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MessageType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Posts_ToPicture">
           <End Type="FacebookDatabaseModel.Picture" Role="Picture" Multiplicity="0..1" />
           <End Type="FacebookDatabaseModel.Post" Role="Post" Multiplicity="*" />
@@ -983,11 +1035,20 @@
           <EntitySetMapping Name="Messages">
             <EntityTypeMapping TypeName="FacebookDatabaseModel.Message">
               <MappingFragment StoreEntitySet="Messages">
+                <ScalarProperty Name="type" ColumnName="type" />
                 <ScalarProperty Name="content" ColumnName="content" />
                 <ScalarProperty Name="date" ColumnName="date" />
                 <ScalarProperty Name="receiver_id" ColumnName="receiver_id" />
                 <ScalarProperty Name="sender_id" ColumnName="sender_id" />
                 <ScalarProperty Name="message_id" ColumnName="message_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MessageTypes">
+            <EntityTypeMapping TypeName="FacebookDatabaseModel.MessageType">
+              <MappingFragment StoreEntitySet="MessageType">
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

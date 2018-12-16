@@ -19,8 +19,10 @@ namespace FacebookClone.Models
         public string receiver_id { get; set; }
         public System.DateTime date { get; set; }
         public string content { get; set; }
+        public int type { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual AspNetUser AspNetUser1 { get; set; }
+        public virtual MessageType MessageType { get; set; }
     }
 }

@@ -34,6 +34,7 @@ namespace FacebookClone.Models
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<Message> Messages { get; set; }
+        public virtual DbSet<MessageType> MessageTypes { get; set; }
         public virtual DbSet<Picture> Pictures { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<Profile> Profiles { get; set; }
