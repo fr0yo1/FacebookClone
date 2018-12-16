@@ -85,7 +85,19 @@ namespace FacebookClone.Controllers
                 {
                     userAlbums.Add(new AlbumViewModel(album.name, "Profile",album.album_id,userPosts, id));
                 }
-                var profileViewModel = new ProfileViewModel(profile, userAlbums, userPosts);
+
+                List<AspNetUser> friends = aspNetUser.AspNetUsers.ToList();
+                List<Profile> profiles = databaseEntities.Profiles.ToList();
+                List<Profile> friendsProfiles = (from aspUser in friends
+                              join friendProfile in profiles on aspUser.Id equals friendProfile.Id
+                              select friendProfile).ToList();
+                //databaseEntities.Profiles.Select(x => x.Id).ToList().Intersect(friends.Select(x => x.Id).ToList()).ToList();
+                List<FriendViewModel> friendsList = new List<FriendViewModel>();
+                foreach (Profile friend in friendsProfiles)
+                {
+                    friendsList.Add(new FriendViewModel(friend.Id, friend.Albums.Where(x=>x.name== "ProfileAlbum").FirstOrDefault().Pictures.OrderByDescending(x=>x.date).FirstOrDefault().path, friend.firstname +friend.lastname));
+                }
+                var profileViewModel = new ProfileViewModel(profile, userAlbums, userPosts, friendsList);
                 profileViewModel.iAmaVisitor = iAmaVisitor;
                 return View("Profile", profileViewModel);
             }

@@ -7,7 +7,7 @@
       <Diagram DiagramId="4641a0ef8a044a5b9436076a8d19e738" Name="Diagram1" ZoomLevel="97">
         <EntityTypeShape EntityType="FacebookDatabaseModel.Album" Width="1.5" PointX="7.5" PointY="12" />
         <EntityTypeShape EntityType="FacebookDatabaseModel.AspNetRole" Width="1.5" PointX="0.75" PointY="9.875" />
-        <EntityTypeShape EntityType="FacebookDatabaseModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="20.75" />
+        <EntityTypeShape EntityType="FacebookDatabaseModel.AspNetUserClaim" Width="3.125" PointX="5.25" PointY="20.75" />
         <EntityTypeShape EntityType="FacebookDatabaseModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="15" />
         <EntityTypeShape EntityType="FacebookDatabaseModel.AspNetUser" Width="1.5" PointX="3" PointY="7.875" />
         <EntityTypeShape EntityType="FacebookDatabaseModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" />

@@ -36,10 +36,11 @@ namespace FacebookClone.Models
         public List<AlbumViewModel> albums { get; set; }
         public bool iAmaVisitor { get; set; }
         public CreateAlbumViewModel newAlbum { get; set; }
+        public List<FriendViewModel> friends { get; set; }
 
         public ProfileViewModel(){}
 
-        public ProfileViewModel(Profile profile, List<AlbumViewModel> albums, List<PostViewModel> posts=null)
+        public ProfileViewModel(Profile profile, List<AlbumViewModel> albums, List<PostViewModel> posts=null, List<FriendViewModel> friends=null)
         {
             firstname = profile.firstname;
             lastname = profile.lastname;
@@ -54,6 +55,7 @@ namespace FacebookClone.Models
             if (posts!=null && posts.Count!=0)
                 newPost.appLocation = posts[0].appLocation;
             newAlbum = new CreateAlbumViewModel();
+            this.friends = friends;
         }
 
         public IEnumerable<SelectListItem> getGenderList()

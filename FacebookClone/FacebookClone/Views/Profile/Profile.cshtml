@@ -39,6 +39,22 @@ else
             <br />
             <input type="text" name="gender" value="@Model.gender.ToString()" readonly />
         </div>
+        <div id="divFriendsList"  style="float:right; width:45%;">
+            <br /><br />
+            <label>Friends</label>
+            <br /><br />
+            @if (Model.friends.Count != 0 && Model.friends != null)
+            {
+                foreach (var friend in Model.friends)
+                {
+                    @Html.Partial("FriendOnProfilePartialView", friend)
+                }
+            }
+            else
+            {
+                <p>No friends to show.</p>
+            }
+        </div>
 
         <div style="clear:both;">
             <hr />
@@ -47,24 +63,24 @@ else
                 {
                     @Html.Partial("AlbumPartialView", album)
                 }
-                
-                @*TODO ADD OPTION TO ADD NEW ALBUM
-                    @Html.Partial("AlbumPartialView", album)*@
-                <div style="border:1px solid black; padding:10px; clear:both;">
-                    @Html.Partial("NewAlbumView", Model.newAlbum)
-                </div>
-            </div>
-           
-            <div id="divPosts" style="float:right; width:45%;">
                 @if (!Model.iAmaVisitor)
                 {
-                    @Html.Partial("CreatePostPartialView", @Model.newPost)
+                    <div style="border:1px solid black; padding:10px; clear:both;">
+                        @Html.Partial("NewAlbumView", Model.newAlbum)
+                    </div>
                 }
-                @foreach (var post in @Model.Posts)
-                {
-                    @Html.Partial("PostPartialView", post)
-                }
+                </div>
+
+                <div id="divPosts" style="float:right; width:45%;">
+                    @if (!Model.iAmaVisitor)
+                    {
+                        @Html.Partial("CreatePostPartialView", @Model.newPost)
+                    }
+                    @foreach (var post in @Model.Posts)
+                    {
+                        @Html.Partial("PostPartialView", post)
+                    }
+                </div>
             </div>
         </div>
-    </div>
-}
+                }
