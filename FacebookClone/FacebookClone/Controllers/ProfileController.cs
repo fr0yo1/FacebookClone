@@ -85,8 +85,30 @@ namespace FacebookClone.Controllers
                 {
                     userAlbums.Add(new AlbumViewModel(album.name, "Profile",album.album_id,userPosts, id));
                 }
-                var profileViewModel = new ProfileViewModel(profile, userAlbums, userPosts);
+
+                List<AspNetUser> friends = aspNetUser.AspNetUsers.ToList();
+                List<Profile> profiles = databaseEntities.Profiles.ToList();
+                List<Profile> friendsProfiles = (from aspUser in friends
+                              join friendProfile in profiles on aspUser.Id equals friendProfile.Id
+                              select friendProfile).ToList();
+                List<FriendViewModel> friendsList = new List<FriendViewModel>();
+                foreach (Profile friend in friendsProfiles)
+                {
+                    friendsList.Add(new FriendViewModel(friend.Id, friend.Albums.Where(x=>x.name== "ProfileAlbum").FirstOrDefault().Pictures.OrderByDescending(x=>x.date).FirstOrDefault().path, friend.firstname +friend.lastname));
+                }
+                var profileViewModel = new ProfileViewModel(profile, userAlbums, userPosts, friendsList);
                 profileViewModel.iAmaVisitor = iAmaVisitor;
+                if (iAmaVisitor)
+                {
+                    var myID = User.Identity.GetUserId();
+                    profileViewModel.profileVisitorID = myID;
+                    if (friendsProfiles.Select(x => x.Id).ToList().Contains(myID))
+                        profileViewModel.relationshipStatus = FriendshipStatus.friends;
+                    else
+                    {
+                        profileViewModel.relationshipStatus = MessageHandler.GetFriendRequestStatus(User.Identity.GetUserId(), id);
+                    }
+                }
                 return View("Profile", profileViewModel);
             }
    
@@ -97,6 +119,19 @@ namespace FacebookClone.Controllers
         {
             var id = User.Identity.GetUserId();
             return RedirectToAction("Show", "Profile", new { id = id});
+        }
+        [Authorize]
+        public ActionResult SendFriendRequest(string senderID, string receiverID)
+        {
+            FacebookDatabaseEntities db = new FacebookDatabaseEntities();
+            Message newFriendRequestAsMessage = new Message() { sender_id = senderID, receiver_id = receiverID, date = DateTime.Now, type = (int)MessageTypes.friendRequest, content = "Please add me as a friend." };
+            //newFriendRequestAsMessage.AspNetUser = db.AspNetUsers.Find(senderID);
+            //newFriendRequestAsMessage.AspNetUser1 = db.AspNetUsers.Find(receiverID);
+            //newFriendRequestAsMessage.date = DateTime.Now;
+            //newFriendRequestAsMessage.type = (int)MessageTypes.friendRequest;
+
+            MessageHandler.sendMessage(newFriendRequestAsMessage);
+            return RedirectToAction("Show", "Profile", new { id = receiverID });
         }
     }
 }

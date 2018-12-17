@@ -8,7 +8,7 @@ namespace FacebookClone.Models
     public class MessengerViewModel
     {
         public List<AspNetUser> friends { get; set; }
-        public List<ChatPreviewViewModel> chatPreviewViewModel { get; set; }
+        public IEnumerable<ChatPreviewViewModel> chatPreviewViewModel { get; set; }
         public List<Message> receivedRequests { get; set; }
         public List<Message> sentRequests { get; set; }
         public ConversationViewModel conversation { get; set; }
@@ -35,7 +35,7 @@ namespace FacebookClone.Models
             var u = user.AspNetUsers.DefaultIfEmpty();
             friends = user.AspNetUsers.ToList();
 
-            chatPreviewViewModel = friends.Select(x => new ChatPreviewViewModel(x.Messages.Where(w => w.sender_id == user.Id).OrderByDescending(y => y.date).First(), x.Messages1.Where(w => w.receiver_id == user.Id).OrderByDescending(y => y.date).First(),x)).ToList();
+            chatPreviewViewModel = friends.Select(x => new ChatPreviewViewModel(x.Messages.Where(w => w.sender_id == user.Id).OrderByDescending(y => y.date).FirstOrDefault(), x.Messages1.Where(w => w.receiver_id == user.Id).OrderByDescending(y => y.date).FirstOrDefault(), x));
 
             receivedRequests = user.Messages.Where(x => x.type == Convert.ToInt32(MessageTypes.friendRequest) || x.type == Convert.ToInt32(MessageTypes.groupRequest)).ToList();
             //remove friend requests as they are shown in conversation.

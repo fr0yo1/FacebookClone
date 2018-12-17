@@ -30,7 +30,38 @@ else
         </div>
         <div id="divProfileInfo" style="float:right; width:45%;">
             <h3>@Model.firstname @Model.lastname</h3>
+
             <br /><br />
+
+            @if (Model.iAmaVisitor)
+            {
+                if (Model.relationshipStatus == FacebookClone.Handlers.FriendshipStatus.friends)
+                {
+                    <p>&#10004;Friends</p>
+                }
+                else if ((Model.relationshipStatus == FacebookClone.Handlers.FriendshipStatus.notSent))
+                {
+                    using (Html.BeginForm("SendFriendRequest", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                    <button type="submit">Send friend request</button>
+                    @Html.Hidden("senderID", Model.profileVisitorID)
+                        @Html.Hidden("receiverID", Model.newPost.userID)
+                    }
+                }
+                else if ((Model.relationshipStatus == FacebookClone.Handlers.FriendshipStatus.pendingSentByHim))
+                {
+                    <p> You have a friend request from @Model.firstname. Please check your messages.</p>
+                }
+                else if ((Model.relationshipStatus == FacebookClone.Handlers.FriendshipStatus.pendingSentByMe))
+                {
+                    <p>
+                        You have sent a friend request to @Model.firstname. Please wait his response.
+                    </p>
+                    }
+
+            }
+            <br /><br />
+
             <label>Age</label>
             <br />
             <input type="text" name="age" value="@Model.age" readonly />
@@ -38,6 +69,22 @@ else
             <label>Gender</label>
             <br />
             <input type="text" name="gender" value="@Model.gender.ToString()" readonly />
+        </div>
+        <div id="divFriendsList" style="float:right; width:45%;">
+            <br /><br />
+            <label>Friends</label>
+            <br /><br />
+            @if (Model.friends.Count != 0 && Model.friends != null)
+            {
+                foreach (var friend in Model.friends)
+                {
+                    @Html.Partial("FriendOnProfilePartialView", friend)
+                }
+            }
+            else
+            {
+                <p>No friends to show.</p>
+            }
         </div>
 
         <div style="clear:both;">
@@ -47,14 +94,14 @@ else
                 {
                     @Html.Partial("AlbumPartialView", album)
                 }
-                
-                @*TODO ADD OPTION TO ADD NEW ALBUM
-                    @Html.Partial("AlbumPartialView", album)*@
-                <div style="border:1px solid black; padding:10px; clear:both;">
-                    @Html.Partial("NewAlbumView", Model.newAlbum)
-                </div>
+                @if (!Model.iAmaVisitor)
+                {
+                    <div style="border:1px solid black; padding:10px; clear:both;">
+                        @Html.Partial("NewAlbumView", Model.newAlbum)
+                    </div>
+                }
             </div>
-           
+
             <div id="divPosts" style="float:right; width:45%;">
                 @if (!Model.iAmaVisitor)
                 {

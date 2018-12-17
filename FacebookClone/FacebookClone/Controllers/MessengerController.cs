@@ -28,9 +28,20 @@ namespace FacebookClone.Controllers
         }
 
         [Authorize]
-        public ActionResult AcceptFriendRequest(string Id)
+        public ActionResult AcceptFriendRequest(string senderID)
         {
-            return View("ShowMessenger");
+            FacebookDatabaseEntities databaseEntities = new FacebookDatabaseEntities();
+            var user = databaseEntities.AspNetUsers.Find(senderID);
+            var me = databaseEntities.AspNetUsers.Find(User.Identity.GetUserId());
+            user.AspNetUsers.Add(me);
+            me.AspNetUsers.Add(user);
+
+            var message = databaseEntities.Messages.Where(x=>x.sender_id == user.Id && x.receiver_id == me.Id && x.type == (int)MessageTypes.friendRequest).FirstOrDefault();
+            message.type = Convert.ToInt32(MessageTypes.normalMessage);
+            message.content = "Friend request accepted";
+
+            databaseEntities.SaveChanges();
+            return RedirectToAction("ShowChat", "Messenger", new { id = senderID });
         }
 
         [Authorize]
