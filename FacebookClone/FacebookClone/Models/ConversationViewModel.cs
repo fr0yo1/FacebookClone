@@ -9,16 +9,20 @@ namespace FacebookClone.Models
     {
         public List<MessageViewModel> messages { get; set; }
         public string sendToUserId { get; set; }
+        public string sendFromUserId { get; set; }
         public string inputText { get; set; }
         public string senderPicture { get; set; }
         public string receiverPicture { get; set; }
         public bool userCanSendMessages { get; set; }
 
+        private int showLastNMessages = 5;
+
         public ConversationViewModel(List<Message> messages,bool userCanSendMessages,string ToUserId, string fromUserId)
         {
             this.sendToUserId = ToUserId;
+            this.sendFromUserId = fromUserId;
             this.userCanSendMessages = userCanSendMessages;
-            this.messages = messages.Select(x=> new MessageViewModel(x, ToUserId)).ToList();
+            this.messages = messages.Skip(messages.Count - showLastNMessages).Select(x=> new MessageViewModel(x, ToUserId)).ToList();
 
             FacebookDatabaseEntities databaseEntities = new FacebookDatabaseEntities();
 
