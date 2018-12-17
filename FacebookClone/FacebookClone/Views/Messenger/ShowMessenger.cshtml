@@ -62,17 +62,20 @@
             foreach (var message in Model.conversation.messages)
             {
                 string picture;
-                if (message.state == State.received)
+                string userId;
+                if (message.state == State.sent)
                 {
+                    userId = Model.conversation.sendFromUserId;
                     picture = Model.conversation.senderPicture;
                 } else
                 {
+                    userId = Model.conversation.sendToUserId;
                     picture = Model.conversation.receiverPicture;
                 }
                 switch (message.type)
                 {
                     case MessageTypes.friendRequest:
-                        @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = message.content , imagePath = picture });
+                        @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = message.content , imagePath = picture, myController="Profile", clickOption="Show", id= userId });
                         if (message.state == State.received)
                         {
                             using (Html.BeginForm("AcceptFriendRequest", "Messenger", new { senderID = Model.conversation.messages.ElementAt(i).sender.Id }, FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -86,10 +89,10 @@
                         }
                         break;
                     case MessageTypes.normalMessage:
-                        @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = message.content, imagePath = picture });
+                        @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = message.content, imagePath = picture , myController = "Profile", clickOption = "Show", id = userId });
                         break;
                     case MessageTypes.groupRequest:
-                        @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = message.content, imagePath = picture });
+                        @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = message.content, imagePath = picture, myController = "Profile", clickOption = "Show", id = userId });
                         if (message.state == State.received)
                         {
                             using (Html.BeginForm("AcceptGroupRequest", "Messenger", FormMethod.Post, new { enctype = "multipart/form-data" }))
