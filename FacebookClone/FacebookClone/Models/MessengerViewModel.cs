@@ -27,7 +27,7 @@ namespace FacebookClone.Models
 
             var messages = databaseEntities.Messages.Where(x => (x.sender_id == sender_id && x.receiver_id == receiver_id) || (x.sender_id == receiver_id && x.receiver_id == sender_id)).ToList();
             var userCanSendMessages = friends.Select(x => x.Id == sender_id).Any(x => x == true);
-            conversation = new ConversationViewModel(messages, userCanSendMessages, sender_id);
+            conversation = new ConversationViewModel(messages, userCanSendMessages, sender_id, receiver_id);
         }
 
         private void setUserList(AspNetUser user)
