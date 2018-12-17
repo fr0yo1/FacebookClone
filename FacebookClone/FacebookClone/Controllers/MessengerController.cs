@@ -21,10 +21,10 @@ namespace FacebookClone.Controllers
         }
 
         [Authorize]
-        public ActionResult ShowChat(string id)
+        public ActionResult ShowChat(string sendToUserId)
         {
             var receiver_id = User.Identity.GetUserId();
-            return   View("ShowMessenger",new MessengerViewModel(receiver_id, id));
+            return   View("ShowMessenger",new MessengerViewModel(receiver_id, sendToUserId));
         }
 
         [Authorize]
@@ -41,7 +41,7 @@ namespace FacebookClone.Controllers
             message.content = "Friend request accepted";
 
             databaseEntities.SaveChanges();
-            return RedirectToAction("ShowChat", "Messenger", new { id = senderID });
+            return RedirectToAction("ShowChat", "Messenger", new { sendToUserId = senderID });
         }
 
         [Authorize]
@@ -50,7 +50,7 @@ namespace FacebookClone.Controllers
             var group_id = int.Parse(actionId);
             var receiver_id = User.Identity.GetUserId();
             GroupHandler.addUserToGroup(sender.Id, group_id, message_id);
-            return RedirectToAction("ShowChat", "Messenger", new { id = sender.Id});
+            return RedirectToAction("ShowChat", "Messenger", new { sendToUserId = sender.Id});
         }
 
         [Authorize]
@@ -63,9 +63,15 @@ namespace FacebookClone.Controllers
 
             MessageHandler.sendMessage(message);
 
-            return RedirectToAction("ShowChat", "Messenger", new { id = conversation.sendToUserId });
+            return RedirectToAction("ShowChat", "Messenger", new { sendToUserId = conversation.sendToUserId });
         }
-        
 
+        [Authorize]
+        public ActionResult ShowMoreMessages(string sendToUserId, int n)
+        {
+            FacebookDatabaseEntities databaseEntities = new FacebookDatabaseEntities();
+            var receiver_id = User.Identity.GetUserId();
+            return View("ShowMessenger", new MessengerViewModel(receiver_id, sendToUserId, n));
+        }
     }
 }

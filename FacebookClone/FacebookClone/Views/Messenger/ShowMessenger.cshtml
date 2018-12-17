@@ -58,6 +58,9 @@
         <br />
         @if (Model.conversation != null)
         {
+            <a class="btn btn-primary" href="~/Messenger/ShowMoreMessages/@Model.conversation.sendToUserId/@Model.conversation.messages.Count" role="button">Show more messages...</a>
+            <br /> <br />
+
             int i = 0;
             foreach (var message in Model.conversation.messages)
             {
@@ -67,7 +70,8 @@
                 {
                     userId = Model.conversation.sendFromUserId;
                     picture = Model.conversation.senderPicture;
-                } else
+                }
+                else
                 {
                     userId = Model.conversation.sendToUserId;
                     picture = Model.conversation.receiverPicture;
@@ -75,12 +79,12 @@
                 switch (message.type)
                 {
                     case MessageTypes.friendRequest:
-                        @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = message.content , imagePath = picture, myController="Profile", clickOption="Show", id= userId });
+                        @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = message.content, imagePath = picture, myController = "Profile", clickOption = "Show", id = userId });
                         if (message.state == State.received)
                         {
                             using (Html.BeginForm("AcceptFriendRequest", "Messenger", new { senderID = Model.conversation.messages.ElementAt(i).sender.Id }, FormMethod.Post, new { enctype = "multipart/form-data" }))
                             {
-                            @*<div hidden="hidden">
+                                @*<div hidden="hidden">
                                     @Html.EditorFor(m => m.conversation.messages.ElementAt(i).sender.Id)
                                 </div>*@
 
@@ -89,7 +93,7 @@
                         }
                         break;
                     case MessageTypes.normalMessage:
-                        @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = message.content, imagePath = picture , myController = "Profile", clickOption = "Show", id = userId });
+                        @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = message.content, imagePath = picture, myController = "Profile", clickOption = "Show", id = userId });
                         break;
                     case MessageTypes.groupRequest:
                         @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = message.content, imagePath = picture, myController = "Profile", clickOption = "Show", id = userId });

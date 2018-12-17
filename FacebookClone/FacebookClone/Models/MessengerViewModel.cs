@@ -18,7 +18,7 @@ namespace FacebookClone.Models
             setUserList(user);
         }
 
-        public MessengerViewModel(string receiver_id, string sender_id)
+        public MessengerViewModel(string receiver_id, string sender_id,int currentMessageNumber = 0)
         {
             FacebookDatabaseEntities databaseEntities = new FacebookDatabaseEntities();
             var user = databaseEntities.AspNetUsers.Find(receiver_id);
@@ -27,7 +27,7 @@ namespace FacebookClone.Models
 
             var messages = databaseEntities.Messages.Where(x => (x.sender_id == sender_id && x.receiver_id == receiver_id) || (x.sender_id == receiver_id && x.receiver_id == sender_id)).ToList();
             var userCanSendMessages = friends.Select(x => x.Id == sender_id).Any(x => x == true);
-            conversation = new ConversationViewModel(messages, userCanSendMessages, sender_id, receiver_id);
+            conversation = new ConversationViewModel(messages, userCanSendMessages, sender_id, receiver_id, currentMessageNumber);
         }
 
         private void setUserList(AspNetUser user)
