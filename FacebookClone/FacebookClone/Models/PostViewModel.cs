@@ -17,6 +17,7 @@ namespace FacebookClone.Models
     }
     public class PostViewModel
     {
+        public Boolean canBeDeletedByAdmin { get; set; }
         public int post_id { get; set; }
         public Nullable<int> group_id { get; set; }
         public DateTime date { get; set; }
@@ -35,8 +36,9 @@ namespace FacebookClone.Models
 
         public HttpPostedFileBase picture { get; set; }
 
-        public PostViewModel(Post post, string location)
+        public PostViewModel(Post post, string location,Boolean canBeDeletedByAdmin = false)
         {
+            this.canBeDeletedByAdmin = canBeDeletedByAdmin;
             string userId = HttpContext.Current.User.Identity.GetUserId();
             this.post = post;
             post_id = post.post_id;

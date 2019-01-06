@@ -26,7 +26,7 @@ namespace FacebookClone.Controllers
             List<PostViewModel> userPosts = new List<PostViewModel>();
             foreach (var post in posts)
             {
-                userPosts.Add(new PostViewModel(post, "Profile"));
+                userPosts.Add(new PostViewModel(post, "Profile", User.IsInRole("Admin")));
             }
             albumViewModel = new AlbumViewModel(albumViewModel.albumName, albumViewModel.appLocation, albumViewModel.albumID,userPosts, albumViewModel.userID);
             return View("PhotoGalleryPartialView", albumViewModel);
@@ -39,7 +39,7 @@ namespace FacebookClone.Controllers
             var aspNetUser = databaseEntities.AspNetUsers.Find(postViewModel.userID);
             var posts = aspNetUser.Posts;
             var thisPost = posts.Where(x => x.post_id == postViewModel.post_id).FirstOrDefault();
-            postViewModel = new PostViewModel(thisPost, "Gallery");
+            postViewModel = new PostViewModel(thisPost, "Gallery", User.IsInRole("Admin"));
             
             // postViewModel = new PostViewModel(postViewModel.)
             return View("PostPartialView", postViewModel);

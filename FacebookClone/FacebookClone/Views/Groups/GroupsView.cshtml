@@ -29,7 +29,7 @@
 
                     foreach (var post in Model.selectedGroup.Posts)
                     {
-                        @Html.Partial("PostPartialView", new PostViewModel(post, "Groups"))
+                        @Html.Partial("PostPartialView", new PostViewModel(post, "Groups",Model.isAdmin))
                     }
                     break;
                 case AccesPermision.noPermission:
@@ -49,7 +49,7 @@
 
                     foreach (var post in Model.selectedGroup.Posts)
                     {
-                        @Html.Partial("PostPartialView", new PostViewModel(post, "Groups"))
+                        @Html.Partial("PostPartialView", new PostViewModel(post, "Groups",Model.isAdmin))
                     }
                     break;
             }

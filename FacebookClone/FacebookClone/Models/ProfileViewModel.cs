@@ -36,6 +36,7 @@ namespace FacebookClone.Models
         public PostViewModel newPost { get; set; }
         public List<AlbumViewModel> albums { get; set; }
         public bool iAmaVisitor { get; set; }
+        public bool isAdmin { get; set; }
         public string profileVisitorID { get; set; }
         public FriendshipStatus relationshipStatus { get; set; }
         public CreateAlbumViewModel newAlbum { get; set; }
@@ -59,6 +60,7 @@ namespace FacebookClone.Models
                 newPost.appLocation = posts[0].appLocation;
             newAlbum = new CreateAlbumViewModel();
             this.friends = friends;
+            isAdmin = RoleHandler.isAdmin(profile.AspNetUser.Id);
         }
 
         public IEnumerable<SelectListItem> getGenderList()

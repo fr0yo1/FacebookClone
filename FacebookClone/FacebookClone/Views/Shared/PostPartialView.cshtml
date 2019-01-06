@@ -27,7 +27,10 @@
                                 </div>
                             </div>
                             <div class="col-md-1">
+                                @if (Model.canBeDeletedByAdmin)
+                                {
                                 <a href="#"><i class="glyphicon glyphicon-chevron-down"></i></a>
+                                }
                             </div>
                         </div>
                     </section>

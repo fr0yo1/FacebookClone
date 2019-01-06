@@ -214,6 +214,7 @@
     <Compile Include="Handlers\FilesHandler.cs" />
     <Compile Include="Handlers\GroupHandler.cs" />
     <Compile Include="Handlers\MessageHandler.cs" />
+    <Compile Include="Handlers\RoleHandler.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Album.cs">
       <DependentUpon>Model.tt</DependentUpon>

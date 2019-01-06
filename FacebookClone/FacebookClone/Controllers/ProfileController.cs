@@ -77,7 +77,7 @@ namespace FacebookClone.Controllers
                 List<PostViewModel> userPosts = new List<PostViewModel>();
                 foreach (var post in posts)
                 {
-                    userPosts.Add(new PostViewModel(post,"Profile"));
+                    userPosts.Add(new PostViewModel(post,"Profile",RoleHandler.isAdmin(User.Identity.GetUserId())));
                 }
                 List<Album> albums = databaseEntities.Albums.Where(x => x.user_id==id).ToList();
                 List<AlbumViewModel> userAlbums = new List<AlbumViewModel>();

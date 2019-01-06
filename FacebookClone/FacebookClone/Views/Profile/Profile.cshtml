@@ -109,7 +109,7 @@ else
                 }
                 @foreach (var post in @Model.Posts)
                 {
-                    @Html.Partial("PostPartialView", new PostViewModel(post.post, post.appLocation))
+                    @Html.Partial("PostPartialView", new PostViewModel(post.post, post.appLocation,Model.isAdmin))
                 }
             </div>
         </div>

@@ -9,6 +9,7 @@ namespace FacebookClone.Models
 {
     public class GroupsViewModel
     {
+        public Boolean isAdmin { get; set; }
         public List<Group> myGroups { get; set; }
         public Group selectedGroup { get; set; }
         public PostViewModel newPost { get; set; }
@@ -56,6 +57,7 @@ namespace FacebookClone.Models
                     accesPermision = AccesPermision.noPermission;
                 }
             }
+            isAdmin = RoleHandler.isAdmin(userId);
         }
 
         public GroupsViewModel()

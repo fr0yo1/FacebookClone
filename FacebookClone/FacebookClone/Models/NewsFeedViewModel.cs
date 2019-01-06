@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FacebookClone.Handlers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,7 @@ namespace FacebookClone.Models
 
         public NewsFeedViewModel(AspNetUser user)
         {
+            var isAdmin = RoleHandler.isAdmin(user.Id);
             var groups = user.Groups;
             List<Post> posts = new List<Post>();
             //TODO TBD posts are shown twice
@@ -24,7 +26,7 @@ namespace FacebookClone.Models
             this.posts = new List<PostViewModel>();
             foreach (var post in posts)
             {
-                this.posts.Add(new PostViewModel(post,"Newsfeed"));
+                this.posts.Add(new PostViewModel(post,"Newsfeed",isAdmin));
             }
         }
     }
