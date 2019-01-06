@@ -25,6 +25,7 @@ namespace FacebookClone.Models
         public string lastname { get; set; }
         public string age { get; set; }
         public string gender { get; set; }
+        public int privacy { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Album> Albums { get; set; }

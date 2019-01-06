@@ -5,19 +5,19 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="4641a0ef8a044a5b9436076a8d19e738" Name="Diagram1" ZoomLevel="97">
-        <EntityTypeShape EntityType="FacebookDatabaseModel.Album" Width="1.5" PointX="7.5" PointY="12" />
-        <EntityTypeShape EntityType="FacebookDatabaseModel.AspNetRole" Width="1.5" PointX="0.75" PointY="9.875" />
-        <EntityTypeShape EntityType="FacebookDatabaseModel.AspNetUserClaim" Width="3.125" PointX="5.25" PointY="20.75" />
-        <EntityTypeShape EntityType="FacebookDatabaseModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="15" />
-        <EntityTypeShape EntityType="FacebookDatabaseModel.AspNetUser" Width="1.5" PointX="3" PointY="7.875" />
+        <EntityTypeShape EntityType="FacebookDatabaseModel.Album" Width="1.5" PointX="7.5" PointY="17.75" />
+        <EntityTypeShape EntityType="FacebookDatabaseModel.AspNetRole" Width="1.5" PointX="0.75" PointY="10.125" />
+        <EntityTypeShape EntityType="FacebookDatabaseModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="5.375" />
+        <EntityTypeShape EntityType="FacebookDatabaseModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="8.125" />
+        <EntityTypeShape EntityType="FacebookDatabaseModel.AspNetUser" Width="1.5" PointX="3" PointY="8.125" />
         <EntityTypeShape EntityType="FacebookDatabaseModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="FacebookDatabaseModel.Comment" Width="1.5" PointX="5.25" PointY="8.5" />
-        <EntityTypeShape EntityType="FacebookDatabaseModel.Group" Width="1.5" PointX="5.25" PointY="17.625" />
-        <EntityTypeShape EntityType="FacebookDatabaseModel.Message" Width="1.5" PointX="5.25" PointY="5.5" />
-        <EntityTypeShape EntityType="FacebookDatabaseModel.MessageType" Width="1.5" PointX="7.125" PointY="6.125" />
-        <EntityTypeShape EntityType="FacebookDatabaseModel.Picture" Width="1.5" PointX="9.75" PointY="11.875" />
-        <EntityTypeShape EntityType="FacebookDatabaseModel.Post" Width="1.5" PointX="12" PointY="12.5" />
-        <EntityTypeShape EntityType="FacebookDatabaseModel.Profile" Width="1.5" PointX="5.25" PointY="11.875" />
+        <EntityTypeShape EntityType="FacebookDatabaseModel.Comment" Width="1.5" PointX="5.25" PointY="11.625" />
+        <EntityTypeShape EntityType="FacebookDatabaseModel.Group" Width="1.5" PointX="5.25" PointY="20.875" />
+        <EntityTypeShape EntityType="FacebookDatabaseModel.Message" Width="1.5" PointX="8.25" PointY="9.5" />
+        <EntityTypeShape EntityType="FacebookDatabaseModel.MessageType" Width="1.5" PointX="6" PointY="15.125" />
+        <EntityTypeShape EntityType="FacebookDatabaseModel.Picture" Width="1.5" PointX="9.75" PointY="17.625" />
+        <EntityTypeShape EntityType="FacebookDatabaseModel.Post" Width="1.5" PointX="12" PointY="14.125" />
+        <EntityTypeShape EntityType="FacebookDatabaseModel.Profile" Width="1.5" PointX="5.25" PointY="17.5" />
         <AssociationConnector Association="FacebookDatabaseModel.FK_Albums_ToUsers" />
         <AssociationConnector Association="FacebookDatabaseModel.FK_Picture_ToAlbum" />
         <AssociationConnector Association="FacebookDatabaseModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />

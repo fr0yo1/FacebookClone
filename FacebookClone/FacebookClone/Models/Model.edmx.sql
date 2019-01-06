@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 12/16/2018 14:35:58
+-- Date Created: 01/06/2019 22:52:03
 -- Generated from EDMX file: C:\Users\Adrian-Sandru\FacebookClone\FacebookClone\FacebookClone\Models\Model.edmx
 -- --------------------------------------------------
 
@@ -200,7 +200,8 @@ CREATE TABLE [dbo].[Comments] (
     [post_id] int  NOT NULL,
     [date] datetime  NOT NULL,
     [content] varchar(50)  NOT NULL,
-    [user_id] nvarchar(128)  NOT NULL
+    [user_id] nvarchar(128)  NOT NULL,
+    [Status] int  NULL
 );
 GO
 
@@ -249,7 +250,8 @@ CREATE TABLE [dbo].[Profiles] (
     [firstname] nvarchar(max)  NOT NULL,
     [lastname] nvarchar(max)  NOT NULL,
     [age] nvarchar(max)  NOT NULL,
-    [gender] nvarchar(max)  NOT NULL
+    [gender] nvarchar(max)  NOT NULL,
+    [privacy] int  NOT NULL
 );
 GO
 
@@ -271,8 +273,8 @@ GO
 
 -- Creating table 'GroupUser'
 CREATE TABLE [dbo].[GroupUser] (
-    [AspNetUsers_Id] nvarchar(128)  NOT NULL,
-    [Groups_group_id] int  NOT NULL
+    [Id] nvarchar(128)  NOT NULL,
+    [group_id] int  NOT NULL
 );
 GO
 
@@ -374,7 +376,7 @@ GO
 -- Creating primary key on [AspNetUsers_Id], [Groups_group_id] in table 'GroupUser'
 ALTER TABLE [dbo].[GroupUser]
 ADD CONSTRAINT [PK_GroupUser]
-    PRIMARY KEY CLUSTERED ([AspNetUsers_Id], [Groups_group_id] ASC);
+    PRIMARY KEY CLUSTERED ([Id], [group_id] ASC);
 GO
 
 -- Creating primary key on [AspNetRoles_Id], [AspNetUsers_Id] in table 'AspNetUserRoles'
@@ -618,7 +620,7 @@ GO
 -- Creating foreign key on [AspNetUsers_Id] in table 'GroupUser'
 ALTER TABLE [dbo].[GroupUser]
 ADD CONSTRAINT [FK_GroupUser_AspNetUser]
-    FOREIGN KEY ([AspNetUsers_Id])
+    FOREIGN KEY ([Id])
     REFERENCES [dbo].[AspNetUsers]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;

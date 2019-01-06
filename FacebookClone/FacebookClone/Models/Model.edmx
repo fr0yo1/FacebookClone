@@ -84,6 +84,7 @@
           <Property Name="date" Type="datetime" Nullable="false" />
           <Property Name="content" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="user_id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Status" Type="int" />
         </EntityType>
         <EntityType Name="Friendship">
           <Key>
@@ -121,7 +122,7 @@
           <Property Name="content" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="type" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="MessageType">
+        <EntityType Name="MessageTypes">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -158,6 +159,7 @@
           <Property Name="lastname" Type="nvarchar(max)" Nullable="false" />
           <Property Name="age" Type="nvarchar(max)" Nullable="false" />
           <Property Name="gender" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="privacy" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_Albums_ToUsers">
           <End Role="Profiles" Type="Self.Profiles" Multiplicity="1" />
@@ -332,10 +334,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Messages_MessageType">
-          <End Role="MessageType" Type="Self.MessageType" Multiplicity="1" />
+          <End Role="MessageTypes" Type="Self.MessageTypes" Multiplicity="1" />
           <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MessageType">
+            <Principal Role="MessageTypes">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Messages">
@@ -418,7 +420,7 @@
           <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GroupUser" EntityType="Self.GroupUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="MessageType" EntityType="Self.MessageType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MessageTypes" EntityType="Self.MessageTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pictures" EntityType="Self.Pictures" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Posts" EntityType="Self.Posts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profiles" EntityType="Self.Profiles" Schema="dbo" store:Type="Tables" />
@@ -479,7 +481,7 @@
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
           <AssociationSet Name="FK_Messages_MessageType" Association="Self.FK_Messages_MessageType">
-            <End Role="MessageType" EntitySet="MessageType" />
+            <End Role="MessageTypes" EntitySet="MessageTypes" />
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
           <AssociationSet Name="FK_Picture_ToAlbum" Association="Self.FK_Picture_ToAlbum">
@@ -678,6 +680,7 @@
           <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="content" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="user_id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
           <NavigationProperty Name="AspNetUser" Relationship="FacebookDatabaseModel.FK_Comments_ToUser" FromRole="Comment" ToRole="AspNetUser" />
           <NavigationProperty Name="Post" Relationship="FacebookDatabaseModel.FK_Comment_ToPost" FromRole="Comment" ToRole="Post" />
         </EntityType>
@@ -751,6 +754,7 @@
           <Property Name="lastname" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="age" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="gender" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="privacy" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Albums" Relationship="FacebookDatabaseModel.FK_Albums_ToUsers" FromRole="Profile" ToRole="Album" />
           <NavigationProperty Name="AspNetUser" Relationship="FacebookDatabaseModel.FK_Profile_ToAspNetUsers" FromRole="Profile" ToRole="AspNetUser" />
         </EntityType>
@@ -1014,6 +1018,7 @@
           <EntitySetMapping Name="Comments">
             <EntityTypeMapping TypeName="FacebookDatabaseModel.Comment">
               <MappingFragment StoreEntitySet="Comments">
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="content" ColumnName="content" />
                 <ScalarProperty Name="date" ColumnName="date" />
@@ -1046,7 +1051,7 @@
           </EntitySetMapping>
           <EntitySetMapping Name="MessageTypes">
             <EntityTypeMapping TypeName="FacebookDatabaseModel.MessageType">
-              <MappingFragment StoreEntitySet="MessageType">
+              <MappingFragment StoreEntitySet="MessageTypes">
                 <ScalarProperty Name="type" ColumnName="type" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -1078,6 +1083,7 @@
           <EntitySetMapping Name="Profiles">
             <EntityTypeMapping TypeName="FacebookDatabaseModel.Profile">
               <MappingFragment StoreEntitySet="Profiles">
+                <ScalarProperty Name="privacy" ColumnName="privacy" />
                 <ScalarProperty Name="gender" ColumnName="gender" />
                 <ScalarProperty Name="age" ColumnName="age" />
                 <ScalarProperty Name="lastname" ColumnName="lastname" />
