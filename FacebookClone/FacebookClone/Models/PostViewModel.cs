@@ -28,6 +28,7 @@ namespace FacebookClone.Models
         public String postPictureRelativePath { get; set; }
         public int albumID { get; set; }
         public string userID { get; set; }
+        public Post post { get; set; }
 
         [Required]
         public string inputComment { get; set; }
@@ -37,7 +38,7 @@ namespace FacebookClone.Models
         public PostViewModel(Post post, string location)
         {
             string userId = HttpContext.Current.User.Identity.GetUserId();
-           
+            this.post = post;
             post_id = post.post_id;
             group_id = post.group_id;
             date = post.date;

@@ -24,14 +24,14 @@ namespace FacebookClone.Models
         public bool isMyPost { get; set; }
         public string location { get; set; }
 
-        public void acceptCommentFrom(CommentViewModel comment)
+        public void acceptCommentFrom(Comment comment)
         {
-            
+            comment.Status = (int)CommentStatus.accepted;
         }
 
-        public void declineCommentFrom(CommentViewModel comment)
+        public void declineCommentFrom(Comment comment)
         {
-            throw new NotImplementedException();
+            comment.Status = (int)CommentStatus.denied;
         }
     }
 }

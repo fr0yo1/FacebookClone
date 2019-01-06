@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Profile";
 }
-
+@using FacebookClone.Models
 @if (Model == null)
 {
     <h1>No profile found</h1>
@@ -109,7 +109,7 @@ else
                 }
                 @foreach (var post in @Model.Posts)
                 {
-                    @Html.Partial("PostPartialView", post)
+                    @Html.Partial("PostPartialView", new PostViewModel(post.post, post.appLocation))
                 }
             </div>
         </div>

@@ -22,15 +22,11 @@
                        <strong>-Pending  </strong>
                         if (Model.isMyPost)
                         {
-                            using (Html.BeginForm("AcceptComment", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            using (Html.BeginForm("AcceptComment", "Post",new { commentId = Model.comment.comment_id, location = Model.location }, FormMethod.Post, new { enctype = "multipart/form-data" }))
                             {
-                                <div hidden="hidden">
-                                    @Html.EditorFor(m => m.comment.comment_id)
-                                    @Html.EditorFor(m => m.location)
-                                </div>
                                     <button type="submit">✓ Accept</button>
                             }
-                            using (Html.BeginForm("DeclineComment", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            using (Html.BeginForm("DeclineComment", "Post", new { commentId = Model.comment.comment_id, location = Model.location }, FormMethod.Post, new { enctype = "multipart/form-data" }))
                             {
                                 <button type="submit"> X Decline</button>
                             }

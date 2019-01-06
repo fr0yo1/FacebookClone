@@ -46,9 +46,10 @@ namespace FacebookClone.Controllers
         [Authorize]
         public ActionResult AcceptComment(string commentId, string location)
         {
-            var thisComm = databaseEntities.Comments.Find(commentId);
+            var thisComm = databaseEntities.Comments.Find(Int32.Parse(commentId));
             CommentViewModel comment = new CommentViewModel(thisComm, true, location);
-            comment.acceptCommentFrom(comment);
+            comment.acceptCommentFrom(thisComm);
+            databaseEntities.SaveChanges();
             switch (location)
             {
                 case "Profile":
@@ -62,9 +63,12 @@ namespace FacebookClone.Controllers
             }
         }
 
-        public ActionResult DeclineComment(CommentViewModel comment)
+        public ActionResult DeclineComment(string commentId, string location)
         {
-            comment.declineCommentFrom(comment);
+            var thisComm = databaseEntities.Comments.Find(Int32.Parse(commentId));
+            CommentViewModel comment = new CommentViewModel(thisComm, true, location);
+            comment.declineCommentFrom(thisComm);
+            databaseEntities.SaveChanges();
             switch (comment.location)
             {
                 case "Profile":
