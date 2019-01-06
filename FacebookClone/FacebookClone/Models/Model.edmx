@@ -105,11 +105,11 @@
         </EntityType>
         <EntityType Name="GroupUser">
           <Key>
-            <PropertyRef Name="AspNetUsers_Id" />
-            <PropertyRef Name="Groups_group_id" />
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="group_id" />
           </Key>
-          <Property Name="AspNetUsers_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Groups_group_id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="group_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Messages">
           <Key>
@@ -293,7 +293,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="GroupUser">
-              <PropertyRef Name="AspNetUsers_Id" />
+              <PropertyRef Name="Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -305,7 +305,7 @@
               <PropertyRef Name="group_id" />
             </Principal>
             <Dependent Role="GroupUser">
-              <PropertyRef Name="Groups_group_id" />
+              <PropertyRef Name="group_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1110,10 +1110,10 @@
           </AssociationSetMapping>
           <AssociationSetMapping Name="GroupUser" TypeName="FacebookDatabaseModel.GroupUser" StoreEntitySet="GroupUser">
             <EndProperty Name="Group">
-              <ScalarProperty Name="group_id" ColumnName="Groups_group_id" />
+              <ScalarProperty Name="group_id" ColumnName="group_id" />
             </EndProperty>
             <EndProperty Name="AspNetUser">
-              <ScalarProperty Name="Id" ColumnName="AspNetUsers_Id" />
+              <ScalarProperty Name="Id" ColumnName="Id" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

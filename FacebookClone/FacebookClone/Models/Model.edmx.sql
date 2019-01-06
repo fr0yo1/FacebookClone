@@ -629,17 +629,13 @@ GO
 -- Creating foreign key on [Groups_group_id] in table 'GroupUser'
 ALTER TABLE [dbo].[GroupUser]
 ADD CONSTRAINT [FK_GroupUser_Group]
-    FOREIGN KEY ([Groups_group_id])
+    FOREIGN KEY ([group_id])
     REFERENCES [dbo].[Groups]
         ([group_id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
--- Creating non-clustered index for FOREIGN KEY 'FK_GroupUser_Group'
-CREATE INDEX [IX_FK_GroupUser_Group]
-ON [dbo].[GroupUser]
-    ([Groups_group_id]);
-GO
+
 
 -- Creating foreign key on [AspNetRoles_Id] in table 'AspNetUserRoles'
 ALTER TABLE [dbo].[AspNetUserRoles]
