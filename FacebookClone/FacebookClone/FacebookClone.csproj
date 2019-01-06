@@ -298,6 +298,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\CommentStyle.css" />
     <Content Include="Content\PostStyle.css" />
+    <Content Include="Database\06_01_2019_AddStatusColumnToComments.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
