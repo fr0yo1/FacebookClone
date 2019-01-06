@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -8,6 +9,12 @@ using System.Web.Mvc;
 
 namespace FacebookClone.Models
 {
+    public enum CommentStatus
+    {
+        pending,
+        accepted,
+        denied
+    }
     public class PostViewModel
     {
         public int post_id { get; set; }
@@ -17,7 +24,7 @@ namespace FacebookClone.Models
         public string content { get; set; }
         public string profilePath { get; set; }
         public string appLocation { get; set; }
-        public ICollection<Comment> comments { get; set; }
+        public List<CommentViewModel> comments { get; set; }
         public String postPictureRelativePath { get; set; }
         public int albumID { get; set; }
         public string userID { get; set; }
@@ -29,14 +36,26 @@ namespace FacebookClone.Models
 
         public PostViewModel(Post post, string location)
         {
+            string userId = HttpContext.Current.User.Identity.GetUserId();
+           
             post_id = post.post_id;
             group_id = post.group_id;
             date = post.date;
             userName = post.AspNetUser.Profile.firstname + " " + post.AspNetUser.Profile.lastname;
             content = post.content;
             profilePath = post.AspNetUser.Profile.Albums.Where(x => x.name.Equals("ProfileAlbum")).FirstOrDefault().Pictures.OrderByDescending(x => x.date).FirstOrDefault().path;
-            postPictureRelativePath = post.Picture!=null?post.Picture.path:String.Empty;
-            comments = post.Comments;
+            postPictureRelativePath = post.Picture != null ? post.Picture.path : String.Empty;
+            if (userId == post.sender_id)
+                comments = post.Comments.Select(x => new CommentViewModel(x,true, location)).ToList();
+
+            else if (post.Comments.Where(x => x.user_id == userId).Any())
+            {
+                comments = post.Comments.Where(x => x.Status == 1 && x.user_id != userId).ToList().Union(post.Comments.Where(x => x.user_id == userId).ToList()).ToList().Select(x => new CommentViewModel(x, false, location)).ToList(); ;
+            }
+            else
+            {
+                comments = post.Comments.Where(x => x.Status == 1).ToList().Select(x => new CommentViewModel(x, false, location)).ToList(); ;
+            }
             appLocation = location;
             if(post.Picture!=null)
                  albumID = post.Picture.album_id;
@@ -47,9 +66,13 @@ namespace FacebookClone.Models
         {
         }
 
-        public void addCommentFrom(AspNetUser user, FacebookDatabaseEntities toDataBase)
+        public void addCommentFrom(AspNetUser user, FacebookDatabaseEntities toDataBase, string actualUserID)
         {
-            user.Comments.Add(new Comment {post_id = post_id, user_id = user.Id, date = DateTime.Now, content = inputComment});
+            var actualPost = toDataBase.Posts.Where(x => x.post_id == post_id).FirstOrDefault();
+            var status = CommentStatus.pending;
+             if (actualPost.sender_id == actualUserID)
+                status = CommentStatus.accepted;
+            user.Comments.Add(new Comment {post_id = post_id, user_id = user.Id, date = DateTime.Now, content = inputComment, Status = (int)status});
             toDataBase.SaveChanges();
         }
 

@@ -19,6 +19,7 @@ namespace FacebookClone.Models
         public System.DateTime date { get; set; }
         public string content { get; set; }
         public string user_id { get; set; }
+        public Nullable<int> Status { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Post Post { get; set; }

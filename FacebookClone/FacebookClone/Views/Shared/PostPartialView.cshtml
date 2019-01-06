@@ -2,7 +2,7 @@
     @{
         ViewBag.Title = "PostPartialView";
     }
-
+@using FacebookClone.Models
 <br />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
@@ -61,7 +61,7 @@
                             <div class="comment">
                                 @foreach (var comment in @Model.comments)
                                 {
-                                    @Html.Partial("CommentPartialView", comment)
+                                    @Html.Partial("CommentPartialView", new CommentViewModel(comment.comment, comment.isMyPost, comment.location))
                                 }
 
                             </div>

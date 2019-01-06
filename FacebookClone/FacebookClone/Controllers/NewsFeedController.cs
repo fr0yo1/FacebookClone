@@ -24,7 +24,7 @@ namespace FacebookClone.Controllers
         {
             var userId = User.Identity.GetUserId();
             var user = databaseEntities.AspNetUsers.Find(userId);
-            postViewModel.addCommentFrom(user, databaseEntities);
+            postViewModel.addCommentFrom(user, databaseEntities, userId);
             return RedirectToAction("Index");
         }
     }

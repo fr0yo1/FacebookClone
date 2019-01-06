@@ -23,9 +23,9 @@ namespace FacebookClone.Controllers
         {
             var userId = User.Identity.GetUserId();
             var path = FilesHandler.saveImage(postViewModel.picture, Server);
-            if(postViewModel.picture==null || path!=null)
+            if (postViewModel.picture == null || path != null)
             {
-                PostViewModel.addPostFrom(userId, databaseEntities, path,postViewModel.content, postViewModel.albumID,postViewModel.group_id);
+                PostViewModel.addPostFrom(userId, databaseEntities, path, postViewModel.content, postViewModel.albumID, postViewModel.group_id);
             }
             else
                 ModelState.AddModelError("imageError", "Something went wrong we were unable to save the photo");
@@ -41,8 +41,41 @@ namespace FacebookClone.Controllers
                 default:
                     return Index();
             }
+        }
 
+        [Authorize]
+        public ActionResult AcceptComment(string commentId, string location)
+        {
+            var thisComm = databaseEntities.Comments.Find(commentId);
+            CommentViewModel comment = new CommentViewModel(thisComm, true, location);
+            comment.acceptCommentFrom(comment);
+            switch (location)
+            {
+                case "Profile":
+                    return RedirectToAction("ShowMyProfile", "Profile");
+                case "Newsfeed":
+                    return RedirectToAction("Index", "NewsFeed");
+                case "Groups":
+                    return RedirectToAction("Show", "Groups");
+                default:
+                    return Index();
+            }
+        }
 
+        public ActionResult DeclineComment(CommentViewModel comment)
+        {
+            comment.declineCommentFrom(comment);
+            switch (comment.location)
+            {
+                case "Profile":
+                    return RedirectToAction("ShowMyProfile", "Profile");
+                case "Newsfeed":
+                    return RedirectToAction("Index", "NewsFeed");
+                case "Groups":
+                    return RedirectToAction("Show", "Groups");
+                default:
+                    return Index();
+            }
         }
     }
 }

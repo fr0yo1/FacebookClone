@@ -64,7 +64,7 @@ namespace FacebookClone.Controllers
             {
                 iAmaVisitor = false;
             }
-
+            var loggedUser = databaseEntities.AspNetUsers.Find(User.Identity.GetUserId());
             Profile profile = databaseEntities.Profiles.Find(id);
             if (profile == null)
             {

@@ -1,7 +1,8 @@
-﻿@model FacebookClone.Models.Comment
+﻿@model FacebookClone.Models.CommentViewModel
 @{
     ViewBag.Title = "CommentPartialView";
 }
+@using FacebookClone.Models
 <br />
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
@@ -9,16 +10,43 @@
 <div class="container">
         <div class="col-sm-1">
             <div class="thumbnail">
-                <img class="img-responsive user-photo" src="@Model.AspNetUser.Profile.Albums.Where(x => x.name.Equals("ProfileAlbum")).FirstOrDefault().Pictures.OrderByDescending(x => x.date).FirstOrDefault().path">
+                <img class="img-responsive user-photo" src="@Model.comment.AspNetUser.Profile.Albums.Where(x => x.name.Equals("ProfileAlbum")).FirstOrDefault().Pictures.OrderByDescending(x => x.date).FirstOrDefault().path">
             </div>
         </div>
         <div class="col-sm-5">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <strong>@Model.AspNetUser.Profile.firstname @Model.AspNetUser.Profile.lastname</strong> <span class="text-muted">commented @Model.date</span>
+                    <strong>@Model.comment.AspNetUser.Profile.firstname @Model.comment.AspNetUser.Profile.lastname</strong> <span class="text-muted">commented @Model.comment.date  </span>
+                    @if ((int)@Model.comment.Status == 0)
+                    {
+                       <strong>-Pending  </strong>
+                        if (Model.isMyPost)
+                        {
+                            using (Html.BeginForm("AcceptComment", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                <div hidden="hidden">
+                                    @Html.EditorFor(m => m.comment.comment_id)
+                                    @Html.EditorFor(m => m.location)
+                                </div>
+                                    <button type="submit">✓ Accept</button>
+                            }
+                            using (Html.BeginForm("DeclineComment", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                <button type="submit"> X Decline</button>
+                            }
+                        }
+                    }
+                    @if ((int)@Model.comment.Status == 1)
+                    {
+                        <strong>-Accepted</strong>
+                    }
+                    @if ((int)@Model.comment.Status == 2)
+                    {
+                        <strong>-Refused</strong>
+                    }
                 </div>
                 <div class="panel-body">
-                    @Model.content
+                    @Model.comment.content
                 </div>
             </div>
         </div>

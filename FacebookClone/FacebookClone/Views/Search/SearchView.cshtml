@@ -6,13 +6,16 @@
 <br />
 <div class="container">
     <h2>Groups:</h2>
-    @foreach (var genericItem in @Model.groupsResult)
-    {
-        @Html.Partial("GenericItemPartialView", genericItem)
-    }
-    @if (!@Model.groupsResult.Any())
+    @if (@Model.groupsResult == null)
     {
         <p>No result</p>
+    }
+    else
+    {
+        foreach (var genericItem in @Model.groupsResult)
+        {
+         @Html.Partial("GenericItemPartialView", genericItem)
+        }
     }
     <h2>Users:</h2>
     @foreach (var genericItem in @Model.usersResult)
