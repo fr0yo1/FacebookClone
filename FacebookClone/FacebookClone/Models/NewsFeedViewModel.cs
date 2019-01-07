@@ -14,14 +14,20 @@ namespace FacebookClone.Models
         {
             var isAdmin = RoleHandler.isAdmin(user.Id);
             var groups = user.Groups;
-            List<Post> posts = new List<Post>();
+            ICollection<Post> posts = new List<Post>();
             //TODO TBD posts are shown twice
             foreach (var group in groups)
             {
-                posts.AddRange(group.Posts);
+                posts = posts.Union(group.Posts).ToList();
             }
-            posts.AddRange(user.Posts);
-            //TO-DO add post from friends and sort them all by date
+            posts = posts.Union(user.Posts).ToList();
+            FacebookDatabaseEntities entities = new FacebookDatabaseEntities();
+            var friends = user.AspNetUsers;
+            foreach (var friend in friends)
+            {
+                posts = posts.Union(friend.Posts).ToList();
+            }
+            posts = posts.OrderByDescending(x => x.date).ToList();
 
             this.posts = new List<PostViewModel>();
             foreach (var post in posts)
