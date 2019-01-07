@@ -26,7 +26,7 @@ namespace FacebookClone.Controllers
                     var currentUserId = User.Identity.GetUserId();
                     profile.addProfileToUser(currentUserId,path);
                 }
-                return RedirectToAction("Show", "Profile");
+                return RedirectToAction("ShowMyProfile", "Profile");
             }
             return View("AddProfile", profile);
         }
@@ -72,6 +72,7 @@ namespace FacebookClone.Controllers
 
             var loggedUser = databaseEntities.AspNetUsers.Find(User.Identity.GetUserId());
             Profile profile = databaseEntities.Profiles.Find(id);
+
             if (profile == null)
             {
                 return View("AddProfile", new ProfileViewModel());
