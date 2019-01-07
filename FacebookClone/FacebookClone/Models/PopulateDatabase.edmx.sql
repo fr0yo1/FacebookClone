@@ -19,6 +19,9 @@ insert into [dbo].[MessageTypes] values ('normalMessage')
 insert into [dbo].[MessageTypes] values ('friendRequest')
 insert into [dbo].[MessageTypes] values ('groupRequest')
 
+insert into AspNetRoles (id,Name) values (1,'User')
+insert into AspNetRoles (id,Name) values (2,'Admin')
+
 -- --------------------------------------------------
 -- Populate script has ended
 -- --------------------------------------------------
