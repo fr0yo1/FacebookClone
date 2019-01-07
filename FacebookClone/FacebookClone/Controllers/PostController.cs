@@ -18,6 +18,33 @@ namespace FacebookClone.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult showDeletePage(string id)
+        {
+            var post = databaseEntities.Posts.Find(int.Parse(id));
+            return View("DeletePage", new DeletePostViewModel(post));
+        }
+
+        [HttpDelete]
+        public ActionResult deletePost(string post_id, string receiver_id, DeletePostViewModel deletePostViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var message = new Message() { sender_id = User.Identity.GetUserId(), receiver_id = receiver_id, content = deletePostViewModel.messageToUser, date = DateTime.Now, type = Convert.ToInt32(MessageTypes.normalMessage) };
+                FacebookDatabaseEntities databaseEntities = new FacebookDatabaseEntities();
+                Post post = new Post() { post_id = int.Parse(post_id) };
+                databaseEntities.Posts.Attach(post);
+                databaseEntities.Posts.Remove(post);
+                databaseEntities.SaveChanges();
+                MessageHandler.sendMessage(message);
+                return RedirectToAction("ShowMyProfile", "Profile");
+            } else
+            {
+                var post = databaseEntities.Posts.Find(int.Parse(post_id));
+                return View("DeletePage", new DeletePostViewModel(post));
+            }
+        }
+
         [Authorize]
         public ActionResult AddPost(PostViewModel postViewModel)
         {

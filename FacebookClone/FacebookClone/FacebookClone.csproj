@@ -241,6 +241,7 @@
     <Compile Include="Models\C__MigrationHistory.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DeletePostViewModel.cs" />
     <Compile Include="Models\FriendViewModel.cs" />
     <Compile Include="Models\GenericItemViewModel.cs" />
     <Compile Include="Models\Group.cs">
@@ -391,12 +392,12 @@
     <Content Include="Views\Shared\NewAlbumView.cshtml" />
     <Content Include="Views\Messenger\ShowMessenger.cshtml" />
     <Content Include="Views\Shared\FriendOnProfilePartialView.cshtml" />
+    <Content Include="Views\Post\DeletePage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Album\" />
     <Folder Include="Views\Comment\" />
     <Folder Include="Views\Message\" />
-    <Folder Include="Views\Post\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

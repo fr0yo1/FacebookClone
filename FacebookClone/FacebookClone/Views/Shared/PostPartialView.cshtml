@@ -29,7 +29,7 @@
                             <div class="col-md-1">
                                 @if (Model.canBeDeletedByAdmin)
                                 {
-                                <a href="#"><i class="glyphicon glyphicon-chevron-down"></i></a>
+                                <a href="/Post/showDeletePage/@Model.post_id"><i class="glyphicon glyphicon-trash"></i></a>
                                 }
                             </div>
                         </div>
@@ -45,6 +45,8 @@
                     </section>
                     <section class="post-footer">
                         <hr>
+                        @if (Model.canAddComments)
+                        {
                         <div class="post-footer-option container">
                             @using (Html.BeginForm("AddComment", "Comment", FormMethod.Post, new { enctype = "multipart/form-data" }))
                             {
@@ -57,6 +59,7 @@
                                 <i class="glyphicon glyphicon-comment"> </i> <input type="submit" value="Comment" />
                             }
                         </div>
+                        }
                         <div class="post-footer-comment-wrapper">
                             <div class="comment-form">
 

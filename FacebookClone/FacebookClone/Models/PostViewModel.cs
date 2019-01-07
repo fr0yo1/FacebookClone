@@ -17,6 +17,7 @@ namespace FacebookClone.Models
     }
     public class PostViewModel
     {
+        public Boolean canAddComments = true;
         public Boolean canBeDeletedByAdmin { get; set; }
         public int post_id { get; set; }
         public Nullable<int> group_id { get; set; }

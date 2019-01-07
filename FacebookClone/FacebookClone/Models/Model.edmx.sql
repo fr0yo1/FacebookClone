@@ -539,7 +539,7 @@ ADD CONSTRAINT [FK_Comment_ToPost]
     FOREIGN KEY ([post_id])
     REFERENCES [dbo].[Posts]
         ([post_id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+   ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_Comment_ToPost'
