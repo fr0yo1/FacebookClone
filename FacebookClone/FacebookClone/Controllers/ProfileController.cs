@@ -64,6 +64,12 @@ namespace FacebookClone.Controllers
             {
                 iAmaVisitor = false;
             }
+            var isAdmin = false;
+            if (User.Identity.GetUserId() != null)
+            {
+                isAdmin = RoleHandler.isAdmin(User.Identity.GetUserId());
+            }
+
             var loggedUser = databaseEntities.AspNetUsers.Find(User.Identity.GetUserId());
             Profile profile = databaseEntities.Profiles.Find(id);
             if (profile == null)
@@ -98,6 +104,7 @@ namespace FacebookClone.Controllers
                 }
                 var profileViewModel = new ProfileViewModel(profile, userAlbums, userPosts, friendsList);
                 profileViewModel.iAmaVisitor = iAmaVisitor;
+                profileViewModel.isAdmin = isAdmin;
                 if (iAmaVisitor)
                 {
                     var myID = User.Identity.GetUserId();

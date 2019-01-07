@@ -30,7 +30,7 @@ namespace FacebookClone.Controllers
         {
             if (ModelState.IsValid)
             {
-                var message = new Message() { sender_id = User.Identity.GetUserId(), receiver_id = receiver_id, content = deletePostViewModel.messageToUser, date = DateTime.Now, type = Convert.ToInt32(MessageTypes.normalMessage) };
+                var message = new Message() { sender_id = User.Identity.GetUserId(), receiver_id = receiver_id, content = deletePostViewModel.messageToUser, date = DateTime.Now, type = Convert.ToInt32(MessageTypes.adminWarning)};
                 FacebookDatabaseEntities databaseEntities = new FacebookDatabaseEntities();
                 Post post = new Post() { post_id = int.Parse(post_id) };
                 databaseEntities.Posts.Attach(post);

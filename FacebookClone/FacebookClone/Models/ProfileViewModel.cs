@@ -60,7 +60,7 @@ namespace FacebookClone.Models
                 newPost.appLocation = posts[0].appLocation;
             newAlbum = new CreateAlbumViewModel();
             this.friends = friends;
-            isAdmin = RoleHandler.isAdmin(profile.AspNetUser.Id);
+           
         }
 
         public IEnumerable<SelectListItem> getGenderList()

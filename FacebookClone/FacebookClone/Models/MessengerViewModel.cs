@@ -10,7 +10,9 @@ namespace FacebookClone.Models
         public List<AspNetUser> friends { get; set; }
         public IEnumerable<ChatPreviewViewModel> chatPreviewViewModel { get; set; }
         public List<Message> receivedRequests { get; set; }
+        public List<Message> receivedWarnings { get; set; }
         public List<Message> sentRequests { get; set; }
+        public List<Message> sentWarnings { get; set; }
         public ConversationViewModel conversation { get; set; }
 
         public MessengerViewModel(AspNetUser user)
@@ -35,14 +37,17 @@ namespace FacebookClone.Models
             var u = user.AspNetUsers.DefaultIfEmpty();
             friends = user.AspNetUsers.ToList();
 
-            chatPreviewViewModel = friends.Select(x => new ChatPreviewViewModel(x.Messages.Where(w => w.sender_id == user.Id).OrderByDescending(y => y.date).FirstOrDefault(), x.Messages1.Where(w => w.receiver_id == user.Id).OrderByDescending(y => y.date).FirstOrDefault(), x));
+            var warnedUsers = user.Messages1.Where(x => x.type == Convert.ToInt32(MessageTypes.adminWarning)).Select(y => y.AspNetUser);
+            var warnedBy = user.Messages.Where(x => x.type == Convert.ToInt32(MessageTypes.adminWarning)).Select(y => y.AspNetUser1);
+            var receivedRequestsFromUsers = user.Messages.Where(x => x.type == Convert.ToInt32(MessageTypes.friendRequest) || x.type == Convert.ToInt32(MessageTypes.groupRequest)).Select(y => y.AspNetUser1);
+            var sentRequestToUsers = user.Messages1.Where(x => x.type == Convert.ToInt32(MessageTypes.friendRequest) || x.type == Convert.ToInt32(MessageTypes.groupRequest)).Select(y => y.AspNetUser);
 
-            receivedRequests = user.Messages.Where(x => x.type == Convert.ToInt32(MessageTypes.friendRequest) || x.type == Convert.ToInt32(MessageTypes.groupRequest)).ToList();
-            //remove friend requests as they are shown in conversation.
-            receivedRequests = receivedRequests.Where(x => user.AspNetUsers.Select(y => y.Id == x.sender_id).DefaultIfEmpty().Any(y => y == false)).ToList();
-            sentRequests = user.Messages1.Where(x => x.type == Convert.ToInt32(MessageTypes.friendRequest) || x.type == Convert.ToInt32(MessageTypes.groupRequest)).ToList();
-            //remove friend requests as they are shown in conversation.
-            sentRequests = sentRequests.Where(x => user.AspNetUsers.Select(y => y.Id == x.receiver_id).DefaultIfEmpty().Any(y => y == false)).ToList();
+            friends = friends.Union(warnedUsers).ToList();
+            friends = friends.Union(warnedBy).ToList();
+            friends = friends.Union(receivedRequestsFromUsers).ToList();
+            friends = friends.Union(sentRequestToUsers).ToList();
+
+            chatPreviewViewModel = friends.Select(x => new ChatPreviewViewModel(x.Messages.Where(w => w.sender_id == user.Id).OrderByDescending(y => y.date).FirstOrDefault(), x.Messages1.Where(w => w.receiver_id == user.Id).OrderByDescending(y => y.date).FirstOrDefault(), x));
         }
     }
 }

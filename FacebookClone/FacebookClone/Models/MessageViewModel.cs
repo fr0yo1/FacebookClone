@@ -9,7 +9,8 @@ namespace FacebookClone.Models
     {
         normalMessage = 1,
         friendRequest = 2,
-        groupRequest = 3
+        groupRequest = 3,
+        adminWarning = 4
     }
 
     public enum State
@@ -52,6 +53,10 @@ namespace FacebookClone.Models
                     FacebookDatabaseEntities databaseEntities = new FacebookDatabaseEntities();
                     var group = databaseEntities.Groups.Find(int.Parse(actionId));
                     content = " sent a group request for " + group.name;
+                    break;
+                case 4:
+                    type = MessageTypes.adminWarning;
+                    content = "We took action on your post. Reason:" + message.content;
                     break;
 
             }

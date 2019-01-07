@@ -7,48 +7,27 @@
 <div style="width:100%;">
     <div id="divUserList" style="float:left; width:20%; border-right: thin solid #000000;">
         <h2> Users list:</h2>
-        @foreach (var message in Model.receivedRequests)
-        {
-            switch (message.type)
-            {
-                case 2:
-                    @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = "Friend request...", myController = "Messenger", clickOption = "ShowChat", content = message.AspNetUser1.Profile.firstname + " " + message.AspNetUser1.Profile.lastname, id = message.AspNetUser1.Id });
-                    break;
-                case 3:
-                    @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = "Request to join...", myController = "Messenger", clickOption = "ShowChat", content = message.AspNetUser1.Profile.firstname + " " + message.AspNetUser1.Profile.lastname, id = message.AspNetUser1.Id });
-                    break;
-            }
-        }
-        @foreach (var message in Model.sentRequests)
-        {
-            switch (message.type)
-            {
-                case 2:
-                    @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = "Friend request...", myController = "Messenger", clickOption = "ShowChat", content = message.AspNetUser.Profile.firstname + " " + message.AspNetUser.Profile.lastname, id = message.AspNetUser.Id });
-                    break;
-                case 3:
-                    @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = "Request to join...", myController = "Messenger", clickOption = "ShowChat", content = message.AspNetUser.Profile.firstname + " " + message.AspNetUser.Profile.lastname, id = message.AspNetUser.Id });
-                    break;
-            }
-        }
         @foreach (var chatPreview in Model.chatPreviewViewModel)
         {
             if (chatPreview.lastMessage == null)
             {
-                @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = "say hi to your frined" + "...", myController = "Messenger", clickOption = "ShowChat", content = chatPreview.name, id = chatPreview.friend_id, imagePath = chatPreview.profilePath});
+                @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = "say hi to your frined" + "...", myController = "Messenger", clickOption = "ShowChat", content = chatPreview.name, id = chatPreview.friend_id, imagePath = chatPreview.profilePath });
             }
             else
             {
                 switch (chatPreview.lastMessage.type)
                 {
                     case 1:
-                    @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = chatPreview.lastMessage.content.Substring(0, Math.Min(15, chatPreview.lastMessage.content.Length)) + "...", myController = "Messenger", clickOption = "ShowChat", content = chatPreview.name, id = chatPreview.friend_id, imagePath = chatPreview.profilePath });
+                        @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = chatPreview.lastMessage.content.Substring(0, Math.Min(15, chatPreview.lastMessage.content.Length)) + "...", myController = "Messenger", clickOption = "ShowChat", content = chatPreview.name, id = chatPreview.friend_id, imagePath = chatPreview.profilePath });
                         break;
                     case 2:
-                    @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = "Friend request...", myController = "Messenger", clickOption = "ShowChat", content = chatPreview.name, id = chatPreview.friend_id, imagePath = chatPreview.profilePath });
+                        @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = "Friend request...", myController = "Messenger", clickOption = "ShowChat", content = chatPreview.name, id = chatPreview.friend_id, imagePath = chatPreview.profilePath });
                         break;
                     case 3:
-                    @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = "Request to join...", myController = "Messenger", clickOption = "ShowChat", content = chatPreview.name, id = chatPreview.friend_id, imagePath = chatPreview.profilePath });
+                        @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = "Request to join...", myController = "Messenger", clickOption = "ShowChat", content = chatPreview.name, id = chatPreview.friend_id, imagePath = chatPreview.profilePath });
+                        break;
+                    case 4:
+                        @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = "Warning...", myController = "Messenger", clickOption = "ShowChat", content = chatPreview.name, id = chatPreview.friend_id, imagePath = chatPreview.profilePath });
                         break;
                 }
             }
@@ -95,6 +74,9 @@
                     case MessageTypes.normalMessage:
                         @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = message.content, imagePath = picture, myController = "Profile", clickOption = "Show", id = userId });
                         break;
+                    case MessageTypes.adminWarning:
+                        @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = message.content, imagePath = picture, myController = "Profile", clickOption = "Show", id = userId });
+                        break;
                     case MessageTypes.groupRequest:
                         @Html.Partial("GenericItemPartialView", new GenericItemViewModel() { previewString = message.content, imagePath = picture, myController = "Profile", clickOption = "Show", id = userId });
                         if (message.state == State.received)
@@ -128,5 +110,5 @@
         }
 
     </div>
-</div>
+    </div>
 
