@@ -14,6 +14,12 @@ namespace FacebookClone
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "ShowMoreMessages",
+                url: "Messenger/{action}/{sendToUserId}/{n}",
+                defaults: new { controller = "Messenger", action = "ShowChat", sendToUserId = UrlParameter.Optional, n = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

@@ -1,0 +1,6 @@
+Alter table dbo.Comments
+Add Status int
+
+
+Update dbo.Comments
+Set Status = 1

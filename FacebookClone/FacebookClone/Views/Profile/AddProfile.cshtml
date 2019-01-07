@@ -1,0 +1,29 @@
+﻿@model FacebookClone.Models.ProfileViewModel
+<h2>It looks like you have not created a profile yet. Please follow the next steps in order to join our comunity</h2>
+@using (Html.BeginForm("Add", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <label>First Name</label>
+    <br />
+    <input type="text" name="firstname" value="@Model.firstname" />
+    <br /><br />
+    <label>Last Name</label>
+    <br />
+    <input type="text" name="lastname" value="@Model.lastname" />
+    <br /><br />
+    <label>Age</label>
+    <br />
+    <input type="text" name="age" value="@Model.age" />
+    <br /> <br />
+    <label>Select your gender</label>
+    <br />
+    @Html.DropDownListFor(x => x.gender, new SelectList(Model.getGenderList(), "Value", "Text"), "Select gender")
+    <br /> <br />
+    <label for="file">Upload profile picture:</label>
+    <br />
+    <input type="file" name="picture" id="file" /><br><br>
+    <label>Set your profile to private</label>
+    @Html.CheckBoxFor(m => m.privacy)
+    <br><br>
+    <button type="submit">Save profile</button>
+}

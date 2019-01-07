@@ -1,0 +1,18 @@
+﻿@model FacebookClone.Models.CreateGroupViewModel
+@{
+    ViewBag.Title = "CreateGroupForm";
+}
+
+@using (Html.BeginForm("SaveGroup", "Groups", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <label>Group name</label>
+    <br />
+    <input type="text" name="name" value="@Model.name" />
+    <br /><br />
+    <label for="file">Upload profile picture:</label>
+    <br />
+    <input type="file" name="picture" id="file" /><br><br>
+    <button type="submit">Save group</button>
+}
+

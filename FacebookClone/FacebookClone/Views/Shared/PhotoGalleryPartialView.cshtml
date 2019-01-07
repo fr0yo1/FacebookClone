@@ -1,0 +1,26 @@
+﻿@model FacebookClone.Models.AlbumViewModel
+@{
+    ViewBag.Title = "Album";
+}
+<div style="width:100%;">
+    <div><h3 style="text-align:center;">@Model.albumName</h3> <br /><br /></div>
+    <div class="gallery">
+        @foreach (var post in Model.posts)
+        {
+            @Html.Partial("PhotoPartialView", post)
+        }
+    </div>
+</div>
+    <style>
+        div.gallery {
+            margin: 5px;
+            border: 1px solid #ccc;
+            float: left;
+            width: 180px;
+        }
+
+            div.gallery:hover {
+                border: 1px solid #777;
+            }
+    </style>
+

@@ -1,0 +1,79 @@
+﻿@model FacebookClone.Models.PostViewModel
+    @{
+        ViewBag.Title = "PostPartialView";
+    }
+@using FacebookClone.Models
+<br />
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <div class="container">
+        <div class="col-md-5" style="width: 60%">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <section class="post-heading">
+                        <div class="row">
+                            <div class="col-md-11">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="#">
+                                            <img class="media-object photo-profile" src="@Model.profilePath"; width="40" height="40" alt="...">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <a href="#" class="anchor-username"><h4 class="media-heading">@Model.userName</h4></a>
+                                        <a href="#" class="anchor-time">@Model.date</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                @if (Model.canBeDeletedByAdmin)
+                                {
+                                <a href="/Post/showDeletePage/@Model.post_id"><i class="glyphicon glyphicon-trash"></i></a>
+                                }
+                            </div>
+                        </div>
+                    </section>
+                    <section class="post-body">
+                        <p>
+                           @Model.content
+                        </p>
+                            @if (Model.postPictureRelativePath != "" && Model.postPictureRelativePath != null)
+                            {
+                                <img src=@Url.Content(Model.postPictureRelativePath) style="width:100%;" />
+                            }
+                    </section>
+                    <section class="post-footer">
+                        <hr>
+                        @if (Model.canAddComments)
+                        {
+                        <div class="post-footer-option container">
+                            @using (Html.BeginForm("AddComment", "Comment", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                <div hidden="hidden">
+                                    @Html.EditorFor(m => m.post_id)
+                                    @Html.EditorFor(m => m.group_id)
+                                    @Html.EditorFor(m => m.appLocation)
+                                </div>
+                                @Html.TextBoxFor(m => m.inputComment)
+                                <i class="glyphicon glyphicon-comment"> </i> <input type="submit" value="Comment" />
+                            }
+                        </div>
+                        }
+                        <div class="post-footer-comment-wrapper">
+                            <div class="comment-form">
+
+                            </div>
+                            <div class="comment">
+                                @foreach (var comment in @Model.comments)
+                                {
+                                    @Html.Partial("CommentPartialView", new CommentViewModel(comment.comment, comment.isMyPost, comment.location))
+                                }
+
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>

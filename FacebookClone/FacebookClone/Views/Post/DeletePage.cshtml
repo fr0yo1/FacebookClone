@@ -1,0 +1,26 @@
+﻿@model FacebookClone.Models.DeletePostViewModel
+@{
+    ViewBag.Title = "DeletePage";
+}
+@Html.Partial("PostPartialView", @Model.postViewModel)
+
+<style>
+    .field-validation-valid {
+        display: none;
+    }
+
+    .validation-summary-valid {
+        display: none;
+    }
+</style>
+
+@using (Html.BeginForm("deletePost", "Post", new { post_id = @Model.postViewModel.post_id, receiver_id = Model.postViewModel.userID }))
+{
+    @Html.HttpMethodOverride(HttpVerbs.Delete)
+    @Html.ValidationMessageFor(m => m.messageToUser,"", new { @class = "text-danger " })
+    <br />
+    @Html.TextAreaFor(m => m.messageToUser, new { @class = "required", @cols = 50, @rows = 5, @style = "width:100%;" })
+    <br />
+    <br />
+    <i class="glyphicon glyphicon-comment"> </i> <input type="submit" value="Delete and send a warning message" />
+}

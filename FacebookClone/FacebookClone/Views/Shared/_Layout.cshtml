@@ -17,13 +17,21 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Facebook", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Profile", "ShowMyProfile", "Profile")</li>
+                    <li>@Html.ActionLink("NewsFeed", "Index", "NewsFeed")</li>
+                    <li>@Html.ActionLink("Groups", "Show", "Groups")</li>
+                    <li>@Html.ActionLink("Messenger", "ShowMessenger", "Messenger")</li>
+                    <li class="navbar-brand">
+                        @using (Html.BeginForm("Search", "Home", FormMethod.Post,
+                                      new { enctype = "multipart/form-data" }))
+                        {
+                            <input type="text" style="color:#000000;" name="searchInput" value="@ViewBag.searchInput" /><input type="submit" value="Search" />
+                        }
+                    </li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -31,10 +39,6 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")

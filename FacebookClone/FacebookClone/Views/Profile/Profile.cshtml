@@ -1,0 +1,122 @@
+﻿@model FacebookClone.Models.ProfileViewModel
+@{
+    ViewBag.Title = "Profile";
+}
+@using FacebookClone.Models
+@if (Model == null)
+{
+    <h1>No profile found</h1>
+}
+else
+{
+    <div style="width:100%;">
+        <div id="divProfilePicture" style="float:left; width:45%;">
+            <img src=@Url.Content(Model.profilePictureRelativePath) style="width:100%; border-radius: 50%;" />
+            <br /><br />
+
+            @if (!Model.iAmaVisitor)
+            {
+                using (Html.BeginForm("AddNewProfilePicture", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <label for="file">Upload profile picture:</label>
+                    <br />
+                    <input type="file" name="picture" id="file" /><br />
+                    <div id="divButtons" style="clear:both;">
+                        <button type="submit">Save Profile</button>
+                    </div>
+                    <br><br>
+                }
+            }
+        </div>
+        <div id="divProfileInfo" style="float:right; width:45%;">
+            <h3>@Model.firstname @Model.lastname</h3>
+
+            <br /><br />
+
+            @if (Model.iAmaVisitor)
+            {
+                if (Model.relationshipStatus == FacebookClone.Handlers.FriendshipStatus.friends)
+                {
+                    <p>&#10004;Friends</p>
+                }
+                else if ((Model.relationshipStatus == FacebookClone.Handlers.FriendshipStatus.notSent))
+                {
+                    using (Html.BeginForm("SendFriendRequest", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                    <button type="submit">Send friend request</button>
+                    @Html.Hidden("senderID", Model.profileVisitorID)
+                        @Html.Hidden("receiverID", Model.newPost.userID)
+                    }
+                }
+                else if ((Model.relationshipStatus == FacebookClone.Handlers.FriendshipStatus.pendingSentByHim))
+                {
+                    <p> You have a friend request from @Model.firstname. Please check your messages.</p>
+                }
+                else if ((Model.relationshipStatus == FacebookClone.Handlers.FriendshipStatus.pendingSentByMe))
+                {
+                    <p>
+                        You have sent a friend request to @Model.firstname. Please wait his response.
+                    </p>
+                    }
+
+            }
+            <br /><br />
+            @if (Model.privacy == false)
+            {
+                <label>Age</label>
+                <br />
+                <input type="text" name="age" value="@Model.age" readonly />
+                <br /> <br />
+                <label>Gender</label>
+                <br />
+                <input type="text" name="gender" value="@Model.gender.ToString()" readonly />
+            }
+        </div>
+        @if (Model.privacy == false)
+        {
+            <div id="divFriendsList" style="float:right; width:45%;">
+                <br /><br />
+                <label>Friends</label>
+                <br /><br />
+                @if (Model.friends.Count != 0 && Model.friends != null)
+                {
+                    foreach (var friend in Model.friends)
+                    {
+                        @Html.Partial("FriendOnProfilePartialView", friend)
+                    }
+                }
+                else
+                {
+                    <p>No friends to show.</p>
+                }
+            </div>
+
+            <div style="clear:both;">
+                <hr />
+                <div id="divGallery" style="float:left; width:45%;">
+                    @foreach (var album in @Model.albums)
+                    {
+                        @Html.Partial("AlbumPartialView", album)
+                    }
+                    @if (!Model.iAmaVisitor)
+                    {
+                        <div style="border:1px solid black; padding:10px; clear:both;">
+                            @Html.Partial("NewAlbumView", Model.newAlbum)
+                        </div>
+                    }
+                </div>
+
+                <div id="divPosts" style="float:right; width:45%;">
+                    @if (!Model.iAmaVisitor)
+                    {
+                        @Html.Partial("CreatePostPartialView", @Model.newPost)
+                    }
+                    @foreach (var post in @Model.Posts)
+                    {
+                        @Html.Partial("PostPartialView", new PostViewModel(post.post, post.appLocation, Model.isAdmin))
+                    }
+                </div>
+            </div>
+        }
+        </div>
+}
