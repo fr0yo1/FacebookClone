@@ -46,10 +46,9 @@ namespace FacebookClone.Controllers
 
             }
 
-            return RedirectToAction("Show", "Profile");
+            return RedirectToAction("ShowMyProfile", "Profile");
         }
 
-        [Authorize]
         public ActionResult Show(string id)
         {
             var databaseEntities = new FacebookDatabaseEntities();
@@ -65,6 +64,7 @@ namespace FacebookClone.Controllers
                 iAmaVisitor = false;
             }
             var isAdmin = false;
+
             if (User.Identity.GetUserId() != null)
             {
                 isAdmin = RoleHandler.isAdmin(User.Identity.GetUserId());
@@ -84,7 +84,7 @@ namespace FacebookClone.Controllers
                 List<PostViewModel> userPosts = new List<PostViewModel>();
                 foreach (var post in posts)
                 {
-                    userPosts.Add(new PostViewModel(post,"Profile",RoleHandler.isAdmin(User.Identity.GetUserId())));
+                    userPosts.Add(new PostViewModel(post,"Profile", isAdmin));
                 }
                 List<Album> albums = databaseEntities.Albums.Where(x => x.user_id==id).ToList();
                 List<AlbumViewModel> userAlbums = new List<AlbumViewModel>();
