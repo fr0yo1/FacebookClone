@@ -116,6 +116,13 @@ namespace FacebookClone.Controllers
                         profileViewModel.relationshipStatus = MessageHandler.GetFriendRequestStatus(User.Identity.GetUserId(), id);
                     }
                 }
+
+                if (profile.privacy == 1)
+                {
+                    if (profile.AspNetUser.Id != User.Identity.GetUserId() && !aspNetUser.AspNetUsers.Where(x => x.Id == User.Identity.GetUserId()).Any())
+                    profileViewModel.privacy = true;
+                }
+
                 return View("Profile", profileViewModel);
             }
    

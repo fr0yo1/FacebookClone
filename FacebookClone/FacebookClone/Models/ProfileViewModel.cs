@@ -31,6 +31,8 @@ namespace FacebookClone.Models
         public Gender gender { get; set; }
         [Required]
         public HttpPostedFileBase picture { get; set; }
+        [Required]
+        public Boolean privacy { get; set; }
         public List<PostViewModel> Posts { get; set; }
         public String profilePictureRelativePath { get; set; }
         public PostViewModel newPost { get; set; }
@@ -86,7 +88,8 @@ namespace FacebookClone.Models
                 firstname = this.firstname,
                 lastname = this.lastname,
                 Id = user_id,
-                gender = this.gender.ToString()
+                gender = this.gender.ToString(),
+                privacy = this.privacy ? 1 : 0
             };
             var databaseEntities = new FacebookDatabaseEntities();
             databaseEntities.Profiles.Add(newProfile);
