@@ -4,12 +4,14 @@
 }
 <div style="width:100%;">
     <div><h3 style="text-align:center;">@Model.albumName</h3> <br /><br /></div>
-    <div class="gallery">
-        @foreach (var post in Model.posts)
-        {
+
+    @foreach (var post in Model.posts)
+    {
+        <div class="gallery">
             @Html.Partial("PhotoPartialView", post)
-        }
-    </div>
+
+        </div>
+    }
 </div>
     <style>
         div.gallery {
